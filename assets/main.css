@@ -1,0 +1,58 @@
+:root {
+    --text-colour: ghostwhite;
+    --theme-colour: darkgreen;
+    --theme-colour-light: hsl(from var(--theme-colour) h s 30%);
+    --control-colour: hsl(from var(--theme-colour) h 50% 75%);
+    --control-border-colour: var(var(--text-colour));
+    --disabled-colour: silver;
+}
+
+body {
+    margin: 0px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+#main {
+    background: radial-gradient(circle at left top, var(--theme-colour-light), var(--theme-colour));
+    color: var(--text-colour);
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    gap: 2vh;
+}
+
+header, main, footer {
+    margin-left: 1vw;
+    margin-right: 1vw;
+} 
+
+header {
+    font-size: xx-large;
+    margin-top: 1vh;
+}
+
+main {
+    flex-grow: 1;
+}
+
+footer { 
+    font-size: small;
+    margin-bottom: 1vh;
+}
+
+button {
+    border: none;
+    background: var(--control-colour);
+    padding-top: 6px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 6px;
+    border-radius: 10px;
+}
+
+button:disabled {
+    background-color: var(--disabled-colour);
+}

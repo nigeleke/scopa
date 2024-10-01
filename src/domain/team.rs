@@ -33,4 +33,8 @@ impl Team {
     pub fn disengage(&mut self) {
         self.engagement = Engagement::Eliminated
     }
+
+    pub fn name(&self) -> TeamName {
+        self.name.clone()
+    }
 }

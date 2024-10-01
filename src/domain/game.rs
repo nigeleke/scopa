@@ -4,11 +4,11 @@ use super::team::*;
 
 use crate::types::*;
 
-#[derive(Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 enum GameState {
     Starting(Vec<Team>),
     Playing(Vec<Team>, Vec<Round>, Points),
-    Finished(Vec<Team>, Vec<Round>, TeamId),
+    Finished(Vec<Team>, Vec<Round>, Points, TeamId),
 }
 
 impl Default for GameState {
@@ -17,30 +17,59 @@ impl Default for GameState {
     }
 }
 
-#[derive(Debug, PartialEq)]
-struct Game(GameState);
+#[derive(Clone, Debug, PartialEq)]
+pub struct Game(GameState);
 
 impl Game {
-    fn new() -> Self {
+    pub fn new() -> Self {
         Self(GameState::default())
+    }
+
+    pub fn is_starting(&self) -> bool {
+        match self.0 {
+            GameState::Starting(_) => true,
+            _ => false,
+        }
+    }
+
+    pub fn is_playing(&self) -> bool {
+        match self.0 {
+            GameState::Playing(_, _, _) => true,
+            _ => false,
+        }
+    }
+
+    pub fn is_finished(&self) -> bool {
+        match self.0 {
+            GameState::Finished(_, _, _, _) => true,
+            _ => false,
+        }
     }
 
     fn team_count(&self) -> TeamCount {
         match &self.0 {
             GameState::Starting(teams) |
             GameState::Playing(teams, _, _) |
-            GameState::Finished(teams, _, _)=> teams.len(),
+            GameState::Finished(teams, _, _, _)=> teams.len(),
         }.into()
     }
 
-    fn target(&self) -> Points {
+    pub fn target(&self) -> Points {
         match &self.0 {
             GameState::Playing(_, _, target) => *target,
             _ => Points::default(),
         }
     }
 
-    fn add_team(&mut self, name: &str) -> Result<TeamId> {
+    pub fn round(&self) -> usize {
+        match &self.0 {
+            GameState::Starting(_) => 0,
+            GameState::Playing(_, rounds, _) |
+            GameState::Finished(_, rounds, _, _) => rounds.len() + 1
+        }
+    }
+
+    pub fn add_team(&mut self, name: &str) -> Result<TeamId> {
         match &mut self.0 {
             GameState::Starting(teams) => {
                 let team = Team::new(name);
@@ -52,11 +81,12 @@ impl Game {
         }
     }
 
-    fn remove_team(&mut self, id: &TeamId) -> Result<()> {
+    pub fn remove_team(&mut self, id: &TeamId) -> Result<()> {
         match &mut self.0 {
             GameState::Starting(teams) => {
+                let valid = teams.iter().filter_map(|t| Some(t.id())).collect::<Vec<_>>().contains(id);
                 teams.retain(|t| t.id() != *id);
-                Ok(())
+                valid.then_some(()).ok_or(Error::TeamsCannotBeChanged)
             },
             _ => Err(Error::TeamsCannotBeChanged)
         }
@@ -64,7 +94,11 @@ impl Game {
 
     const VALID_TEAM_COUNTS: [TeamCount; 4] = [TeamCount::new(2), TeamCount::new(3), TeamCount::new(4), TeamCount::new(6)];
 
-    fn start(self, target: Points) -> Result<Game> {
+    pub fn can_start(&self) -> bool {
+        Self::VALID_TEAM_COUNTS.contains(&self.team_count())
+    }
+
+    pub fn start(self, target: Points) -> Result<Game> {
         match self.0 {
             GameState::Starting(teams) => {
                 let team_count = teams.len().into();
@@ -78,21 +112,21 @@ impl Game {
         }
     }
 
-    fn points(&self, id: &TeamId) -> Points {
+    pub fn points(&self, id: TeamId) -> Points {
         match &self.0 {
             GameState::Starting(_) => Points::default(),
             GameState::Playing(_, rounds, _) | 
-            GameState::Finished(_, rounds, _) => {
+            GameState::Finished(_, rounds, _, _) => {
                 rounds.iter().fold(Points::default(), |acc, r| acc + r.points(id))
             },
         }
     }
 
-    fn score_round(self, score: &Round) -> Result<Game> {        
+    pub fn score_round(self, score: &Round) -> Result<Game> {        
         match self.0 {
             GameState::Starting(_) => Err(Error::GameNotStarted),
             GameState::Playing(ref teams, ref rounds, target) => {
-                let mut teams = teams.clone();
+                // let mut teams = teams.clone();
 
                 let mut rounds = rounds.clone();
                 rounds.push(score.clone());
@@ -101,7 +135,7 @@ impl Game {
                     .iter()
                     .map(|team: &Team| {
                         let id = team.id();
-                        let points = self.points(&id) + score.points(&id);
+                        let points = self.points(id) + score.points(id);
                         (team, points)
                     })
                     .collect::<Vec<_>>();
@@ -116,10 +150,10 @@ impl Game {
                 let game = if winners.is_empty() {
                     Game(GameState::Playing(teams.clone(), rounds.clone(), target))
                 } else if winners.len() == 1 {
-                    Game(GameState::Finished(teams.clone(), rounds.clone(), winners[0].0.id()))
+                    Game(GameState::Finished(teams.clone(), rounds.clone(), target, winners[0].0.id()))
                 } else {
                     if winners[0].1 > winners[1].1 {
-                        Game(GameState::Finished(teams.clone(), rounds.clone(), winners[0].0.id()))
+                        Game(GameState::Finished(teams.clone(), rounds.clone(), target, winners[0].0.id()))
                     } else {
                         let mut teams = losers.into_iter().map(|(team, _)| {
                             let mut team = team.clone();
@@ -136,31 +170,23 @@ impl Game {
 
                 Ok(game)
             },            
-            GameState::Finished(_, _, _) => Err(Error::GameAlreadyComplete),
+            GameState::Finished(_, _, _, _) => Err(Error::GameAlreadyComplete),
         }
     }
 
-    fn is_finished(&self) -> bool {
-        match self.0 {
-            GameState::Finished(_, _, _) => true,
-            _ => false,
-        }
-    }
-
-    fn teams(&self) -> Vec<TeamId> {
-        let teams = match &self.0 {
+    pub fn teams(&self) -> Vec<Team> {
+        match &self.0 {
             GameState::Starting(teams) => teams,
             GameState::Playing(teams, _, _) => teams,
-            GameState::Finished(teams, _, _) => teams,
-        };
-        teams.iter().map(Team::id).collect::<Vec<_>>()
+            GameState::Finished(teams, _, _, _) => teams,
+        }.clone()
     }
 
     fn active_teams(&self) -> Vec<TeamId> {
         let teams = match &self.0 {
             GameState::Starting(teams) => teams,
             GameState::Playing(teams, _, _) => teams,
-            GameState::Finished(teams, _, _) => teams,
+            GameState::Finished(teams, _, _, _) => teams,
         };
         teams.iter().filter_map(|team| team.is_active().then_some(team.id())).collect::<Vec<_>>()
     }
@@ -169,9 +195,22 @@ impl Game {
         let teams = match &self.0 {
             GameState::Starting(teams) => teams,
             GameState::Playing(teams, _, _) => teams,
-            GameState::Finished(teams, _, _) => teams,
+            GameState::Finished(teams, _, _, _) => teams,
         };
         teams.iter().filter_map(|team| (!team.is_active()).then_some(team.id())).collect::<Vec<_>>()
+    }
+
+    pub fn winner(&self) -> Option<TeamName> {
+        match &self.0 {
+            GameState::Starting(_) |
+            GameState::Playing(_, _, _) => None,
+            GameState::Finished(teams, _, _, winner) => {
+                teams
+                    .iter()
+                    .find(|t| t.id() == *winner)
+                    .map(Team::name)
+            },
+        }
     }
 
 }
@@ -197,7 +236,8 @@ mod test {
     fn teams_can_be_removed_before_a_game_starts() {
         let mut game = Game::new();
         let id = game.add_team("name").unwrap();
-        game.remove_team(&id);
+        let result = game.remove_team(&id);
+        assert!(result.is_ok());
         assert_eq!(game.team_count(), 0.into());
     }
 
@@ -206,7 +246,8 @@ mod test {
         let mut game = Game::new();
         let _ = game.add_team("name").unwrap();
         let team = Team::new("name");
-        game.remove_team(&team.id());
+        let result = game.remove_team(&team.id());
+        assert!(result.is_err());
         assert_eq!(game.team_count(), 1.into());
     }
 
@@ -242,8 +283,8 @@ mod test {
         let id1 = game.add_team("name").unwrap();
         let id2 = game.add_team("name").unwrap();
         let game = game.start(11.into()).unwrap();
-        assert_eq!(game.points(&id1), 0.into());
-        assert_eq!(game.points(&id2), 0.into());
+        assert_eq!(game.points(id1), 0.into());
+        assert_eq!(game.points(id2), 0.into());
     }
 
     #[test]
@@ -273,11 +314,11 @@ mod test {
         let id2 = game.add_team("name").unwrap();
         let game = game.start(11.into()).unwrap();
         let score = Round::default()
-            .with_scopas(&id1, 2.into())
-            .with_scopas(&id2, 3.into());
+            .with_scopas(id1, 2.into())
+            .with_scopas(id2, 3.into());
         let game = game.score_round(&score).unwrap();
-        assert_eq!(game.points(&id1), 2.into());
-        assert_eq!(game.points(&id2), 3.into());
+        assert_eq!(game.points(id1), 2.into());
+        assert_eq!(game.points(id2), 3.into());
     }
 
     fn test_is_finished(target: usize, score1: usize, score2: usize, is_finished: bool) {
@@ -286,11 +327,11 @@ mod test {
         let id2 = game.add_team("name").unwrap();
         let game = game.start(target.into()).unwrap();
         let score = Round::default()
-            .with_scopas(&id1, score1.into())
-            .with_scopas(&id2, score2.into());
+            .with_scopas(id1, score1.into())
+            .with_scopas(id2, score2.into());
         let game = game.score_round(&score).unwrap();
-        assert_eq!(game.points(&id1), score1.into());
-        assert_eq!(game.points(&id2), score2.into());
+        assert_eq!(game.points(id1), score1.into());
+        assert_eq!(game.points(id2), score2.into());
         assert_eq!(game.is_finished(), is_finished);
 
     }
@@ -318,11 +359,11 @@ mod test {
         let id3 = game.add_team("name").unwrap();
         let game = game.start(3.into()).unwrap();
         let score = Round::default()
-            .with_scopas(&id1, 2.into())
-            .with_scopas(&id2, 4.into())
-            .with_scopas(&id3, 4.into());
+            .with_scopas(id1, 2.into())
+            .with_scopas(id2, 4.into())
+            .with_scopas(id3, 4.into());
         let game = game.score_round(&score).unwrap();
-        assert_eq!(game.teams(), [id1, id2, id3]);
+        assert_eq!(game.teams().iter().map(Team::id).collect::<Vec<_>>(), [id1, id2, id3]);
         assert_eq!(game.active_teams(), [id2, id3]);
         assert_eq!(game.inactive_teams(), [id1]);
     }
@@ -344,7 +385,7 @@ mod test {
         let _ = game.add_team("name").unwrap();
         let game = game.start(1.into()).unwrap();
         let score = Round::default()
-            .with_scopas(&id, 2.into());
+            .with_scopas(id, 2.into());
         let game = game.score_round(&score).unwrap();
         let error = game.score_round(&score).unwrap_err();
         assert_eq!(error, Error::GameAlreadyComplete);

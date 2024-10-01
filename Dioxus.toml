@@ -1,0 +1,19 @@
+[application]
+name = "scopa"
+default_platform = "web"
+out_dir = "dist"
+asset_dir = "assets"
+
+[web.app]
+title = "Scopa"
+
+[web.watcher]
+reload_html = true
+watch_path = ["src", "assets"]
+
+[web.resource]
+style = [ "./main.css" ]
+script = []
+
+[web.resource.dev]
+script = []
