@@ -1,6 +1,4 @@
-use super::{PointsView, PointsEditor};
-use super::TargetView;
-use super::TeamNameView;
+use crate::components::prelude::*;
 
 use crate::domain::*;
 use crate::types::*;

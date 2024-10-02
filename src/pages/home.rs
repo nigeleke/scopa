@@ -1,4 +1,4 @@
-use crate::components::*;
+use crate::components::prelude::{StartingGame, PlayingGame, FinishedGame};
 use crate::domain::*;
 
 use dioxus::prelude::*;

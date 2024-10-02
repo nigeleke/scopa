@@ -1,6 +1,4 @@
-use super::target::TargetEditor;
-use super::team_name::{TeamNameEditor, TeamNameView};
-
+use crate::components::prelude::*;
 use crate::domain::*;
 use crate::types::*;
 
