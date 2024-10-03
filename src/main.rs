@@ -11,7 +11,7 @@ use dioxus::prelude::*;
 use dioxus_logger::tracing::Level;
 
 fn main() {
-    dioxus_logger::init(Level::INFO).expect("Cannot start logging");
+    dioxus_logger::init(Level::DEBUG).expect("Cannot start logging");
     launch(app);
 }
 

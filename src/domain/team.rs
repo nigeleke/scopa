@@ -26,11 +26,11 @@ impl Team {
         self.id
     }
 
-    pub fn is_active(&self) -> bool {
-        self.engagement == Engagement::Participating
+    pub fn is_not_playing(&self) -> bool {
+        self.engagement == Engagement::Eliminated
     }
 
-    pub fn disengage(&mut self) {
+    pub fn set_not_playing(&mut self) {
         self.engagement = Engagement::Eliminated
     }
 

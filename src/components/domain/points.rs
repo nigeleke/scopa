@@ -1,6 +1,7 @@
 use crate::types::Points;
 
 use dioxus::prelude::*;
+use dioxus_logger::tracing::info;
 
 #[component]
 pub fn PointsView(
@@ -29,6 +30,8 @@ pub fn PointsEditor(
             onchange.call(value);
         };
     };
+
+    info!("PointsEditor::Attributes: {:?}", attributes);
 
     rsx! {
         input {

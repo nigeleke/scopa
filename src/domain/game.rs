@@ -126,8 +126,6 @@ impl Game {
         match self.0 {
             GameState::Starting(_) => Err(Error::GameNotStarted),
             GameState::Playing(ref teams, ref rounds, target) => {
-                // let mut teams = teams.clone();
-
                 let mut rounds = rounds.clone();
                 rounds.push(score.clone());
 
@@ -155,15 +153,9 @@ impl Game {
                     if winners[0].1 > winners[1].1 {
                         Game(GameState::Finished(teams.clone(), rounds.clone(), target, winners[0].0.id()))
                     } else {
-                        let mut teams = losers.into_iter().map(|(team, _)| {
-                            let mut team = team.clone();
-                            team.disengage();
-                            team
-                        }).collect::<Vec<_>>();
-                        let mut winners = winners.into_iter().map(|(team, _)| {
-                            team.clone()
-                        }).collect::<Vec<_>>();
-                        teams.append(&mut winners);
+                        let mut teams = teams.clone();
+                        let loser_ids = losers.iter().map(|(t, p)| t.id()).collect::<Vec<_>>();
+                        teams.iter_mut().for_each(|t| if loser_ids.contains(&t.id()) { t.set_not_playing(); });
                         Game(GameState::Playing(teams, rounds.clone(), target))
                     }
                 };
@@ -180,24 +172,6 @@ impl Game {
             GameState::Playing(teams, _, _) => teams,
             GameState::Finished(teams, _, _, _) => teams,
         }.clone()
-    }
-
-    fn active_teams(&self) -> Vec<TeamId> {
-        let teams = match &self.0 {
-            GameState::Starting(teams) => teams,
-            GameState::Playing(teams, _, _) => teams,
-            GameState::Finished(teams, _, _, _) => teams,
-        };
-        teams.iter().filter_map(|team| team.is_active().then_some(team.id())).collect::<Vec<_>>()
-    }
-
-    fn inactive_teams(&self) -> Vec<TeamId> {
-        let teams = match &self.0 {
-            GameState::Starting(teams) => teams,
-            GameState::Playing(teams, _, _) => teams,
-            GameState::Finished(teams, _, _, _) => teams,
-        };
-        teams.iter().filter_map(|team| (!team.is_active()).then_some(team.id())).collect::<Vec<_>>()
     }
 
     pub fn winner(&self) -> Option<TeamName> {
@@ -363,9 +337,10 @@ mod test {
             .with_scopas(id2, 4.into())
             .with_scopas(id3, 4.into());
         let game = game.score_round(&score).unwrap();
-        assert_eq!(game.teams().iter().map(Team::id).collect::<Vec<_>>(), [id1, id2, id3]);
-        assert_eq!(game.active_teams(), [id2, id3]);
-        assert_eq!(game.inactive_teams(), [id1]);
+        let teams = game.teams();
+        assert!(!teams[0].is_not_playing());
+        assert!(teams[1].is_not_playing());
+        assert!(teams[2].is_not_playing());
     }
 
     #[test]

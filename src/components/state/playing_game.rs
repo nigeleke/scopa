@@ -1,9 +1,10 @@
 use crate::components::prelude::*;
-
 use crate::domain::*;
 use crate::types::*;
 
 use dioxus::prelude::*;
+use dioxus_logger::tracing::debug;
+use dioxus_logger::tracing::info;
 
 #[component]
 pub fn PlayingGame() -> Element {
@@ -52,13 +53,17 @@ impl std::fmt::Display for PointsGroup {
 #[component]
 pub fn Rounds() -> Element {
     let game = use_context::<Signal<Game>>();
+    use_effect(move || {
+        debug!("game changed: {:?}", game);
+    });
 
     let teams = game.read().teams();
+    debug!("teams now: {:?}", teams);
 
-    let tied_plus_teams = std::iter::once(Option::None)
-            .chain(teams.clone()
-                .into_iter()
-                .map(Option::Some))
+    let some_teams = teams.iter().map(Option::Some);
+    let tie_or_teams = 
+        std::iter::once(Option::None)
+            .chain(some_teams)
             .collect::<Vec<_>>();
 
     let as_header = move |team: &Team| {
@@ -68,7 +73,8 @@ pub fn Rounds() -> Element {
             } 
         } 
     };
-    
+    let headers = teams.iter().map(as_header);
+
     let as_total = move |team: &Team| {
         rsx! {
             th {
@@ -76,42 +82,54 @@ pub fn Rounds() -> Element {
             }
         }
     };
+    let totals = teams.iter().map(as_total);
 
-    let as_scopa = move |team: &Team| {
+    let as_scopa = move |(i, team): (usize, &Team)| {
+        info!("as_scopa team: {:?}", team);
         rsx! {
             td {
-                ScopaScore { id: team.id(), is_active: team.is_active() }
+                ScopaScore { team: team.clone(), autofocus: i == 0 }
             }
         }
     };
+    let scopas = teams.iter().enumerate().map(as_scopa);
 
     let as_id_selector = move |group: PointsGroup| {
-        move |team: &Option<Team>| {
-            let id = team.as_ref().map(|team| team.id());
-            let is_active = team.as_ref().map(|team| team.is_active()).unwrap_or(true);
+        move |team: &Option<&Team>| {
             rsx! {
                 td {
-                    TeamSelect { group: group, id, is_active }
+                    TeamSelect { group: group, team: team.map(|t| t.clone()) }
                 } 
             }
         }
     }; 
 
+    let card_count_selectors = tie_or_teams.iter().map(as_id_selector(PointsGroup::CardsCount));
+    let coins_count_selectors = tie_or_teams.iter().map(as_id_selector(PointsGroup::CoinsCount));
+    let settebello_selectors = teams.iter().map(|team| as_id_selector(PointsGroup::Settebello)(&Some(team)));
+    let premiera_selectors = tie_or_teams.iter().map(as_id_selector(PointsGroup::Premiera));
+
     rsx! {
         table {
-            tr { td { "" }             td { "- tied -" } { teams.iter().map(as_header) }  }
-            tr { th { "Total:"  }      td { "" }         { teams.iter().map(as_total) } }
-            tr { td { "Scopas:"  }     td { "" }         { teams.iter().map(as_scopa) } }
-            tr { td { "Card count:" }  { tied_plus_teams.iter().map(as_id_selector(PointsGroup::CardsCount)) } }
-            tr { td { "Coins count:" } { tied_plus_teams.iter().map(as_id_selector(PointsGroup::CoinsCount)) } }
-            tr { td { "Settebello:" }  td { "" }         { teams.into_iter().map(|team| as_id_selector(PointsGroup::Settebello)(&Some(team))) } }
-            tr { td { "Premiera:" }    { tied_plus_teams.iter().map(as_id_selector(PointsGroup::Premiera)) } }
+            tr { td { "" }             td { "- tied -" } { headers } }
+            tr { th { "Total:"  }      td { "" }         { totals } }
+            tr { td { "Scopas:"  }     td { "" }         { scopas } }
+            tr { td { "Card count:" }  { card_count_selectors } }
+            tr { td { "Coins count:" } { coins_count_selectors } }
+            tr { td { "Settebello:" }  td { "" }         { settebello_selectors } }
+            tr { td { "Premiera:" }    { premiera_selectors } }
         }
     }
 }
 
 #[component]
-fn ScopaScore(id: TeamId, is_active: bool) -> Element {
+fn ScopaScore(
+    team: Team,
+    autofocus: bool
+) -> Element {
+    let id = team.id();
+    let is_not_playing = team.is_not_playing();
+
     let mut round = use_context::<Signal<Round>>();
 
     let mut draft = use_signal(move || Points::default());
@@ -121,15 +139,23 @@ fn ScopaScore(id: TeamId, is_active: bool) -> Element {
     });
 
     let update_draft = move |points| {
-        draft.set(points);
+        // draft.set(points);
         round.set(round().with_scopas(id, points));
     };
+
+    // let update_string_draft = move |event: Event<FormData>| {
+    //     if let Ok(points) = Points::try_from(event.value()) {
+    //         draft.set(points);
+    //         round.set(round().with_scopas(team.id(), points));
+    //     }
+    // };
 
     rsx! {
         PointsEditor {
             value: draft(),
             onchange: update_draft,
-            autofocus: true,
+            autofocus: autofocus,
+            disabled: is_not_playing,
         }
     }
 }
@@ -137,9 +163,11 @@ fn ScopaScore(id: TeamId, is_active: bool) -> Element {
 #[component]
 fn TeamSelect(
     group: PointsGroup,
-    id: Option<TeamId>,
-    is_active: bool
+    team: Option<Team>,
 ) -> Element {
+    let id = team.as_ref().map(|team| team.id());
+    let is_not_playing = team.as_ref().map(|team| team.is_not_playing());
+
     let mut round = use_context::<Signal<Round>>();
 
     let mut draft = use_signal(move || None);
@@ -171,7 +199,7 @@ fn TeamSelect(
             onchange: update_draft,
             r#type: "radio",
             name: group.to_string(),
-            disabled: !is_active,
+            disabled: is_not_playing.unwrap_or(false),
             checked: draft() == id,
         }
     }
