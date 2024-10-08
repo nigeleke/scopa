@@ -3,8 +3,9 @@
     --theme-colour: darkgreen;
     --theme-colour-light: hsl(from var(--theme-colour) h s 30%);
     --control-colour: hsl(from var(--theme-colour) h 50% 75%);
-    --control-border-colour: var(var(--text-colour));
+    --control-border-colour: var(--text-colour);
     --disabled-colour: silver;
+    --glow-colour: #0fa;
 }
 
 body {
@@ -30,7 +31,6 @@ header, main, footer {
 } 
 
 header {
-    font-size: xx-large;
     margin-top: 1vh;
 }
 
@@ -46,10 +46,6 @@ footer {
 button {
     border: none;
     background: var(--control-colour);
-    padding-top: 6px;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-bottom: 6px;
     border-radius: 10px;
 }
 

@@ -1,10 +1,10 @@
-use crate::types::Points;
+use crate::types::Target;
 
 use dioxus::prelude::*;
 
 #[component]
 pub fn TargetView(
-    value: Points,
+    value: Target,
 ) -> Element {
     rsx! {
         { value.to_string() }
@@ -13,25 +13,46 @@ pub fn TargetView(
 
 #[component]
 pub fn TargetEditor (
-    value: Signal<Points>,
+    value: Target,
+    onchange: EventHandler<Target>,
     #[props(extends = input)]
     attributes: Vec<Attribute>,
  ) -> Element {
 
     let update_target = move |event: Event<FormData>| {
-        let result = Points::try_from(event.value());
+        let result = Target::try_from(event.value());
         if let Ok(new_value) = result {
-            value.set(new_value);
+            onchange.call(new_value);
         };
     };
 
     rsx! {
-        input {
-            value: value.to_string(),
-            oninput: update_target,
-            r#type: "number",
-            min: "11",
-            step: "5",
+        Container {
+            input {
+                value: value.to_string(),
+                oninput: update_target,
+                r#type: "number",
+                min: "11",
+                step: "5",
+                size: "3",
+                ..attributes,
+            }
+            p { "Target" }
+        }
+    }
+}
+
+#[component]
+fn Container(
+    children: Element,
+) -> Element {
+    rsx! {
+        div {
+            class: "target-outer",
+            div {
+                class: "target-inner",
+                {children},
+            },
         }
     }
 }

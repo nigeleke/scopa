@@ -1,23 +1,23 @@
-use crate::components::prelude::{StartingGame, PlayingGame, FinishedGame};
-use crate::domain::*;
+use crate::components::prelude::*;
+use crate::domain::prelude::*;
 
 use dioxus::prelude::*;
 
 #[component]
 pub fn Home() -> Element {
-    let game = use_context_provider(|| Signal::new(Game::new()));
+    let mut game = use_context_provider(|| Signal::new(GameState::default()));
+    
+    let update_game = move |new_game| game.set(new_game);
 
     rsx! {
-        header { "Scopa Scorer" }
+        header { ScopaHeader {} }
         main {
-            if game.read().is_starting() {
-                StartingGame {}
-            } else if game.read().is_playing() {
-                PlayingGame {}
-            } else if game.read().is_finished() {
-                FinishedGame {}
+            match game() {
+                GameState::Starting(game) => rsx! { StartingGame { game, onchange: update_game, } },
+                GameState::Playing(game) => rsx! { PlayingGame { game, onchange: update_game } },
+                GameState::Finished(game) => rsx! { FinishedGame { game, onchange: update_game } },
             }
         }
-        footer { "Copyright © 2024; Nigel Eke. All rights reserved." }
+        footer { ScopaFooter {} }
     }
 }

@@ -37,4 +37,20 @@ impl Team {
     pub fn name(&self) -> TeamName {
         self.name.clone()
     }
+
+    pub fn set_name(&mut self, name: TeamName) {
+        self.name = name;
+    }
+}
+
+pub trait Teams {
+    fn teams(&self) -> &[Team];
+
+    fn team_count(&self) -> TeamCount {
+        self.teams().len().into()
+    }
+
+    fn find_team(&self, id: TeamId) -> Option<&Team> {
+        self.teams().into_iter().find(|team| team.id() == id)
+    }
 }

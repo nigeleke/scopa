@@ -72,6 +72,20 @@ impl Round {
     }
 }
 
+pub trait Rounds {
+    fn rounds(&self) -> &[Round];
+
+    fn round_number(&self) -> RoundNumber {
+        (self.rounds().len() + 1).into()
+    }
+
+    fn points(&self, id: TeamId) -> Points {
+        self.rounds()
+            .iter()
+            .fold(Points::default(), |acc, r| acc + r.points(id))
+    }
+}
+
 #[cfg(test)]
 mod test {
     use crate::domain::team::Team;

@@ -5,15 +5,22 @@ out_dir = "dist"
 asset_dir = "assets"
 
 [web.app]
-title = "Scopa"
+title = "Scopa Scorer"
 
 [web.watcher]
 reload_html = true
 watch_path = ["src", "assets"]
 
 [web.resource]
-style = [ "./main.css" ]
-script = []
+style = [
+    "./main.css",
+    "./scopa_header.css",
+    "./starting_game.css",
+    "./target.css",
+]
+script = [
+    "https://cardmeister.github.io/elements.cardmeister.full.js",
+]
 
 [web.resource.dev]
 script = []

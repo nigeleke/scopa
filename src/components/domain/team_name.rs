@@ -14,25 +14,30 @@ pub fn TeamNameView(
 
 #[component]
 pub fn TeamNameEditor(
-    value: Signal<TeamName>,
+    value: TeamName,
+    onchange: EventHandler<TeamName>,
     oncommit: EventHandler<TeamName>,
     #[props(extends = input)]
     attributes: Vec<Attribute>,
 ) -> Element {
 
+    let mut team_name = use_signal(move || value);
+
     let update_team_name = move |event: Event<FormData>| {
-        value.set(TeamName::from(event.value().as_str()));
+        team_name.set(TeamName::from(event.value().as_str()));
     };
+
+    use_effect(move || { onchange.call(team_name()); });
 
     let commit_team_edit = move |event: KeyboardEvent| {
         if event.key() == Key::Enter {
-            oncommit.call(value());        
+            oncommit.call(team_name());        
         }        
     };
 
     rsx! {
         input {
-            value: value().to_string(),
+            value: team_name().to_string(),
             oninput: update_team_name,
             onkeydown: commit_team_edit, 
             ..attributes,

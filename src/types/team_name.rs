@@ -9,6 +9,14 @@ impl From<&str> for TeamName {
     }
 }
 
+impl std::ops::Deref for TeamName {
+    type Target = str;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
 impl TryFrom<String> for TeamName {
     type Error = Infallible;
 
