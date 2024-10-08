@@ -39,29 +39,23 @@ pub fn StartingGame(
     rsx! {
         div {
             class: "starting-game",
-            div {
-                TargetEditor {
-                    value: target,
-                    onchange: update_target,
-                    autofocus: true,
-                }
+            TargetEditor {
+                value: target,
+                onchange: update_target,
+                autofocus: true,
             }
-            div {
-                AddTeam {
-                    onadd: add_team,
-                }
-                TeamRows {
-                    teams: Vec::from(teams),
-                    onremove: remove_team,
-                }
+            AddTeam {
+                onadd: add_team,
             }
-            div {
-                StartAction {
-                    can_start: game.read().can_start(),
-                    onstart: start_game,
-                }
+            StartAction {
+                can_start: game.read().can_start(),
+                onstart: start_game,
             }
-        }
+            TeamRows {
+                teams: Vec::from(teams),
+                onremove: remove_team,
+            }
+    }
     }
 }
 

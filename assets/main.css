@@ -1,9 +1,13 @@
 :root {
     --text-colour: ghostwhite;
+    --text-shadow: 2px 2px 4px var(--text-colour);
     --theme-colour: darkgreen;
     --theme-colour-light: hsl(from var(--theme-colour) h s 30%);
     --control-colour: hsl(from var(--theme-colour) h 50% 75%);
-    --control-border-colour: var(--text-colour);
+    --control-colour-focused: hsl(from var(--control-colour) h s 50%);
+    --control-text-colour: var(--theme-colour-light);
+    --control-border: 1px solid var(--text-colour);
+    --control-shadow: 2px 2px 5px var(--text-colour);
     --disabled-colour: silver;
     --glow-colour: #0fa;
 }

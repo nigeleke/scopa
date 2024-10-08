@@ -7,7 +7,9 @@ pub fn TargetView(
     value: Target,
 ) -> Element {
     rsx! {
-        { value.to_string() }
+        Container {
+            { value.to_string() }
+        }
     }
 }
 
@@ -28,6 +30,7 @@ pub fn TargetEditor (
 
     rsx! {
         Container {
+            "Play to"
             input {
                 value: value.to_string(),
                 oninput: update_target,
@@ -37,7 +40,7 @@ pub fn TargetEditor (
                 size: "3",
                 ..attributes,
             }
-            p { "Target" }
+            "points"
         }
     }
 }
