@@ -1,4 +1,4 @@
-div.target-outer {
+div.round-number-outer {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -11,28 +11,10 @@ div.target-outer {
     padding-right: 10px;
 }
 
-div.target-inner {
+div.round-number-inner {
     flex-shrink: 1;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: baseline;
-}
-
-div.target-inner input {
-    width: 60px;
-
-    text-align: center;
-    vertical-align: middle;
-    text-shadow: var(--text-shadow);
-    
-    background-color: var(--control-colour);
-    background-image: none;
-    border-width: 0;    
-    outline: none;
-    transition: box-shadow 0.3s ease;
-}
-
-div.target-inner input:focus {
-    background-color: var(--control-colour-focused); 
 }

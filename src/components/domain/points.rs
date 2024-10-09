@@ -31,15 +31,27 @@ pub fn PointsEditor(
         };
     };
 
-    info!("PointsEditor::Attributes: {:?}", attributes);
-
     rsx! {
-        input {
-            value: value.to_string(),
-            oninput: update_points,
-            r#type: "number",
-            min: "0",
-            ..attributes,
+        Container {
+            input {
+                value: value.to_string(),
+                oninput: update_points,
+                r#type: "number",
+                min: "0",
+                ..attributes,
+            }
+        }
+    }
+}
+
+#[component]
+fn Container(
+    children: Element
+) -> Element {
+    rsx! {
+        div {
+            class: "points",
+            {children}
         }
     }
 }

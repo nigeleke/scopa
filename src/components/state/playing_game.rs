@@ -8,6 +8,7 @@ pub fn PlayingGame(
     game: Game<PlayingState>,
     onchange: EventHandler<GameState>
 ) -> Element {
+
     let game = use_memo(move || game.clone());
 
     let mut round = use_signal(move || Round::default());
@@ -20,17 +21,20 @@ pub fn PlayingGame(
     };
 
     rsx! {
-        TargetView { value: game.read().target(), }
-        RoundNumberView { value: game.read().round_number(), }
-        RoundEditor {
-            teams: Vec::from(game.read().teams()),
-            round: round(),
-            onchange: update_round,
-        }
-        ScoreButton {
-            can_score: round.read().is_well_defined(),
-            onscore: score_round, 
-        }
+        div {
+            class: "playing-game",
+            TargetView { value: game.read().target(), }
+            RoundNumberView { value: game.read().round_number(), }
+            RoundEditor {
+                teams: Vec::from(game.read().teams()),
+                round: round(),
+                onchange: update_round,
+            }
+            ScoreButton {
+                can_score: round.read().is_well_defined(),
+                onscore: score_round, 
+            }
+            }
     }
 }
 

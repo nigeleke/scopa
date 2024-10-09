@@ -8,7 +8,9 @@ pub fn TargetView(
 ) -> Element {
     rsx! {
         Container {
+            "Playing to "
             { value.to_string() }
+            " points"
         }
     }
 }

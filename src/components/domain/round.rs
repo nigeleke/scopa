@@ -41,7 +41,6 @@ pub fn RoundEditor(
     // let totals = teams.iter().map(as_total);
 
     let as_scopa = move |(i, team): (usize, &Team)| {
-        info!("as_scopa team: {:?}", team);
         rsx! {
             td {
                 ScopaScore {

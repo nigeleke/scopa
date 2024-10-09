@@ -3,6 +3,7 @@ use crate::domain::prelude::*;
 use crate::types::*;
 
 use dioxus::prelude::*;
+use dioxus_logger::tracing::info;
 
 #[component]
 pub fn StartingGame(
@@ -12,23 +13,22 @@ pub fn StartingGame(
 
     let mut game = use_signal(move || game.clone());
 
+    use_effect(move || {
+        onchange.call(GameState::Starting(game()));
+        info!("Game changed: {:?}", game())
+    });
+
     let target = game.read().target();
     let update_target = move |new_target| {
-        let mut new_game = game();
-        new_game.set_target(new_target);
-        game.set(new_game);
+        game.write().set_target(new_target);
     };
 
     let teams = Vec::from(game.read().teams());
     let add_team = move |team| { 
-        let mut new_game = game();
-        let _ = new_game.add_team(team).unwrap();
-        game.set(new_game); 
+        game.write().add_team(team).unwrap();
     };
     let remove_team = move |id| {
-        let mut new_game = game();
-        let _ = new_game.remove_team(id).unwrap();
-        game.set(new_game); 
+        game.write().remove_team(id).unwrap(); 
     };
 
     let start_game = move |_| {
@@ -42,7 +42,6 @@ pub fn StartingGame(
             TargetEditor {
                 value: target,
                 onchange: update_target,
-                autofocus: true,
             }
             AddTeam {
                 onadd: add_team,
@@ -65,12 +64,13 @@ fn AddTeam(
 ) -> Element {
     let mut team_name = use_signal(move || TeamName::default());
 
-    let update_team_name = move |new_name| team_name.set(new_name);
+    let update_team_name = move |new_name| {
+        team_name.set(new_name)
+    };
 
     let add_team = move |value: TeamName| {
         let team = Team::new(&value);
         onadd.call(team);
-        team_name.set(TeamName::default());
     };
 
     rsx! {
