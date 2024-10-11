@@ -10,6 +10,7 @@ pub fn PlayingGame(
 ) -> Element {
 
     let game = use_memo(move || game.clone());
+    use_context_provider(move || game());
 
     let mut round = use_signal(move || Round::default());
 

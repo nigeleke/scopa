@@ -13,16 +13,20 @@ watch_path = ["src", "assets"]
 
 [web.resource]
 style = [
-    "./main.css",
-    "./round_number.css",
-    "./points.css",
-    "./playing_game.css",
-    "./scopa_header.css",
-    "./starting_game.css",
-    "./target.css",
+    "./css/main.css",
+    "./css/domain/cards_icon.css",
+    "./css/domain/points.css",
+    "./css/domain/round_number.css",
+    "./css/domain/round.css",
+    "./css/domain/scopa_header.css",
+    "./css/domain/target.css",
+    "./css/state/playing_game.css",
+    "./css/state/starting_game.css",
+    "./css/ui/glow.css",
+    "./css/ui/icon.css",
 ]
 script = [
-    "https://cardmeister.github.io/elements.cardmeister.full.js",
+    "./js/elements.cardmeister.min.js",
 ]
 
 [web.resource.dev]

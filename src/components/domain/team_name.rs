@@ -8,7 +8,7 @@ pub fn TeamNameView(
     value: TeamName,
 ) -> Element {
     rsx! { 
-        { value.to_string() } 
+        span { { value.to_string() } }
     }
 }
 

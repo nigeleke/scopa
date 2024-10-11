@@ -8,7 +8,7 @@ pub fn PointsView(
     value: Points
 ) -> Element {
     rsx! {
-        { value.to_string() }
+        span { { value.to_string() } }
     }
 }
 

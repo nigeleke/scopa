@@ -8,7 +8,7 @@ pub fn RoundNumberView(
 ) -> Element {
     rsx! {
         Container {
-            "Round number "
+            "Round "
              { value.to_string() }
         }
     }

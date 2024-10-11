@@ -1,5 +1,4 @@
-span.scopa_header {
-    font-size: 64pt;
+span.glow {
     text-shadow:
         0 0 10px var(--text-colour),
         0 0 20px var(--text-colour),

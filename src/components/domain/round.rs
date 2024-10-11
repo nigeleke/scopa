@@ -1,7 +1,7 @@
-use super::points::PointsEditor;
+use crate::components::ui::prelude::*;
 
+use crate::components::prelude::*;
 use crate::domain::prelude::*;
-use crate::types::*;
 
 use dioxus::prelude::*;
 use dioxus_logger::tracing::*;
@@ -13,108 +13,137 @@ pub fn RoundEditor(
     onchange: EventHandler<Round>,
 ) -> Element {
     let round = use_context_provider(move || Signal::new(round.clone()));
-    let update_round = move |new_round| onchange.call(new_round);
 
-    let some_teams = teams.iter().map(Option::Some);
+    use_effect(move || {
+        onchange.call(round());
+    });
+
+    rsx! {
+        div {
+            class: "round-editor-container",
+            { scoring_row(teams.clone(), Empty, team_header) },
+            { scoring_row(teams.clone(), ScopaIcon, scopa_score) },
+            { scoring_row(teams.clone(), radio_none_icon(PointsGroup::CardsCount), radio_team_icon(PointsGroup::CardsCount)) },
+            { scoring_row(teams.clone(), radio_none_icon(PointsGroup::CoinsCount), radio_team_icon(PointsGroup::CoinsCount)) },
+            { scoring_row(teams.clone(), radio_none_icon(PointsGroup::Settebello), radio_team_icon(PointsGroup::Settebello)) },
+            { scoring_row(teams.clone(), radio_none_icon(PointsGroup::Premiera), radio_team_icon(PointsGroup::Premiera)) },
+        }
+    }
+}
+
+#[component]
+fn Empty() -> Element {
+    rsx! { " " }
+}
+
+fn scoring_row<F, G> (
+    teams: Vec<Team>,
+    default: F,
+    element: G
+) -> Element
+where
+    F: Fn() -> Element,
+    G: Fn(Team) -> Element,
+{
+    let some_teams = teams.into_iter().map(Option::Some);
     let tie_or_teams = 
         std::iter::once(Option::None)
-            .chain(some_teams)
-            .collect::<Vec<_>>();
+            .chain(some_teams);
 
-
-    // let as_header = move |team: &Team| {
-    //     rsx! {
-    //         th { 
-    //             TeamNameView { value: team.name() } 
-    //         } 
-    //     } 
-    // };
-    // let headers = teams.iter().map(as_header);
-
-    // let as_total = move |team: &Team| {
-    //     rsx! {
-    //         th {
-    //             PointsView { value: rounds.iter().fold(Points::default(), |acc, r| r.points(team.id())) }
-    //         }
-    //     }
-    // };
-    // let totals = teams.iter().map(as_total);
-
-    let as_scopa = move |(i, team): (usize, &Team)| {
-        rsx! {
-            td {
-                ScopaScore {
-                    team: team.clone(),
-                    round: round(),
-                    onchange: update_round,
-                    autofocus: i == 0 
+    rsx! {
+        div {
+            class: "round-editor-row",
+            for team in tie_or_teams {
+                div {
+                    class: "round-editor-column",
+                    if let Some(team) = team {
+                        {element(team)}
+                    } else {
+                        {default()} 
+                    }
                 }
             }
         }
-    };
-    let scopas = teams.iter().enumerate().map(as_scopa);
-
-    let as_id_selector = move |group: PointsGroup| {
-        move |team: &Option<&Team>| {
-            rsx! {
-                td {
-                    TeamSelect { group: group, team: team.map(|t| t.clone()) }
-                } 
-            }
-        }
-    }; 
-
-    let card_count_selectors = tie_or_teams.iter().map(as_id_selector(PointsGroup::CardsCount));
-    let coins_count_selectors = tie_or_teams.iter().map(as_id_selector(PointsGroup::CoinsCount));
-    let settebello_selectors = teams.iter().map(|team| as_id_selector(PointsGroup::Settebello)(&Some(team)));
-    let premiera_selectors = tie_or_teams.iter().map(as_id_selector(PointsGroup::Premiera));
-
-    rsx! {
-        table {
-            // tr { td { "" }             td { "- tied -" } { headers } }
-            // tr { th { "Total:"  }      td { "" }         { totals } }
-            tr { td { "Scopas:"  }     td { "" }         { scopas } }
-            tr { td { "Card count:" }  { card_count_selectors } }
-            tr { td { "Coins count:" } { coins_count_selectors } }
-            tr { td { "Settebello:" }  td { "" }         { settebello_selectors } }
-            tr { td { "Premiera:" }    { premiera_selectors } }
-        }
     }
-
 }
 
+// #[component]
+// fn TeamRoundEditor(
+//     team: Option<Team>
+// ) -> Element {
+//     let team = use_memo(move || team.clone());
+
+//     rsx! {
+//         div {
+//             class: "round-editor-team",
+//             TeamNameHeader { team: team() },
+//             TeamTotal { team: team() },
+//             TeamScopaScore { team: team() },
+//             TeamSelect { group: PointsGroup::CardsCount, team: team() },
+//             TeamSelect { group: PointsGroup::CoinsCount, team: team() },
+//             TeamSelect { group: PointsGroup::Settebello, team: team() },
+//             TeamSelect { group: PointsGroup::Premiera, team: team() },
+//         } 
+//     }
+// }
+
+#[component]
+fn TeamHeader(                                                                                                                                            
+    team: Team
+) -> Element {
+    let game = use_context::<Game<PlayingState>>();
+
+    rsx! {
+        Glow {
+            TeamNameView { value: team.name() }
+            ": "
+            PointsView { value: game.points(team.id()) }
+        }
+    }
+}
+
+fn team_header(team: Team) -> Element { rsx! { TeamHeader { team: team } } }
+
+#[component]
+fn ScopaIcon() -> Element {
+    rsx! {
+        Icon {
+            src: "./images/broom.png",
+            height: "88px",
+        } 
+    }
+}
 
 #[component]
 fn ScopaScore(
     team: Team,
-    round: Round,
-    onchange: EventHandler<Round>,
-    autofocus: bool,
 ) -> Element {
-    let round = use_memo(move || round.clone());
+    let mut round = use_context::<Signal<Round>>();
 
     let id = team.id();
     let is_not_playing = team.is_not_playing();
 
-    let mut draft = use_signal(move || round.read().scopas(id));
+    let draft = use_signal(move || round.read().scopas(id));
 
     let update_draft = move |points| {
         let new_round = round().with_scopas(id, points);
-        onchange.call(new_round);
+        round.set(new_round);
     };
-
+    
     rsx! {
         PointsEditor {
             value: draft(),
             onchange: update_draft,
-            autofocus: autofocus,
+            autofocus: true,
             disabled: is_not_playing,
-        }
+        }    
     }
 }
 
+fn scopa_score(team: Team) -> Element { rsx! { ScopaScore { team: team } } }
+
 #[component]
-fn TeamSelect(
+fn RadioTeamIcon(
     group: PointsGroup,
     team: Option<Team>,
 ) -> Element {
@@ -147,14 +176,35 @@ fn TeamSelect(
         round.set(new_round);
     };
 
+    let cids = match group {
+        PointsGroup::CardsCount => "AC2H3S",
+        PointsGroup::CoinsCount => "AD2D3D",
+        PointsGroup::Settebello => "7D",
+        PointsGroup::Premiera => "7H7C7D7S",
+    };
+
     rsx! {
         input {
             onchange: update_draft,
+            hidden: true,
             r#type: "radio",
             name: group.to_string(),
             disabled: is_not_playing.unwrap_or(false),
             checked: draft() == id,
         }
+        CardsIcon { cids: cids }
+    }
+}
+
+fn radio_none_icon(group: PointsGroup) -> impl Fn() -> Element { move ||
+    rsx! {
+        RadioTeamIcon { group: group, team: None } 
+    } 
+}
+
+fn radio_team_icon(group: PointsGroup) -> impl Fn(Team) -> Element { move |team: Team|
+    rsx! { 
+        RadioTeamIcon { group: group, team: Some(team) }
     }
 }
 

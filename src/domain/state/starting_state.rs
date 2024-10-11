@@ -60,6 +60,12 @@ impl Teams for StartingState {
     }
 }
 
+impl Rounds for StartingState {
+    fn rounds(&self) -> &[Round] {
+        unreachable!()
+    }
+}
+
 // impl HasTarget for StartingState {
 //     fn target(&self) -> Target {
 //         self.target
