@@ -6,30 +6,43 @@ pub fn CardsIcon(cids: String) -> Element {
         .collect::<Vec<_>>()
         .chunks(2)          
         .map(|chunk| chunk.iter().collect::<String>())
+        .enumerate()
         .collect::<Vec<_>>();
-    rsx! { 
-        for cid in cids {
-            Card { cid: cid }
-        }
+
+    let len = cids.len();
+
+    rsx! {
+        div {
+            class: "cards-icon",
+            for (i, cid) in cids {
+                Card {
+                    cid: cid,
+                    n: i,
+                    of: len,
+                }
+            }
+        } 
     }
 }
 
 #[component]
 pub fn Card(
     cid: String,
-    #[props(extends = img)]
+    n: usize,
+    of: usize,
+    #[props(extends = GlobalAttributes)]
     attributes: Vec<Attribute>
 ) -> Element {
     let cid = cid.as_str();
+    let class = format!("card-{}-of-{}", n+1, of);
+
     rsx! {
-        span {
-            class: "cards-icon",
-            playing-card {
-                cid: cid,
-                suitcolor: {colour(cid)},
-                rankcolor: {colour(cid)},
-                ..attributes,
-            }
+        playing-card {
+            class: class,
+            cid: cid,
+            suitcolor: {colour(cid)},
+            rankcolor: {colour(cid)},
+            ..attributes,
         }
     }
 }

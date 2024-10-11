@@ -109,7 +109,7 @@ fn ScopaIcon() -> Element {
     rsx! {
         Icon {
             src: "./images/broom.png",
-            height: "88px",
+            height: "80px",
         } 
     }
 }
