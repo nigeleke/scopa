@@ -1,15 +1,17 @@
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
-pub struct Points(pub usize);
+use super::target::Target;
 
-impl Default for Points {
-    fn default() -> Self {
-        Self(Default::default())
-    }
-}
+#[derive(Clone, Copy, Debug, Default, PartialEq, PartialOrd, Eq, Ord)]
+pub struct Points(pub usize);
 
 impl From<usize> for Points {
     fn from(value: usize) -> Self {
         Self(value)
+    }
+}
+
+impl From<Target> for Points {
+    fn from(value: Target) -> Points {
+        value.into()
     }
 }
 

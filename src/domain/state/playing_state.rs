@@ -39,7 +39,7 @@ impl PlayingState {
 
         let (winners, losers): (Vec<(&Team, Points)>, Vec<(&Team, Points)>) = team_points
             .iter()
-            .partition(|(_, points)| *points >= self.target.into());
+            .partition(|(_, points)| *points >= Points::from(self.target));
 
         let mut winners = winners;
         winners.sort_by(|(_, p1), (_, p2)| p2.cmp(p1));

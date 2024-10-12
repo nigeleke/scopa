@@ -1,5 +1,3 @@
-use super::points::Points;
-
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub struct Target(pub usize);
 
@@ -9,21 +7,12 @@ impl Default for Target {
     }
 }
 
-// pub trait HasTarget {
-//     fn target(&self) -> Target;
-// }
-
 impl From<usize> for Target {
     fn from(value: usize) -> Self {
         Self(value)
     }
 }
 
-impl Into<Points> for Target {
-    fn into(self) -> Points {
-        self.0.into()
-    }
-}
 impl TryFrom<String> for Target {
     type Error = String;
 

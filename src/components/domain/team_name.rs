@@ -1,7 +1,6 @@
 use crate::types::TeamName;
 
 use dioxus::prelude::*;
-use dioxus_logger::tracing::{info, Value};
 
 #[component]
 pub fn TeamNameView(

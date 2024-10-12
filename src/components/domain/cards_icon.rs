@@ -40,8 +40,8 @@ pub fn Card(
         playing-card {
             class: class,
             cid: cid,
-            suitcolor: {colour(cid)},
-            rankcolor: {colour(cid)},
+            suitcolor: colour(cid),
+            rankcolor: colour(cid),
             ..attributes,
         }
     }

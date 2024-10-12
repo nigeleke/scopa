@@ -26,8 +26,12 @@ impl Team {
         self.id
     }
 
+    pub fn is_playing(&self) -> bool {
+        self.engagement == Engagement::Participating
+    }
+
     pub fn is_not_playing(&self) -> bool {
-        self.engagement == Engagement::Eliminated
+        !self.is_playing()
     }
 
     pub fn set_not_playing(&mut self) {

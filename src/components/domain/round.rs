@@ -2,9 +2,9 @@ use crate::components::ui::prelude::*;
 
 use crate::components::prelude::*;
 use crate::domain::prelude::*;
+use crate::types::TeamId;
 
 use dioxus::prelude::*;
-use dioxus_logger::tracing::*;
 
 #[component]
 pub fn RoundEditor(
@@ -18,11 +18,16 @@ pub fn RoundEditor(
         onchange.call(round());
     });
 
+    let first_active_team_id = teams.iter()
+        .find(|t| t.is_playing())
+        .map(Team::id)
+        .unwrap();
+
     rsx! {
         div {
             class: "round-editor-container",
             { scoring_row(teams.clone(), Empty, team_header) },
-            { scoring_row(teams.clone(), ScopaIcon, scopa_score) },
+            { scoring_row(teams.clone(), ScopaIcon, scopa_score(first_active_team_id)) },
             { scoring_row(teams.clone(), radio_none_icon(PointsGroup::CardsCount), radio_team_icon(PointsGroup::CardsCount)) },
             { scoring_row(teams.clone(), radio_none_icon(PointsGroup::CoinsCount), radio_team_icon(PointsGroup::CoinsCount)) },
             { scoring_row(teams.clone(), radio_none_icon(PointsGroup::Settebello), radio_team_icon(PointsGroup::Settebello)) },
@@ -67,25 +72,20 @@ where
     }
 }
 
-// #[component]
-// fn TeamRoundEditor(
-//     team: Option<Team>
-// ) -> Element {
-//     let team = use_memo(move || team.clone());
+fn team_header(team: Team) -> Element { rsx! { TeamHeader { team: team } } }
 
-//     rsx! {
-//         div {
-//             class: "round-editor-team",
-//             TeamNameHeader { team: team() },
-//             TeamTotal { team: team() },
-//             TeamScopaScore { team: team() },
-//             TeamSelect { group: PointsGroup::CardsCount, team: team() },
-//             TeamSelect { group: PointsGroup::CoinsCount, team: team() },
-//             TeamSelect { group: PointsGroup::Settebello, team: team() },
-//             TeamSelect { group: PointsGroup::Premiera, team: team() },
-//         } 
-//     }
-// }
+fn scopa_score(first_active_id: TeamId) -> impl Fn(Team) -> Element { move |team: Team| {
+    let this_team_id = team.id();
+    rsx! { ScopaScore { team: team, autofocus: this_team_id == first_active_id } }
+}}
+
+fn radio_none_icon(group: PointsGroup) -> impl Fn() -> Element { move ||
+    rsx! { RadioTeamIcon { group: group, team: None } } 
+}
+
+fn radio_team_icon(group: PointsGroup) -> impl Fn(Team) -> Element { move |team: Team|
+    rsx! { RadioTeamIcon { group: group, team: Some(team) } }
+}
 
 #[component]
 fn TeamHeader(                                                                                                                                            
@@ -102,8 +102,6 @@ fn TeamHeader(
     }
 }
 
-fn team_header(team: Team) -> Element { rsx! { TeamHeader { team: team } } }
-
 #[component]
 fn ScopaIcon() -> Element {
     rsx! {
@@ -117,6 +115,7 @@ fn ScopaIcon() -> Element {
 #[component]
 fn ScopaScore(
     team: Team,
+    autofocus: bool,
 ) -> Element {
     let mut round = use_context::<Signal<Round>>();
 
@@ -134,13 +133,11 @@ fn ScopaScore(
         PointsEditor {
             value: draft(),
             onchange: update_draft,
-            autofocus: true,
             disabled: is_not_playing,
+            autofocus: autofocus,
         }    
     }
 }
-
-fn scopa_score(team: Team) -> Element { rsx! { ScopaScore { team: team } } }
 
 #[component]
 fn RadioTeamIcon(
@@ -193,18 +190,6 @@ fn RadioTeamIcon(
             checked: draft() == id,
         }
         CardsIcon { cids: cids }
-    }
-}
-
-fn radio_none_icon(group: PointsGroup) -> impl Fn() -> Element { move ||
-    rsx! {
-        RadioTeamIcon { group: group, team: None } 
-    } 
-}
-
-fn radio_team_icon(group: PointsGroup) -> impl Fn(Team) -> Element { move |team: Team|
-    rsx! { 
-        RadioTeamIcon { group: group, team: Some(team) }
     }
 }
 
