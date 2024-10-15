@@ -19,7 +19,7 @@ pub fn PointsEditor(
     attributes: Vec<Attribute>,
 ) -> Element {
 
-    let mut draft = use_signal(|| value.into());
+    let mut draft = use_signal(|| value.to_string());
 
     let update_points = move |event: Event<FormData>| {
         draft.set(event.value());

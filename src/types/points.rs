@@ -24,12 +24,6 @@ impl TryFrom<String> for Points {
     }
 }
 
-impl Into<String> for Points {
-    fn into(self) -> String {
-        self.0.to_string()
-    }
-}
-
 impl PartialEq<Target> for Points {
     fn eq(&self, other: &Target) -> bool {
         self.0 == other.0

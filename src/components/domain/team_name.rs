@@ -20,7 +20,7 @@ pub fn TeamNameEditor(
     attributes: Vec<Attribute>,
 ) -> Element {
 
-    let mut team_name = use_signal(move || TeamName::default());
+    let mut team_name = use_signal(TeamName::default);
 
     let update_team_name = move |event: Event<FormData>| {
         let new_team_name = TeamName::try_from(event.value()).unwrap();

@@ -104,7 +104,6 @@ mod test {
     #[test]
     fn a_new_game_will_have_no_teams() {
         let game = Game::default();
-        println!("test new game {:?} {:?}", game, game.team_count());
         assert_eq!(game.team_count(), 0.into());
     }
 

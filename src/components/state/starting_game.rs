@@ -45,7 +45,7 @@ pub fn StartingGame(
                 onstart: start_game,
             }
             TeamRows {
-                teams: Vec::from(teams),
+                teams: teams,
                 onremove: remove_team,
             }
     }
@@ -56,7 +56,7 @@ pub fn StartingGame(
 fn AddTeam(
     onadd: EventHandler<Team>,
 ) -> Element {
-    let mut team_name = use_signal(move || TeamName::default());
+    let mut team_name = use_signal(TeamName::default);
 
     let update_team_name = move |new_name| {
         team_name.set(new_name)

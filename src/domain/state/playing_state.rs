@@ -16,8 +16,7 @@ impl PlayingState {
         Self {
             teams: Vec::from(teams),
             rounds: Vec::default(),
-            target: target
-        }
+            target        }
     }
 
     pub fn target(&self) -> Target {
@@ -37,27 +36,27 @@ impl PlayingState {
             })
             .collect::<Vec<_>>();
 
-        let (winners, losers): (Vec<(&Team, Points)>, Vec<(&Team, Points)>) = team_points
+        type TeamPoints<'a> = Vec<(&'a Team, Points)>;
+        let (winners, losers): (TeamPoints, TeamPoints) = team_points
             .iter()
             .partition(|(_, points)| *points >= self.target);
 
         let mut winners = winners;
         winners.sort_by(|(_, p1), (_, p2)| p2.cmp(p1));
 
+        let no_winners = || winners.is_empty();
+        let single_winner = || winners.len() == 1;
+        let definitive_winner = || winners[0].1 > winners[1].1;
+
         let game =
-            if winners.is_empty() {
+            if no_winners() {
                 GameState::Playing(Game::from(new_state))
-            } else if winners.len() == 1 {
+            } else if single_winner() || definitive_winner() {
                 GameState::Finished(Game::new_finished_state(&self.teams, &new_state.rounds, self.target, winners[0].0.id()))
             } else {
-                if winners[0].1 > winners[1].1 {
-                    GameState::Finished(Game::new_finished_state(&self.teams, &new_state.rounds, self.target, winners[0].0.id()))
-                } else {
-                    let loser_ids = losers.iter().map(|(t, _)| t.id()).collect::<Vec<_>>();
-                    new_state.teams.iter_mut().for_each(|t| if loser_ids.contains(&t.id()) { t.set_not_playing(); });
-                    println!("tieing::new_state {:?}", new_state);
-                    GameState::Playing(Game::from(new_state))
-                }
+                let loser_ids = losers.iter().map(|(t, _)| t.id()).collect::<Vec<_>>();
+                new_state.teams.iter_mut().for_each(|t| if loser_ids.contains(&t.id()) { t.set_not_playing(); });
+                GameState::Playing(Game::from(new_state))
             };
 
         Ok(game)
@@ -73,11 +72,5 @@ impl Teams for PlayingState {
 impl Rounds for PlayingState {
     fn rounds(&self) -> &[Round] {
         &self.rounds
-    }
-}
-
-impl AsRef<PlayingState> for PlayingState {
-    fn as_ref(&self) -> &PlayingState {
-        &self
     }
 }

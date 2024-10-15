@@ -51,6 +51,6 @@ pub trait Teams {
     }
 
     fn find_team(&self, id: TeamId) -> Option<&Team> {
-        self.teams().into_iter().find(|team| team.id() == id)
+        self.teams().iter().find(|team| team.id() == id)
     }
 }

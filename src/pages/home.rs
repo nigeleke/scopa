@@ -5,7 +5,7 @@ use dioxus::prelude::*;
 
 #[component]
 pub fn Home() -> Element {
-    let mut game = use_signal(|| GameState::default());
+    let mut game = use_signal(GameState::default);
     
     let update_game = move |new_game| {
         game.set(new_game);

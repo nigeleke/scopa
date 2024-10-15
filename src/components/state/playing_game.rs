@@ -11,7 +11,7 @@ pub fn PlayingGame(
     let round_number = state.round_number();
     let target = state.target();
 
-    let mut round = use_signal(move || Round::default());
+    let mut round = use_signal(Round::default);
 
     let current_state = state.clone();
     let score_round = move |_| {

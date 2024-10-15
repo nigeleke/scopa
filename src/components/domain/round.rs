@@ -18,7 +18,7 @@ pub fn RoundEditor(
         .map(Team::id)
         .unwrap();
 
-    let none_column_components = vec![
+    let none_column_components = [
         rsx! { Empty {} },
         rsx! { ScopaIcon {} },
         rsx! { RadioTeamIcon { group: PointsGroup::CardsCount, id: None, round: round } },
@@ -34,7 +34,7 @@ pub fn RoundEditor(
         let name = team.name();
         let points = state.points(id);
         let is_not_playing = team.is_not_playing();
-        vec![
+        [
             rsx! { TeamHeader { name: name, points: points } },
             rsx! { ScopaScore { id: id, round: round, autofocus: id == first_active_team_id, disabled: is_not_playing } },
             rsx! { RadioTeamIcon { group: PointsGroup::CardsCount, id: Some(id), round: round, disabled: is_not_playing } },
@@ -44,7 +44,7 @@ pub fn RoundEditor(
         ]
     };
 
-    let some_column_components = teams.iter().map(|team| team_column_components(team)).collect::<Vec<_>>();
+    let some_column_components = teams.iter().map(team_column_components).collect::<Vec<_>>();
     let columns_count = some_column_components.len();
 
     rsx! {
@@ -126,7 +126,7 @@ fn ScopaScore(
     autofocus: bool,
     disabled: bool,
 ) -> Element {
-    let mut draft = use_signal(move || Points::default());
+    let mut draft = use_signal(Points::default);
 
     use_effect(move || {
         draft.set(round.read().scopas(id))
