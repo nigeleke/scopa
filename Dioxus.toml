@@ -20,6 +20,7 @@ style = [
     "./css/domain/round.css",
     "./css/domain/scopa_header.css",
     "./css/domain/target.css",
+    "./css/state/finished_game.css",
     "./css/state/playing_game.css",
     "./css/state/starting_game.css",
     "./css/ui/glow.css",

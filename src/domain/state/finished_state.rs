@@ -1,5 +1,6 @@
 use crate::domain::InternalGameState;
 use crate::domain::prelude::*;
+use crate::types::TeamName;
 use crate::types::{Target, TeamId};
 
 #[derive(Clone, Debug, PartialEq)]
@@ -26,8 +27,10 @@ impl FinishedState {
         self.target    
     }
 
-    pub fn winner(&self) -> TeamId {
-        self.winner
+    pub fn winner(&self) -> TeamName {
+        self.teams().iter()
+            .find(|t| t.id() == self.winner)
+            .map_or(TeamName::default(), |t| t.name())
     }
 }
 

@@ -15,8 +15,10 @@ pub fn PointsView(
 pub fn PointsEditor(
     value: Points,
     onchange: EventHandler<Points>,
-    #[props(extends = input)]
-    attributes: Vec<Attribute>,
+    #[props(default = false)]
+    autofocus: bool,
+    #[props(default = false)]
+    disabled: bool,
 ) -> Element {
 
     let mut draft = use_signal(|| value.to_string());
@@ -37,7 +39,8 @@ pub fn PointsEditor(
                 oninput: update_points,
                 r#type: "number",
                 min: "0",
-                ..attributes,
+                autofocus: autofocus,
+                disabled: disabled,
             }
         }
     }

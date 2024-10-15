@@ -10,40 +10,78 @@ pub fn FinishedGame(
 ) -> Element {
     let winner = state.winner();
 
-    let mut retain = use_signal(|| true);
+    let mut retain_players = use_signal(|| true);
 
-    let update_retain = move |event: Event<FormData>| {
-        retain.set(event.checked());
+    let update_retain_players = move |event: Event<FormData>| {
+        retain_players.set(event.checked());
+    };
+
+    let mut retain_target = use_signal(|| true);
+
+    let update_retain_target = move |event: Event<FormData>| {
+        retain_target.set(event.checked());
     };
 
     let start_new_game = move |_| {
         let mut new_game = Game::default();
-        if retain() {
-            new_game.set_target(state.target());
+
+        if retain_players() {
             let teams = state.teams();
-            teams.iter().for_each(|t| { let _ = new_game.add_team(t.clone()); } );
+            teams.iter().for_each(|t| {
+                let team = Team::new(&t.name());
+                let _ = new_game.add_team(team); } 
+            );
         }
-        onchange.call(new_game.start().unwrap());
+
+        if retain_target() {
+            new_game.set_target(state.target());
+        }
+
+        if retain_players() && retain_target() {
+            onchange.call(new_game.start().unwrap());
+        } else {
+            onchange.call(GameState::Starting(new_game));
+        }
     };
 
     rsx! {
-        Glow {
-            { "The winner is" }
-            { winner.to_string() }
-        }
         div {
+            class: "finished-game-container",
             div {
-                button {
-                    onclick: start_new_game,
-                    "New Game"
+                class: "finished-game-winner-text",
+                Glow { "Winner - " { winner } }
+            }
+            div {
+                class: "finished-game-controls",
+                div {
+                    class: "finished-game-start-game-button",
+                    button {
+                        onclick: start_new_game,
+                        "Start again"
+                    }
+                }
+                div {
+                    class: "finished-game-retain-group",
+                    div {
+                        class: "finished-game-retain-checkbox",
+                        input {
+                            r#type: "checkbox",
+                            checked: retain_players(),
+                            onchange: update_retain_players,
+                        }
+                        { " Same players" }    
+                    }
+                    div {
+                        class: "finished-game-retain-checkbox",
+                        input {
+                            r#type: "checkbox",
+                            checked: retain_target(),
+                            onchange: update_retain_target,
+                        }
+                        { " Same target" }    
+                    }
                 }
             }
-            input {
-                r#type: "checkbox",
-                checked: retain(),
-                onchange: update_retain,
-            }
-            { " Retain players and target?" }
         }
     }
 }

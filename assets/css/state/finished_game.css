@@ -1,0 +1,37 @@
+.finished-game-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+  }
+  
+.finished-game-winner-text {
+    text-align: center;
+}
+
+.finished-game-winner-text * {
+    font-size: 64px;
+}
+  
+.finished-game-controls {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+}
+  
+.finished-game-retain-group {
+    display: flex;
+    flex-direction: column;
+    align-items: right;
+}
+
+.finished-game-start-game-button {
+    align-self: left;
+}
+
+.finished-game-start-game-button,
+.finished-game-retain-checkbox + label {
+    margin-bottom: 5px;
+}
