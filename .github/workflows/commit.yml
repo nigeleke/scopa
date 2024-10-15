@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Compile
-        run: cargo build --verbose
+        run: dx build --verbose
 
       - name: Lint
         run: cargo clippy

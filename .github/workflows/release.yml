@@ -1,0 +1,27 @@
+# Run release-cycle on main commits.
+#
+# Release cycle comprises:
+# - build release versions of application
+# - publish app
+#
+name: Release Cycle
+
+on:
+  workflow_run:
+    workflows: ["Release Cycle"]
+    branches: [main]
+    types:
+      - completed
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Build
+        run: dx build --release
