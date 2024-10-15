@@ -1,4 +1,4 @@
-use crate::types::Target;
+use crate::domain::prelude::*;
 
 use dioxus::prelude::*;
 

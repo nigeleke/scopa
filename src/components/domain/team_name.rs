@@ -1,4 +1,4 @@
-use crate::types::TeamName;
+use crate::domain::prelude::*;
 
 use dioxus::prelude::*;
 
