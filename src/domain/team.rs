@@ -41,10 +41,6 @@ impl Team {
     pub fn name(&self) -> TeamName {
         self.name.clone()
     }
-
-    pub fn set_name(&mut self, name: TeamName) {
-        self.name = name;
-    }
 }
 
 pub trait Teams {

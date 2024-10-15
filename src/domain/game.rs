@@ -37,6 +37,15 @@ pub struct Game<T> {
     _phantom: std::marker::PhantomData<T>,
 }
 
+impl<T> Game<T>
+where
+    T: Clone
+{
+    pub fn state(&self) -> T {
+        self.state.clone()
+    }
+}
+
 impl<T> std::ops::Deref for Game<T> {
     type Target = T;
 
@@ -176,8 +185,8 @@ mod test {
         let _ = game.add_team(team2).unwrap();
 
         let GameState::Playing(game) = game.start().unwrap() else { panic!("Unexpected state")};
-        assert_eq!(game.points(id1), 0.into());
-        assert_eq!(game.points(id2), 0.into());
+        assert_eq!(game.points(id1), Points::from(0));
+        assert_eq!(game.points(id2), Points::from(0));
     }
 
     #[test]
@@ -199,8 +208,8 @@ mod test {
             .with_scopas(id2, 3.into());
 
         let GameState::Playing(game) = game.score_round(&score).unwrap() else { panic!("Unexpected state") };
-        assert_eq!(game.points(id1), 2.into());
-        assert_eq!(game.points(id2), 3.into());        
+        assert_eq!(game.points(id1), Points::from(2));
+        assert_eq!(game.points(id2), Points::from(3));        
     }
 
     fn test_is_finished(target: usize, score1: usize, score2: usize, is_finished: bool) {
@@ -224,13 +233,13 @@ mod test {
         match game.score_round(&score).unwrap() {
             GameState::Starting(game) => panic!("Unexpected state {:?}", game),
             GameState::Playing(game) => {
-                assert_eq!(game.points(id1), score1.into());
-                assert_eq!(game.points(id2), score2.into());
+                assert_eq!(game.points(id1), Points::from(score1));
+                assert_eq!(game.points(id2), Points::from(score2));
                 assert!(!is_finished);
             },
             GameState::Finished(game) => {
-                assert_eq!(game.points(id1), score1.into());
-                assert_eq!(game.points(id2), score2.into());
+                assert_eq!(game.points(id1), Points::from(score1));
+                assert_eq!(game.points(id2), Points::from(score2));
                 assert!(is_finished);
             },
         }

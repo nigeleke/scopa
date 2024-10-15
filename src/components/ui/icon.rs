@@ -6,16 +6,16 @@ pub fn Icon(
     #[props(default = true)]
     checked: bool,
     #[props(extends = img)]
-    attributes: Vec<Attribute>
+    attributes: Vec<Attribute>,
 ) -> Element {
     rsx! {
         div {
             class: "icon",
             class: if checked { "checked" },
-            img { 
-                src, 
-                ..attributes
-            } 
+            img {
+                src,
+                ..attributes,
+            },
         }
     }
 }

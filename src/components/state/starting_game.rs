@@ -3,36 +3,30 @@ use crate::domain::prelude::*;
 use crate::types::*;
 
 use dioxus::prelude::*;
-use dioxus_logger::tracing::info;
 
 #[component]
 pub fn StartingGame(
-    game: Game<StartingState>,
+    state: StartingState,
     onchange: EventHandler<GameState>,
 ) -> Element {
 
-    let mut game = use_signal(move || game.clone());
+    let mut state = use_signal(move || state);
 
-    use_effect(move || {
-        onchange.call(GameState::Starting(game()));
-        info!("Game changed: {:?}", game())
-    });
-
-    let target = game.read().target();
+    let target = state.read().target();
     let update_target = move |new_target| {
-        game.write().set_target(new_target);
+        state.write().set_target(new_target);
     };
 
-    let teams = Vec::from(game.read().teams());
+    let teams = Vec::from(state.read().teams());
     let add_team = move |team| { 
-        game.write().add_team(team).unwrap();
+        state.write().add_team(team).unwrap();
     };
     let remove_team = move |id| {
-        game.write().remove_team(id).unwrap(); 
+        state.write().remove_team(id).unwrap(); 
     };
 
     let start_game = move |_| {
-        let new_game = game().start().unwrap();
+        let new_game = state.read().start().unwrap();
         onchange.call(new_game);
     };
 
@@ -47,7 +41,7 @@ pub fn StartingGame(
                 onadd: add_team,
             }
             StartAction {
-                can_start: game.read().can_start(),
+                can_start: state.read().can_start(),
                 onstart: start_game,
             }
             TeamRows {

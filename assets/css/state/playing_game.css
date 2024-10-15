@@ -4,3 +4,10 @@ div.playing-game {
     align-items: center;
     gap: 5vh;
 }
+
+div.playing-game-header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

@@ -1,4 +1,3 @@
-mod core;
 mod domain;
 mod state;
 mod ui;

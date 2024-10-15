@@ -100,9 +100,9 @@ mod test {
         let round = Round::default()
             .with_scopas(id1, 1.into())
             .with_scopas(id2, 2.into());
-        assert_eq!(round.points(id1), 1.into());
-        assert_eq!(round.points(id2), 2.into());
-        assert_eq!(round.points(id3), 0.into());
+        assert_eq!(round.points(id1),Points::from(1));
+        assert_eq!(round.points(id2), Points::from(2));
+        assert_eq!(round.points(id3), Points::from(0));
     }
 
     #[test]
@@ -110,8 +110,8 @@ mod test {
         let id1 = Team::new("name").id();
         let id2 = Team::new("name").id();
         let round = Round::default();
-        assert_eq!(round.points(id1), 0.into());
-        assert_eq!(round.points(id2), 0.into());
+        assert_eq!(round.points(id1), Points::from(0));
+        assert_eq!(round.points(id2), Points::from(0));
     }
 
     #[test]
@@ -120,8 +120,8 @@ mod test {
         let id2 = Team::new("name").id();
         let round = Round::default()
             .with_highest_card_count(Some(id1));
-        assert_eq!(round.points(id1), 1.into());
-        assert_eq!(round.points(id2), 0.into());
+        assert_eq!(round.points(id1), Points::from(1));
+        assert_eq!(round.points(id2), Points::from(0));
     }
     
     #[test]
@@ -130,8 +130,8 @@ mod test {
         let id2 = Team::new("name").id();
         let round = Round::default()
             .with_highest_coins_count(Some(id1));
-        assert_eq!(round.points(id1), 1.into());
-        assert_eq!(round.points(id2), 0.into());
+        assert_eq!(round.points(id1), Points::from(1));
+        assert_eq!(round.points(id2), Points::from(0));
     }
     
     #[test]
@@ -140,8 +140,8 @@ mod test {
         let id2 = Team::new("name").id();
         let round = Round::default()
             .with_settobello(id1);
-        assert_eq!(round.points(id1), 1.into());
-        assert_eq!(round.points(id2), 0.into());
+        assert_eq!(round.points(id1), Points::from(1));
+        assert_eq!(round.points(id2), Points::from(0));
     }
     
     #[test]
@@ -150,7 +150,7 @@ mod test {
         let id2 = Team::new("name").id();
         let round = Round::default()
             .with_premiere(Some(id1));
-        assert_eq!(round.points(id1), 1.into());
-        assert_eq!(round.points(id2), 0.into());
+        assert_eq!(round.points(id1), Points::from(1));
+        assert_eq!(round.points(id2), Points::from(0));
     }
 }

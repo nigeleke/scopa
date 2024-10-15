@@ -2,69 +2,66 @@ use crate::components::ui::prelude::*;
 
 use crate::components::prelude::*;
 use crate::domain::prelude::*;
-use crate::types::TeamId;
+use crate::types::{Points, TeamId, TeamName};
 
 use dioxus::prelude::*;
 
 #[component]
 pub fn RoundEditor(
-    teams: Vec<Team>,
-    round: Round,
-    onchange: EventHandler<Round>,
+    state: PlayingState,
+    round: Signal<Round>,
 ) -> Element {
-    let round = use_context_provider(move || Signal::new(round.clone()));
-
-    use_effect(move || {
-        onchange.call(round());
-    });
+    let teams = Vec::from(state.teams());
 
     let first_active_team_id = teams.iter()
         .find(|t| t.is_playing())
         .map(Team::id)
         .unwrap();
 
-    rsx! {
-        div {
-            class: "round-editor-container",
-            { scoring_row(teams.clone(), Empty, team_header) },
-            { scoring_row(teams.clone(), ScopaIcon, scopa_score(first_active_team_id)) },
-            { scoring_row(teams.clone(), radio_none_icon(PointsGroup::CardsCount), radio_team_icon(PointsGroup::CardsCount)) },
-            { scoring_row(teams.clone(), radio_none_icon(PointsGroup::CoinsCount), radio_team_icon(PointsGroup::CoinsCount)) },
-            { scoring_row(teams.clone(), radio_none_icon(PointsGroup::Settebello), radio_team_icon(PointsGroup::Settebello)) },
-            { scoring_row(teams.clone(), radio_none_icon(PointsGroup::Premiera), radio_team_icon(PointsGroup::Premiera)) },
-        }
-    }
-}
+    let none_column_components = vec![
+        rsx! { Empty {} },
+        rsx! { ScopaIcon {} },
+        rsx! { RadioTeamIcon { group: PointsGroup::CardsCount, id: None, round: round } },
+        rsx! { RadioTeamIcon { group: PointsGroup::CoinsCount, id: None, round: round } },
+        rsx! { RadioTeamIcon { group: PointsGroup::Settebello, id: None, round: round } },
+        rsx! { RadioTeamIcon { group: PointsGroup::Premiera, id: None, round: round } },
+    ];
 
-#[component]
-fn Empty() -> Element {
-    rsx! { " " }
-}
+    let rows_count = none_column_components.len();
 
-fn scoring_row<F, G> (
-    teams: Vec<Team>,
-    default: F,
-    element: G
-) -> Element
-where
-    F: Fn() -> Element,
-    G: Fn(Team) -> Element,
-{
-    let some_teams = teams.into_iter().map(Option::Some);
-    let tie_or_teams = 
-        std::iter::once(Option::None)
-            .chain(some_teams);
+    let team_column_components = move |team: &Team| {
+        let id = team.id();
+        let name = team.name();
+        let points = state.points(id);
+        let is_not_playing = team.is_not_playing();
+        vec![
+            rsx! { TeamHeader { name: name, points: points } },
+            rsx! { ScopaScore { id: id, round: round, autofocus: id == first_active_team_id, disabled: is_not_playing } },
+            rsx! { RadioTeamIcon { group: PointsGroup::CardsCount, id: Some(id), round: round, disabled: is_not_playing } },
+            rsx! { RadioTeamIcon { group: PointsGroup::CoinsCount, id: Some(id), round: round, disabled: is_not_playing } },
+            rsx! { RadioTeamIcon { group: PointsGroup::Settebello, id: Some(id), round: round, disabled: is_not_playing } },
+            rsx! { RadioTeamIcon { group: PointsGroup::Premiera, id: Some(id), round: round, disabled: is_not_playing } },
+        ]
+    };
+
+    let some_column_components = teams.iter().map(|team| team_column_components(team)).collect::<Vec<_>>();
+    let columns_count = some_column_components.len();
 
     rsx! {
         div {
-            class: "round-editor-row",
-            for team in tie_or_teams {
+            class: "round-editor-component",
+            for i in 0..rows_count {
                 div {
-                    class: "round-editor-column",
-                    if let Some(team) = team {
-                        {element(team)}
-                    } else {
-                        {default()} 
+                    class: "round-editor-row",
+                    div {
+                        class: "round-editor-column",
+                        {none_column_components[i].clone()}
+                    }
+                    for j in 0..columns_count {
+                        div {
+                            class: "round-editor-column",
+                            {some_column_components[j][i].clone()}
+                        }
                     }
                 }
             }
@@ -72,32 +69,39 @@ where
     }
 }
 
-fn team_header(team: Team) -> Element { rsx! { TeamHeader { team: team } } }
-
-fn scopa_score(first_active_id: TeamId) -> impl Fn(Team) -> Element { move |team: Team| {
-    let this_team_id = team.id();
-    rsx! { ScopaScore { team: team, autofocus: this_team_id == first_active_id } }
-}}
-
-fn radio_none_icon(group: PointsGroup) -> impl Fn() -> Element { move ||
-    rsx! { RadioTeamIcon { group: group, team: None } } 
+#[component]
+fn ScoringColumn(
+    children: Element
+) -> Element {
+    rsx! { 
+        div {
+            class: "round-editor-column",
+            {children} 
+        }
+    }
 }
 
-fn radio_team_icon(group: PointsGroup) -> impl Fn(Team) -> Element { move |team: Team|
-    rsx! { RadioTeamIcon { group: group, team: Some(team) } }
+#[component]
+fn Empty() -> Element {
+    rsx! {
+        div {
+            class: "round-editor-item",
+            p { " " } 
+        }
+    }
 }
 
 #[component]
 fn TeamHeader(                                                                                                                                            
-    team: Team
+    name: TeamName,
+    points: Points,
 ) -> Element {
-    let game = use_context::<Game<PlayingState>>();
-
     rsx! {
         Glow {
-            TeamNameView { value: team.name() }
+            class: "round-editor-item",
+            TeamNameView { value: name }
             ": "
-            PointsView { value: game.points(team.id()) }
+            PointsView { value: points }
         }
     }
 }
@@ -105,50 +109,54 @@ fn TeamHeader(
 #[component]
 fn ScopaIcon() -> Element {
     rsx! {
-        Icon {
-            src: "./images/broom.png",
-            height: "80px",
-        } 
+        div {
+            class: "round-editor-item",
+            Icon {
+                src: "./images/broom.png",
+                height: "80px",
+            } 
+        }
     }
 }
 
 #[component]
 fn ScopaScore(
-    team: Team,
+    id: TeamId,
+    round: Signal<Round>,
     autofocus: bool,
+    disabled: bool,
 ) -> Element {
-    let mut round = use_context::<Signal<Round>>();
+    let mut draft = use_signal(move || Points::default());
 
-    let id = team.id();
-    let is_not_playing = team.is_not_playing();
-
-    let draft = use_signal(move || round.read().scopas(id));
+    use_effect(move || {
+        draft.set(round.read().scopas(id))
+    });
 
     let update_draft = move |points| {
-        let new_round = round().with_scopas(id, points);
-        round.set(new_round);
+        round.set(round().with_scopas(id, points));
     };
     
     rsx! {
-        PointsEditor {
-            value: draft(),
-            onchange: update_draft,
-            disabled: is_not_playing,
-            autofocus: autofocus,
-        }    
+        div {
+            class: "round-editor-item",
+            PointsEditor {
+                value: draft(),
+                onchange: update_draft,
+                autofocus: autofocus,
+                disabled: disabled,
+            }    
+        }
     }
 }
 
 #[component]
 fn RadioTeamIcon(
     group: PointsGroup,
-    team: Option<Team>,
+    id: Option<TeamId>,
+    round: Signal<Round>,
+    #[props(default = false)]
+    disabled: bool,
 ) -> Element {
-    let id = team.as_ref().map(|team| team.id());
-    let is_not_playing = team.as_ref().map(|team| team.is_not_playing());
-
-    let mut round = use_context::<Signal<Round>>();
-
     let mut draft = use_signal(move || None);
 
     use_effect(move || {
@@ -166,7 +174,7 @@ fn RadioTeamIcon(
         let new_round = match group {
             PointsGroup::CardsCount => round().with_highest_card_count(id),
             PointsGroup::CoinsCount => round().with_highest_coins_count(id),
-            PointsGroup::Settebello => round().with_settobello(id.unwrap()),
+            PointsGroup::Settebello => id.map_or(round(), |id| round().with_settobello(id)),
             PointsGroup::Premiera => round().with_premiere(id),
         };
 
@@ -182,14 +190,19 @@ fn RadioTeamIcon(
 
     rsx! {
         input {
+            value: draft() == id,
             onchange: update_draft,
-            hidden: true,
+            // hidden: true,
             r#type: "radio",
             name: group.to_string(),
-            disabled: is_not_playing.unwrap_or(false),
+            checked: draft() == id,
+            disabled: disabled,
+        }
+        CardsIcon {
+            cids: cids,
+            disabled: disabled,
             checked: draft() == id,
         }
-        CardsIcon { cids: cids }
     }
 }
 

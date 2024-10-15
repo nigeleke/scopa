@@ -9,12 +9,6 @@ impl From<usize> for Points {
     }
 }
 
-impl From<Target> for Points {
-    fn from(value: Target) -> Points {
-        value.into()
-    }
-}
-
 impl TryFrom<String> for Points {
     type Error = String;
 
@@ -33,6 +27,18 @@ impl TryFrom<String> for Points {
 impl Into<String> for Points {
     fn into(self) -> String {
         self.0.to_string()
+    }
+}
+
+impl PartialEq<Target> for Points {
+    fn eq(&self, other: &Target) -> bool {
+        self.0 == other.0
+    }
+}
+
+impl PartialOrd<Target> for Points {
+    fn partial_cmp(&self, other: &Target) -> Option<std::cmp::Ordering> {
+        self.0.partial_cmp(&other.0)
     }
 }
 

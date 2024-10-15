@@ -28,26 +28,6 @@ impl TryFrom<String> for Target {
     }
 }
 
-// impl Into<String> for Target {
-//     fn into(self) -> String {
-//         self.0.to_string()
-//     }
-// }
-
-// impl std::ops::Add for Target {
-//     type Output = Target;
-
-//     fn add(self, rhs: Self) -> Self::Output {
-//         Self(self.0 + rhs.0)
-//     }
-// }
-
-// impl std::ops::AddAssign for Target {
-//     fn add_assign(&mut self, rhs: Self) {
-//         self.0 += rhs.0;
-//     }
-// }
-
 impl std::fmt::Display for Target {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{}", self.0)

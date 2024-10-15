@@ -1,7 +1,11 @@
 use dioxus::prelude::*;
 
 #[component]
-pub fn CardsIcon(cids: String) -> Element {
+pub fn CardsIcon(
+    cids: String,
+    disabled: bool,
+    checked: bool,
+) -> Element {
     let cids = cids.chars()
         .collect::<Vec<_>>()
         .chunks(2)          
@@ -14,6 +18,8 @@ pub fn CardsIcon(cids: String) -> Element {
     rsx! {
         div {
             class: "cards-icon",
+            class: if disabled { "disabled" },
+            class: if checked { "checked" }, 
             for (i, cid) in cids {
                 Card {
                     cid: cid,

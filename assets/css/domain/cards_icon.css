@@ -1,3 +1,15 @@
+.cards-icon {
+    opacity: 50%;
+}
+
+.cards-icon.disabled {
+    opacity: 20%;
+}
+
+.cards-icon.checked {
+    opacity: 100%;
+}
+
 .cards-icon playing-card img {
     height: 85px;
     width: 85px;

@@ -3,7 +3,6 @@ mod points;
 mod round;
 mod round_number;
 mod target;
-mod team;
 mod team_name;
 
 pub mod prelude {
