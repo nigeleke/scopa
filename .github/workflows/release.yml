@@ -24,4 +24,6 @@ jobs:
           fetch-depth: 0
 
       - name: Build
-        run: dx build --release
+        run: |
+          | cargo build
+          | dx build --release
