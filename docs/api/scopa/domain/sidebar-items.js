@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["game","prelude","result","round","state","team"]};
+window.SIDEBAR_ITEMS = {"mod":["game","points","prelude","result","round","round_number","state","target","team","team_count","team_id","team_name"]};
