@@ -1,6 +1,5 @@
 use crate::domain::{GameState, InternalGameState};
 use crate::domain::prelude::*;
-use crate::types::*;
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct PlayingState {

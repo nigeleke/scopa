@@ -1,4 +1,4 @@
-use crate::types::*;
+use crate::domain::prelude::*;
 
 #[derive(Clone, Debug, PartialEq)]
 enum Engagement {

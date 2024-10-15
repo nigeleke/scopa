@@ -1,8 +1,5 @@
-use crate::components::ui::prelude::*;
-
 use crate::components::prelude::*;
 use crate::domain::prelude::*;
-use crate::types::{Points, TeamId, TeamName};
 
 use dioxus::prelude::*;
 use dioxus_logger::tracing::info;

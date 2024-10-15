@@ -1,4 +1,4 @@
-use crate::types::Points;
+use crate::domain::prelude::*;
 
 use dioxus::prelude::*;
 

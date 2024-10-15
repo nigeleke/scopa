@@ -1,7 +1,5 @@
 use crate::domain::InternalGameState;
 use crate::domain::prelude::*;
-use crate::types::TeamName;
-use crate::types::{Target, TeamId};
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct FinishedState {

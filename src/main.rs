@@ -3,7 +3,6 @@
 mod components;
 mod domain;
 mod pages;
-mod types;
 
 use crate::pages::home::Home;
 

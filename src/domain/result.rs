@@ -1,4 +1,4 @@
-use crate::types::{TeamCount, TeamId};
+use crate::domain::prelude::*;
 
 use thiserror::Error;
 
@@ -12,15 +12,6 @@ pub enum Error {
     
     #[error("scopa cannot be played with {0} teams. It must be played with 2, 3, 4 or 6 teams only; 2 and 3 teams can be a single player or pair of players")]
     InvalidNumberOfTeams(TeamCount),
-
-    // #[error("teams cannot change after the game has started")]
-    // TeamsCannotBeChanged,
-
-    // #[error("the game is not started")]
-    // GameNotStarted,
-
-    // #[error("the game is already complete")]
-    // GameAlreadyComplete,
 }
 
 pub type Result<T> = std::result::Result<T, Error>;
@@ -37,16 +28,12 @@ mod test {
             Error::TeamExists(id),
             Error::TeamNotFound(id),
             Error::InvalidNumberOfTeams(0.into()),
-            // Error::GameNotStarted,
-            // Error::GameAlreadyComplete,
         ];
 
         let expected = vec![
             format!("team {} exists", id),
             format!("team {} not found", id),
             "scopa cannot be played with 0 teams. It must be played with 2, 3, 4 or 6 teams only; 2 and 3 teams can be a single player or pair of players".into(),
-            // "the game is not started",
-            // "the game is already complete"
         ];
 
         assert_eq!(errors.len(), expected.len());

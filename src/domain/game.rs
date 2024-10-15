@@ -1,8 +1,4 @@
-use super::round::*;
-use super::state::*;
-use super::team::*;
-
-use crate::types::*;
+use crate::domain::prelude::*;
 
 #[derive(Clone, Debug)]
 pub enum GameState {

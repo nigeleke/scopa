@@ -1,4 +1,4 @@
-use super::target::Target;
+use crate::domain::prelude::Target;
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, PartialOrd, Eq, Ord)]
 pub struct Points(pub usize);
@@ -17,9 +17,9 @@ impl TryFrom<String> for Points {
             Err("Required".into())
         } else {
             value
-            .parse::<usize>()
-            .map(|p| p.into())
-            .map_err(|e| e.to_string())
+                .parse::<usize>()
+                .map(|p| p.into())
+                .map_err(|e| e.to_string())
         }
     }
 }
