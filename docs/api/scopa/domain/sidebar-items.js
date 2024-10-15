@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["game","prelude","result","round","state","team"]};

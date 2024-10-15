@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["points","round_number","target","team_count","team_id","team_name"]};

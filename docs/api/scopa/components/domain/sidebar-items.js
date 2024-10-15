@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["cards_icon","points","prelude","round","round_number","target","team_name"]};

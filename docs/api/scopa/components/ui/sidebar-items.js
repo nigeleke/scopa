@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["glow","icon","prelude","scopa_footer","scopa_header"]};
