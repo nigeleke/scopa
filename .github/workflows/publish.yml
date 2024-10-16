@@ -42,7 +42,7 @@ jobs:
 
       - name: Build App
         run: |
-          cargo install dioxus-cli
+          cargo install dioxus-cli --locked
           dx build --release
   
       - name: Publish
