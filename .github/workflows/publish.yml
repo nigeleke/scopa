@@ -42,8 +42,8 @@ jobs:
 
       - name: Build App
         run: |
-          cargo install --locked dioxus-cli
-          cargo update -p wasm-bindgen --precise 0.2.95
+          cargo install dioxus-cli
+          cargo update
           dx build --release
   
       - name: Publish App & Documentation
