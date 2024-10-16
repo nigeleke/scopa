@@ -22,7 +22,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Build
+      - name: Build Site
         run: |
           cargo doc --no-deps
           cargo install cargo-tarpaulin
@@ -40,6 +40,11 @@ jobs:
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
+      - name: Build App
+        run: |
+          cargo install dioxus-cli
+          dx build --release
+  
       - name: Publish
         run: |
           git config --global user.email "nigeleke@users.noreply.github.com"
@@ -48,6 +53,8 @@ jobs:
           git checkout gh-pages
           rm -rf docs
           mv docs0 docs
+          mkdir docs/app/
+          mv -R dist/* docs/app/
           git add .
           git commit -m "Release $VERSION"
           git push
