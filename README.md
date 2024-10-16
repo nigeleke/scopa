@@ -34,3 +34,9 @@ dx serve
 ```
 
 - Open the browser to http://localhost:8080
+
+## Acknowledgements
+
+  - Scopa broom logo - [Clean icons created by Freepik - Flaticon](https://www.flaticon.com/free-icons/clean)
+  - Playing card images - [Cardmeister](https://cardmeister.github.io/)
+
