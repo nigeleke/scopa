@@ -17,7 +17,8 @@ jobs:
 
       - name: Compile
         run: |
-          cargo install dioxus-cli --locked
+          cargo install dioxus-cli
+          cargo update
           dx build --verbose
 
       - name: Lint
