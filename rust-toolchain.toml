@@ -1,5 +1,2 @@
 [toolchain]
 channel = "nightly"
-
-[toolchain.install]
-extra_rust_toolchain_commands = ["cargo install dioxus-cli --locked"]
