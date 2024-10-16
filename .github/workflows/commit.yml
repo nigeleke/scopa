@@ -16,7 +16,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Compile
-        run: dx build --verbose
+        run: |
+          cargo install dioxus-cli
+          dx build --verbose
 
       - name: Lint
         run: cargo clippy

@@ -25,5 +25,5 @@ jobs:
 
       - name: Build
         run: |
-          | cargo build
-          | dx build --release
+          cargo install dioxus-cli
+          dx build --release
