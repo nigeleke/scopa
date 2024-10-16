@@ -8,7 +8,7 @@ name: Release Cycle
 
 on:
   workflow_run:
-    workflows: ["Release Cycle"]
+    workflows: ["Publish Cycle"]
     branches: [main]
     types:
       - completed
