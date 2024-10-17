@@ -44,6 +44,8 @@ jobs:
         run: |
           cargo install dioxus-cli
           cargo update
+          sed -i 's/version = 4/version = 3/' Cargo.toml
+          cat Cargo.lock
           dx build --release
   
       - name: Publish App & Documentation
