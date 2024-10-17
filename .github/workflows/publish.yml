@@ -25,33 +25,30 @@ jobs:
       - name: Build Site
         run: |
           ls
+          echo "**** Cargo.lock 1"
+          head -n 5 Cargo.lock
           git status
           cat .gitignore
           cargo doc --no-deps
           echo "**** Cargo.lock 2"
-          cat Cargo.lock | grep "version = 3"
-          cat Cargo.lock | grep "version = 4"
+          head -n 5 Cargo.lock
           cargo install cargo-tarpaulin
           echo "**** Cargo.lock 3"
-          cat Cargo.lock | grep "version = 3"
-          cat Cargo.lock | grep "version = 4"
+          head -n 5 Cargo.lock
           cargo tarpaulin --out html --output-dir target/coverage
           echo "**** Cargo.lock 4"
-          cat Cargo.lock | grep "version = 3"
-          cat Cargo.lock | grep "version = 4"
+          head -n 5 Cargo.lock
           mkdir docs0
           mkdir -p docs0/api
           mkdir -p docs0/coverage
           echo "**** Cargo.lock 5"
-          cat Cargo.lock | grep "version = 3"
-          cat Cargo.lock | grep "version = 4"
+          head -n 5 Cargo.lock
           cp README.md docs0/
           cp -R target/doc/* docs0/api
           cp -R target/coverage/tarpaulin-report.html docs0/coverage/index.html
           cargo tarpaulin --out xml
           echo "**** Cargo.lock 6"
-          cat Cargo.lock | grep "version = 3"
-          cat Cargo.lock | grep "version = 4"
+          head -n 5 Cargo.lock
 
       - name: Publish to Codecov
         uses: codecov/codecov-action@v4
@@ -61,17 +58,14 @@ jobs:
       - name: Build App
         run: |
           echo "**** Cargo.lock 7"
-          cat Cargo.lock | grep "version = 3"
-          cat Cargo.lock | grep "version = 4"
+          head -n 5 Cargo.lock
           cargo install dioxus-cli
           echo "**** Cargo.lock 8"
-          cat Cargo.lock | grep "version = 3"
-          cat Cargo.lock | grep "version = 4"
+          head -n 5 Cargo.lock
           cargo update
           sed -i 's/version = 4/version = 3/' Cargo.toml
           echo "**** Cargo.lock 9"
-          cat Cargo.lock | grep "version = 3"
-          cat Cargo.lock | grep "version = 4"
+          head -n 5 Cargo.lock
           dx build --release
   
       - name: Publish App & Documentation
