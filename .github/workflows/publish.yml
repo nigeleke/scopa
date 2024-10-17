@@ -24,9 +24,9 @@ jobs:
 
       - name: Build Site
         run: |
-          echo "**** Cargo.lock 1"
-          cat Cargo.lock | grep "version = 3"
-          cat Cargo.lock | grep "version = 4"
+          ls
+          git status
+          cat .gitignore
           cargo doc --no-deps
           echo "**** Cargo.lock 2"
           cat Cargo.lock | grep "version = 3"
