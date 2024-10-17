@@ -66,6 +66,6 @@ jobs:
           cargo install cargo-workspaces
           echo "**** Cargo.lock I"
           head -n 5 Cargo.lock
-          cargo workspaces -v version --allow-branch main --publish-as-is --yes patch
+          cargo workspaces -v version --allow-branch main --yes skip
           echo "**** Cargo.lock J"
           head -n 5 Cargo.lock
