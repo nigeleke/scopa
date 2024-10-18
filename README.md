@@ -6,7 +6,7 @@
 [![Coverage](https://img.shields.io/codecov/c/github/nigeleke/scopa?style=plastic)](https://codecov.io/gh/nigeleke/scopa)
 ![Version](https://img.shields.io/github/v/tag/nigeleke/scopa?style=plastic)
 
-  [Site](https://nigeleke.github.io/scopa) \| [GitHub](https://github.com/nigeleke/scopa) \| [API](https://nigeleke.github.io/scopa/api/index.html) \| [Coverage Report](https://nigeleke.github.io/scopa/coverage/index.html) \| [App](https://nigeleke.github.io/scopa/app/)
+  [Site](https://nigeleke.github.io/scopa) \| [GitHub](https://github.com/nigeleke/scopa) \| [API](https://nigeleke.github.io/scopa/api/scopa/index.html) \| [Coverage Report](https://nigeleke.github.io/scopa/coverage/index.html) \| [App](https://nigeleke.github.io/scopa/app/)
 
 [Scopa](https://en.wikipedia.org/wiki/Scopa) is a popular Italian card game played by two to four players.
 
@@ -33,7 +33,7 @@ cargo test
 dx serve
 ```
 
-- Open the browser to http://localhost:8080
+- Open the browser to http://localhost:8080/scopa/app/
 
 ## Acknowledgements
 
