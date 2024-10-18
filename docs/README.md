@@ -38,5 +38,5 @@ dx serve
 ## Acknowledgements
 
   - Scopa broom logo - [Clean icons created by Freepik - Flaticon](https://www.flaticon.com/free-icons/clean)
-  - Playing card images - [Cardmeister](https://cardmeister.github.io/)
+  - Playing card images - Derived using [Cardmeister](https://cardmeister.github.io/) generated cards.
 

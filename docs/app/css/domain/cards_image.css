@@ -10,9 +10,8 @@
     opacity: 100%;
 }
 
-.cards-icon playing-card img {
-    height: 85px;
-    width: 85px;
+.cards-icon img {
+    height: 100px;
 }
 
 .cards-icon playing-card {

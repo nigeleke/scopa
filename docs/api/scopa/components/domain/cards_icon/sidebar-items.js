@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["Card","CardsIcon","colour"],"struct":["CardProps","CardsIconProps"]};

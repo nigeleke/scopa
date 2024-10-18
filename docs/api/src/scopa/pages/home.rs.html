@@ -40,6 +40,7 @@
 <span class="kw">use </span><span class="kw">crate</span>::domain::prelude::<span class="kw-2">*</span>;
 
 <span class="kw">use </span>dioxus::prelude::<span class="kw-2">*</span>;
+<span class="kw">use </span>dioxus::prelude::document::<span class="kw-2">*</span>;
 
 <span class="attr">#[component]
 </span><span class="kw">pub fn </span>Home() -&gt; Element {
@@ -50,19 +51,18 @@
     };
 
     <span class="macro">rsx!</span> {
-        document::Link { rel: <span class="string">"stylesheet"</span>, href: <span class="macro">asset!</span>(<span class="string">"./assets/css/main.css"</span>) }
-        document::Link { rel: <span class="string">"stylesheet"</span>, href: <span class="macro">asset!</span>(<span class="string">"./assets/css/domain/cards_icon.css"</span>) }
-        document::Link { rel: <span class="string">"stylesheet"</span>, href: <span class="macro">asset!</span>(<span class="string">"./assets/css/domain/points.css"</span>) }
-        document::Link { rel: <span class="string">"stylesheet"</span>, href: <span class="macro">asset!</span>(<span class="string">"./assets/css/domain/round_number.css"</span>) }
-        document::Link { rel: <span class="string">"stylesheet"</span>, href: <span class="macro">asset!</span>(<span class="string">"./assets/css/domain/round.css"</span>) }
-        document::Link { rel: <span class="string">"stylesheet"</span>, href: <span class="macro">asset!</span>(<span class="string">"./assets/css/domain/scopa_header.css"</span>) }
-        document::Link { rel: <span class="string">"stylesheet"</span>, href: <span class="macro">asset!</span>(<span class="string">"./assets/css/domain/target.css"</span>) }
-        document::Link { rel: <span class="string">"stylesheet"</span>, href: <span class="macro">asset!</span>(<span class="string">"./assets/css/state/finished_game.css"</span>) }
-        document::Link { rel: <span class="string">"stylesheet"</span>, href: <span class="macro">asset!</span>(<span class="string">"./assets/css/state/playing_game.css"</span>) }
-        document::Link { rel: <span class="string">"stylesheet"</span>, href: <span class="macro">asset!</span>(<span class="string">"./assets/css/state/starting_game.css"</span>) }
-        document::Link { rel: <span class="string">"stylesheet"</span>, href: <span class="macro">asset!</span>(<span class="string">"./assets/css/ui/glow.css"</span>) }
-        document::Link { rel: <span class="string">"stylesheet"</span>, href: <span class="macro">asset!</span>(<span class="string">"./assets/css/ui/icon.css"</span>) }
-        document::Script { src: <span class="macro">asset!</span>(file(<span class="string">"./assets/js/elements.cardmeister.min.js"</span>)) }
+        Link { rel: <span class="string">"stylesheet"</span>, href: <span class="macro">asset!</span>(<span class="string">"./assets/css/main.css"</span>) }
+        Link { rel: <span class="string">"stylesheet"</span>, href: <span class="macro">asset!</span>(<span class="string">"./assets/css/domain/cards_image.css"</span>) }
+        Link { rel: <span class="string">"stylesheet"</span>, href: <span class="macro">asset!</span>(<span class="string">"./assets/css/domain/points.css"</span>) }
+        Link { rel: <span class="string">"stylesheet"</span>, href: <span class="macro">asset!</span>(<span class="string">"./assets/css/domain/round_number.css"</span>) }
+        Link { rel: <span class="string">"stylesheet"</span>, href: <span class="macro">asset!</span>(<span class="string">"./assets/css/domain/round.css"</span>) }
+        Link { rel: <span class="string">"stylesheet"</span>, href: <span class="macro">asset!</span>(<span class="string">"./assets/css/domain/scopa_header.css"</span>) }
+        Link { rel: <span class="string">"stylesheet"</span>, href: <span class="macro">asset!</span>(<span class="string">"./assets/css/domain/target.css"</span>) }
+        Link { rel: <span class="string">"stylesheet"</span>, href: <span class="macro">asset!</span>(<span class="string">"./assets/css/state/finished_game.css"</span>) }
+        Link { rel: <span class="string">"stylesheet"</span>, href: <span class="macro">asset!</span>(<span class="string">"./assets/css/state/playing_game.css"</span>) }
+        Link { rel: <span class="string">"stylesheet"</span>, href: <span class="macro">asset!</span>(<span class="string">"./assets/css/state/starting_game.css"</span>) }
+        Link { rel: <span class="string">"stylesheet"</span>, href: <span class="macro">asset!</span>(<span class="string">"./assets/css/ui/glow.css"</span>) }
+        Link { rel: <span class="string">"stylesheet"</span>, href: <span class="macro">asset!</span>(<span class="string">"./assets/css/ui/icon.css"</span>) }
         header { ScopaHeader {} }
         main {
             <span class="kw">match </span>game() {
