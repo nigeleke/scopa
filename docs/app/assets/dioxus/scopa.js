@@ -1316,15 +1316,15 @@ function __wbg_get_imports() {
         const ret = arg0.pageY;
         return ret;
     };
-    imports.wbg.__wbindgen_closure_wrapper1689 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper1691 = function(arg0, arg1, arg2) {
         const ret = makeMutClosure(arg0, arg1, 200, __wbg_adapter_50);
         return ret;
     };
-    imports.wbg.__wbindgen_closure_wrapper1770 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper1772 = function(arg0, arg1, arg2) {
         const ret = makeMutClosure(arg0, arg1, 153, __wbg_adapter_53);
         return ret;
     };
-    imports.wbg.__wbindgen_closure_wrapper1840 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper1842 = function(arg0, arg1, arg2) {
         const ret = makeMutClosure(arg0, arg1, 153, __wbg_adapter_56);
         return ret;
     };
