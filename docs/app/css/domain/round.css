@@ -1,0 +1,23 @@
+.round-editor-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+  
+.round-editor-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+  
+.round-editor-column {
+    flex: 1;
+    text-align: center;
+    box-sizing: border-box;
+}
+  
+.round-editor-row .round-editor-column:not(:last-child) {
+    margin-right: 10px;
+}

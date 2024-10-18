@@ -1,0 +1,12 @@
+div.icon {
+    opacity: 25%;
+}
+
+div.icon:hover {
+    opacity: 80%;
+}
+
+div.icon.checked {
+    opacity: 100%;
+}
+
