@@ -109,7 +109,7 @@ fn ScopaIcon() -> Element {
         div {
             class: "round-editor-item",
             Icon {
-                src: "./images/broom.png",
+                src: asset!("./assets/images/broom.png"),
                 height: "80px",
             } 
         }
@@ -178,48 +178,20 @@ fn RadioTeamIcon(
         round.set(new_round);
     };
 
-    let cids = match group {
-        PointsGroup::CardsCount => "AC2H3S",
-        PointsGroup::CoinsCount => "AD2D3D",
-        PointsGroup::Settebello => "7D",
-        PointsGroup::Premiera => "7H7C7D7S",
-    };
 
     rsx! {
         input {
             value: draft() == id,
             onchange: update_draft,
-            // hidden: true,
             r#type: "radio",
             name: group.to_string(),
             checked: draft() == id,
             disabled: disabled,
         }
-        CardsIcon {
-            cids: cids,
+        CardsImage {
+            group: group,
             disabled: disabled,
             checked: draft() == id,
         }
-    }
-}
-
-#[derive(Clone, Copy, PartialEq)]
-enum PointsGroup {
-    CardsCount,
-    CoinsCount,
-    Settebello,
-    Premiera,
-}
-
-impl std::fmt::Display for PointsGroup {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", {
-            match self {
-                PointsGroup::CardsCount => "cards-count",
-                PointsGroup::CoinsCount => "coins-count",
-                PointsGroup::Settebello => "settebello",
-                PointsGroup::Premiera => "premiera",
-            }
-        })
     }
 }
