@@ -17,8 +17,7 @@ jobs:
 
       - name: Compile
         run: |
-          cargo install dioxus-cli
-          cargo update
+          cargo install dioxus-cli --git https://github.com/DioxusLabs/dioxus.git
           dx build --verbose
 
       - name: Lint
