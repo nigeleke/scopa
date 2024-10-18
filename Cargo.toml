@@ -5,7 +5,7 @@ authors = ["Nigel Eke <nigeleke@gmail.com>"]
 edition = "2021"
 
 [dependencies]
-dioxus = { version = "0.5", features = ["web"] }
+dioxus = { git = "https://github.com/DioxusLabs/dioxus.git", features = ["web", "asset"] }
 dioxus-logger = "0.5.1"
 getrandom = { version = "0.2.15", features = ["js"] }
 thiserror = "1.0.63"

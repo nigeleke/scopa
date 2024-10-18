@@ -57,15 +57,7 @@ jobs:
 
       - name: Build App
         run: |
-          echo "**** Cargo.lock 7"
-          head -n 5 Cargo.lock
-          cargo install dioxus-cli
-          echo "**** Cargo.lock 8"
-          head -n 5 Cargo.lock
-          cargo update
-          sed -i 's/version = 4/version = 3/' Cargo.toml
-          echo "**** Cargo.lock 9"
-          head -n 5 Cargo.lock
+          cargo install dioxus-cli --git https://github.com/DioxusLabs/dioxus.git
           dx build --release
   
       - name: Publish App & Documentation

@@ -10,25 +10,3 @@ title = "Scopa Scorer"
 [web.watcher]
 reload_html = true
 watch_path = ["src", "assets"]
-
-[web.resource]
-style = [
-    "./css/main.css",
-    "./css/domain/cards_icon.css",
-    "./css/domain/points.css",
-    "./css/domain/round_number.css",
-    "./css/domain/round.css",
-    "./css/domain/scopa_header.css",
-    "./css/domain/target.css",
-    "./css/state/finished_game.css",
-    "./css/state/playing_game.css",
-    "./css/state/starting_game.css",
-    "./css/ui/glow.css",
-    "./css/ui/icon.css",
-]
-script = [
-    "./js/elements.cardmeister.min.js",
-]
-
-[web.resource.dev]
-script = []

@@ -2,7 +2,6 @@ use crate::components::prelude::*;
 use crate::domain::prelude::*;
 
 use dioxus::prelude::*;
-use dioxus_logger::tracing::info;
 
 #[component]
 pub fn RoundEditor(
@@ -125,8 +124,6 @@ fn ScopaScore(
     disabled: bool,
 ) -> Element {
     let mut draft = use_signal(Points::default);
-
-    info!("ScopaScore {:?} af {} dis {}", id, autofocus, disabled);
 
     use_effect(move || {
         draft.set(round.read().scopas(id))

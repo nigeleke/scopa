@@ -12,6 +12,19 @@ pub fn Home() -> Element {
     };
 
     rsx! {
+        document::Link { rel: "stylesheet", href: asset!("./assets/css/main.css") }
+        document::Link { rel: "stylesheet", href: asset!("./assets/css/domain/cards_icon.css") }
+        document::Link { rel: "stylesheet", href: asset!("./assets/css/domain/points.css") }
+        document::Link { rel: "stylesheet", href: asset!("./assets/css/domain/round_number.css") }
+        document::Link { rel: "stylesheet", href: asset!("./assets/css/domain/round.css") }
+        document::Link { rel: "stylesheet", href: asset!("./assets/css/domain/scopa_header.css") }
+        document::Link { rel: "stylesheet", href: asset!("./assets/css/domain/target.css") }
+        document::Link { rel: "stylesheet", href: asset!("./assets/css/state/finished_game.css") }
+        document::Link { rel: "stylesheet", href: asset!("./assets/css/state/playing_game.css") }
+        document::Link { rel: "stylesheet", href: asset!("./assets/css/state/starting_game.css") }
+        document::Link { rel: "stylesheet", href: asset!("./assets/css/ui/glow.css") }
+        document::Link { rel: "stylesheet", href: asset!("./assets/css/ui/icon.css") }
+        document::Script { src: asset!(file("./assets/js/elements.cardmeister.min.js")) }
         header { ScopaHeader {} }
         main {
             match game() {
