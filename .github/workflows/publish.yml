@@ -69,7 +69,7 @@ jobs:
           rm -rf docs
           mv docs0 docs
           mkdir docs/app/
-          mv -R dist/* docs/app/
+          mv dist/* docs/app/
           git add .
           git commit -m "Release $VERSION"
           git push
