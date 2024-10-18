@@ -21,14 +21,8 @@ jobs:
 
       - name: Test
         run: |
-          echo "**** Cargo.lock A"
-          head -n 5 Cargo.lock
           cargo install cargo-tarpaulin
-          echo "**** Cargo.lock B"
-          head -n 5 Cargo.lock
           cargo tarpaulin --out xml
-          echo "**** Cargo.lock C"
-          head -n 5 Cargo.lock
 
       - name: Publish to Codecov
         uses: codecov/codecov-action@v4
@@ -38,8 +32,6 @@ jobs:
       - name: Documentation
         run: |
           cargo doc --no-deps
-          echo "**** Cargo.lock D"
-          head -n 5 Cargo.lock
 
   release:
     needs: acceptance
