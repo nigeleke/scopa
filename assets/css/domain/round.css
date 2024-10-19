@@ -21,3 +21,20 @@
 .round-editor-row .round-editor-column:not(:last-child) {
     margin-right: 10px;
 }
+
+.radio-team-icon input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+
+.radio-team-icon input + .cards-image {
+    border: 2px solid transparent;
+    border-radius: 20px;
+}
+
+.radio-team-icon input:focus + .cards-image {
+    border-color: var(--control-colour-focused);
+}

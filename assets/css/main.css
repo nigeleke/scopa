@@ -5,6 +5,7 @@
     --theme-colour-light: hsl(from var(--theme-colour) h s 30%);
     --control-colour: hsl(from var(--theme-colour) h 50% 75%);
     --control-colour-focused: hsl(from var(--control-colour) h s 50%);
+    --control-colour-hover: hsl(from var(--control-colour) h s 50%);
     --control-text-colour: var(--theme-colour-light);
     --control-border: 1px solid var(--text-colour);
     --control-shadow: 2px 2px 5px var(--text-colour);
@@ -55,6 +56,10 @@ button {
     border: none;
     background: var(--control-colour);
     border-radius: 10px;
+}
+
+button:hover {
+    background-color: var(--control-colour-hover);
 }
 
 button:disabled {

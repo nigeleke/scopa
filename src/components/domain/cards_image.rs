@@ -17,7 +17,7 @@ pub fn CardsImage(
 
     rsx! {
         div {
-            class: "cards-icon",
+            class: "cards-image",
             class: if disabled { "disabled" },
             class: if checked { "checked" }, 
             img {
