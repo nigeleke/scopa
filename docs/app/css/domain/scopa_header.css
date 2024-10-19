@@ -1,3 +1,15 @@
-span.scopa_header * {
-    font-size: 64pt;
+.scopa_header * {
+    font-size: 12vh;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    .scopa_header * {
+        font-size: 10vh;
+    }
+}
+  
+@media only screen and (max-width: 767px) {
+    .scopa_header * {
+        font-size: 5vh;
+    }
 }

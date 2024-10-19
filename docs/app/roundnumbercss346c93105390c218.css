@@ -1,1 +1,0 @@
-div.round-number-outer{background-color:var(--control-colour);color:var(--control-text-colour);border:var(--control-border);border-width:0;border-radius:10px;flex-direction:row;justify-content:center;padding-left:10px;padding-right:10px;display:flex}div.round-number-inner{flex-direction:row;flex-shrink:1;justify-content:space-around;align-items:baseline;display:flex}

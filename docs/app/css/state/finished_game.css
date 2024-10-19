@@ -14,6 +14,18 @@
     font-size: 64px;
 }
   
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    .finished-game-winner-text * {
+        font-size: 10vh;
+    }
+}
+  
+@media only screen and (max-width: 767px) {
+    .finished-game-winner-text * {
+        font-size: 5vh;
+    }
+}
+
 .finished-game-controls {
     display: flex;
     justify-content: center;
