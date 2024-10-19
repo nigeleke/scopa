@@ -56,9 +56,9 @@
             <span class="prelude-val">Err</span>(<span class="string">"Required"</span>.into())
         } <span class="kw">else </span>{
             value
-            .parse::&lt;usize&gt;()
-            .map(|p| p.into())
-            .map_err(|e| e.to_string())
+                .parse::&lt;usize&gt;()
+                .map(|p| p.into())
+                .map_err(|e| e.to_string())
         }
     }
 }
