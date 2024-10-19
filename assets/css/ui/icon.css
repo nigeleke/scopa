@@ -1,12 +1,16 @@
-div.icon {
+.icon {
     opacity: 25%;
 }
 
-div.icon:hover {
+.icon img {
+    height: 10vh;
+}
+
+.icon:hover {
     opacity: 80%;
 }
 
-div.icon.checked {
+.icon.checked {
     opacity: 100%;
 }
 

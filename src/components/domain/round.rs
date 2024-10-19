@@ -67,22 +67,9 @@ pub fn RoundEditor(
 }
 
 #[component]
-fn ScoringColumn(
-    children: Element
-) -> Element {
-    rsx! { 
-        div {
-            class: "round-editor-column",
-            {children} 
-        }
-    }
-}
-
-#[component]
 fn Empty() -> Element {
     rsx! {
         div {
-            class: "round-editor-item",
             p { " " } 
         }
     }
@@ -95,7 +82,6 @@ fn TeamHeader(
 ) -> Element {
     rsx! {
         Glow {
-            class: "round-editor-item",
             TeamNameView { value: name }
             ": "
             PointsView { value: points }
@@ -107,11 +93,7 @@ fn TeamHeader(
 fn ScopaIcon() -> Element {
     rsx! {
         div {
-            class: "round-editor-item",
-            Icon {
-                src: asset!("./assets/images/broom.png"),
-                height: "80px",
-            } 
+            Icon { src: asset!("./assets/images/broom.png") } 
         }
     }
 }
@@ -135,7 +117,6 @@ fn ScopaScore(
     
     rsx! {
         div {
-            class: "round-editor-item",
             PointsEditor {
                 value: draft(),
                 onchange: update_draft,
@@ -178,20 +159,24 @@ fn RadioTeamIcon(
         round.set(new_round);
     };
 
+    let is_checked = draft() == id;
 
     rsx! {
-        input {
-            value: draft() == id,
-            onchange: update_draft,
-            r#type: "radio",
-            name: group.to_string(),
-            checked: draft() == id,
-            disabled: disabled,
-        }
-        CardsImage {
-            group: group,
-            disabled: disabled,
-            checked: draft() == id,
+        label {
+            class: "radio-team-icon",
+            input {
+                r#type: "radio",
+                name: group.to_string(),
+                value: format!("{}-{}", group.to_string(), id.map_or("none".to_string(), |t| t.to_string())),
+                onchange: update_draft,
+                checked: is_checked,
+                disabled: disabled,
+            }
+            CardsImage {
+                group: group,
+                disabled: disabled,
+                checked: is_checked,
+            }    
         }
     }
 }
