@@ -14,25 +14,28 @@
 }
 
 html, body {
-    height: 100%;
-    margin: 0;
     background: radial-gradient(circle at left top, var(--theme-colour-light), var(--theme-colour));
     background-attachment: fixed;
 } 
 
-body * {
+body {
+    min-height: 100vh;
+    margin: 0;
+    overflow-x: auto;
+}
+
+* {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 18pt;
+    font-size: 16pt;
 }
 
 #main {
     color: var(--text-colour);
     height: 100vh;
-    width: 100vw;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    align-items: center;
+    align-items: stretch;
     gap: 2vh;
 }
 
@@ -42,6 +45,7 @@ header, main, footer {
 } 
 
 header {
+    align-self: center;
     margin-top: 1vh;
 }
 
@@ -49,9 +53,13 @@ main {
     flex-grow: 1;
 }
 
+footer {
+    align-self: center;
+    margin-bottom: 1vh;
+}
+
 footer * { 
     font-size: small;
-    margin-bottom: 1vh;
 }
 
 button {
