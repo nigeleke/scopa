@@ -159,7 +159,9 @@ fn RadioTeamIcon(
         round.set(new_round);
     };
 
-    let is_checked = draft() == id;
+    let is_checked = *draft.read() == id;
+    let settebello_none_disabled = group == PointsGroup::Settebello && id.is_none() && draft.read().is_some();
+    let is_disabled = disabled || settebello_none_disabled;
 
     rsx! {
         label {
@@ -170,11 +172,11 @@ fn RadioTeamIcon(
                 value: format!("{}-{}", group.to_string(), id.map_or("none".to_string(), |t| t.to_string())),
                 onchange: update_draft,
                 checked: is_checked,
-                disabled: disabled,
+                disabled: is_disabled,
             }
             CardsImage {
                 group: group,
-                disabled: disabled,
+                disabled: is_disabled,
                 checked: is_checked,
             }    
         }
