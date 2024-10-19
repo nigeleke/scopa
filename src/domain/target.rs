@@ -21,9 +21,9 @@ impl TryFrom<String> for Target {
             Err("Required".into())
         } else {
             value
-            .parse::<usize>()
-            .map(|p| p.into())
-            .map_err(|e| e.to_string())
+                .parse::<usize>()
+                .map(|p| p.into())
+                .map_err(|e| e.to_string())
         }
     }
 }
