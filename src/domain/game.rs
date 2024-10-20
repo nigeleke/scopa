@@ -104,9 +104,9 @@ mod test {
     }
 
     #[test]
-    fn a_new_game_default_target_will_be_16() {
+    fn a_new_game_default_target_will_be_11() {
         let game = Game::default();
-        assert_eq!(game.target(), 16.into());
+        assert_eq!(game.target(), 11.into());
     }
 
     #[test]
@@ -142,7 +142,7 @@ mod test {
     #[test]
     fn can_define_valid_new_target() {
         let mut game = Game::default();
-        let target = 11.into();
+        let target = 16.into();
         assert_ne!(game.target(), target);
         game.set_target(target);
         assert_eq!(game.target(), target);
