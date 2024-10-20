@@ -10,6 +10,13 @@ pub fn FinishedGame(
 ) -> Element {
     let winner = state.winner();
 
+    let mut teams = Vec::from(state.teams());
+    teams.sort_by(|a, b| state.points(b.id()).cmp(&state.points(a.id())));
+
+    let team_points = teams.into_iter()
+        .map(|team: Team| rsx!{ TeamPoints { state: state.clone(), team: team } })
+        .collect::<Vec<_>>();
+
     let mut retain_players = use_signal(|| true);
 
     let update_retain_players = move |event: Event<FormData>| {
@@ -26,7 +33,7 @@ pub fn FinishedGame(
         let mut new_game = Game::default();
 
         if retain_players() {
-            let teams = state.teams();
+            let teams = Vec::from(state.teams());
             teams.iter().for_each(|t| {
                 let team = Team::new(&t.name());
                 let _ = new_game.add_team(team); } 
@@ -50,6 +57,12 @@ pub fn FinishedGame(
             div {
                 class: "finished-game-winner-text",
                 Glow { "Winner - " { winner } }
+            }
+            div {
+                class: "finished-game-team-scores",
+                for team_points in team_points {
+                    {team_points}
+                }
             }
             div {
                 class: "finished-game-controls",
@@ -82,6 +95,22 @@ pub fn FinishedGame(
                     }
                 }
             }
+        }
+    }
+}
+
+#[component]
+fn TeamPoints(
+    state: FinishedState,
+    team: Team,
+) -> Element {
+    let name = team.name();
+    let points = state.points(team.id());
+    rsx ! {
+        div {
+            class: "finished-game-team-score",
+            span { {name} }
+            span { {points.to_string()} }
         }
     }
 }

@@ -11,7 +11,23 @@
 }
 
 .finished-game-winner-text * {
-    font-size: largest;
+    font-size: xx-large;
+}
+
+.finished-game-team-scores {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    gap: 1svh;
+    width: 15%;
+}
+
+.finished-game-team-score {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-grow: 1;
 }
 
 .finished-game-controls {
