@@ -3,7 +3,7 @@ pub struct Target(pub usize);
 
 impl Default for Target {
     fn default() -> Self {
-        Self(16)
+        Self(11)
     }
 }
 
