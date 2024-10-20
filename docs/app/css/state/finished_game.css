@@ -16,13 +16,13 @@
   
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
     .finished-game-winner-text * {
-        font-size: 10vh;
+        font-size: 10svh;
     }
 }
   
 @media only screen and (max-width: 767px) {
     .finished-game-winner-text * {
-        font-size: 5vh;
+        font-size: 5svh;
     }
 }
 
