@@ -1,4 +1,4 @@
-div.target-outer {
+.target-outer {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -11,7 +11,7 @@ div.target-outer {
     padding-right: 5px;
 }
 
-div.target-inner {
+.target-inner {
     flex-shrink: 1;
     display: flex;
     flex-direction: row;
@@ -19,8 +19,8 @@ div.target-inner {
     align-items: baseline;
 }
 
-div.target-inner input {
-    width: 60px;
+.target-inner input {
+    width: 50px;
 
     text-align: center;
     vertical-align: middle;
@@ -33,6 +33,6 @@ div.target-inner input {
     transition: box-shadow 0.3s ease;
 }
 
-div.target-inner input:focus {
+.target-inner input:focus {
     background-color: var(--control-colour-focused); 
 }

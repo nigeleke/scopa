@@ -1,4 +1,4 @@
-div.round-number-outer {
+.round-number-outer {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -11,7 +11,7 @@ div.round-number-outer {
     padding-right: 5px;
 }
 
-div.round-number-inner {
+.round-number-inner {
     flex-shrink: 1;
     display: flex;
     flex-direction: row;

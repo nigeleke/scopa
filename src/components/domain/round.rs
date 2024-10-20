@@ -46,7 +46,7 @@ pub fn RoundEditor(
 
     rsx! {
         div {
-            class: "round-editor-component",
+            class: "round-editor-container",
             for i in 0..rows_count {
                 div {
                     class: "round-editor-row",
@@ -92,9 +92,7 @@ fn TeamHeader(
 #[component]
 fn ScopaIcon() -> Element {
     rsx! {
-        div {
-            Icon { src: asset!("./assets/images/broom.png") } 
-        }
+        Icon { src: asset!("./assets/images/broom.png") } 
     }
 }
 
@@ -116,13 +114,11 @@ fn ScopaScore(
     };
     
     rsx! {
-        div {
-            PointsEditor {
-                value: draft(),
-                onchange: update_draft,
-                autofocus: autofocus,
-                disabled: disabled,
-            }    
+        PointsEditor {
+            value: draft(),
+            onchange: update_draft,
+            autofocus: autofocus,
+            disabled: disabled,
         }
     }
 }
