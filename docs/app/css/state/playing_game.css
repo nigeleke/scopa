@@ -1,8 +1,9 @@
 .playing-game {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 5svh;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 3svh;
 }
 
 .playing-game-header {
@@ -10,4 +11,8 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+}
+
+.playing-game button {
+    align-self: center;
 }

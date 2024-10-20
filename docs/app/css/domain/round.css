@@ -1,25 +1,30 @@
 .round-editor-container {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    justify-content: flex-start;
+    align-items: stretch;
 }
 
 .round-editor-row {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
-    width: 100%;
+    align-items: center;    
 }
   
 .round-editor-column {
-    flex: 1;
+    flex-grow: 1;
     text-align: center;
     box-sizing: border-box;
+    width: 10svw;
 }
-  
+
+.round-editor-column * input {
+    flex-shrink: 1;
+}
+
 .round-editor-row .round-editor-column:not(:last-child) {
-    margin-right: 10px;
+    margin-right: 5px;
 }
 
 .radio-team-icon input[type="radio"] {
@@ -30,11 +35,11 @@
 }
 
 
-.radio-team-icon input + .cards-image {
+.radio-team-icon input[type="radio"] + .cards-image {
     border: 2px solid transparent;
     border-radius: 20px;
 }
 
-.radio-team-icon input:focus + .cards-image {
+.radio-team-icon input[type="radio"]:focus + .cards-image {
     border-color: var(--control-colour-focused);
 }
