@@ -15,6 +15,11 @@ pub fn RoundEditor(
         .map(Team::id)
         .unwrap();
 
+    let leading_team_score = teams.iter()
+        .map(|team| state.points(team.id()))
+        .max()
+        .unwrap_or_default();
+
     let none_column_components = [
         rsx! { Empty {} },
         rsx! { ScopaIcon {} },
@@ -30,9 +35,10 @@ pub fn RoundEditor(
         let id = team.id();
         let name = team.name();
         let points = state.points(id);
+        let is_leader = points == leading_team_score;
         let is_not_playing = team.is_not_playing();
         [
-            rsx! { TeamHeader { name: name, points: points } },
+            rsx! { TeamHeader { name: name, points: points, is_leader: is_leader } },
             rsx! { ScopaScore { id: id, round: round, autofocus: id == first_active_team_id, disabled: is_not_playing } },
             rsx! { RadioTeamIcon { group: PointsGroup::CardsCount, id: Some(id), round: round, disabled: is_not_playing } },
             rsx! { RadioTeamIcon { group: PointsGroup::CoinsCount, id: Some(id), round: round, disabled: is_not_playing } },
@@ -79,12 +85,16 @@ fn Empty() -> Element {
 fn TeamHeader(                                                                                                                                            
     name: TeamName,
     points: Points,
+    is_leader: bool,
 ) -> Element {
     rsx! {
-        Glow {
-            TeamNameView { value: name }
-            ": "
-            PointsView { value: points }
+        span {
+            class: if is_leader { "team-leader-header" } else { "team-header" },
+            Glow {
+                TeamNameView { value: name }
+                ": "
+                PointsView { value: points }
+            }
         }
     }
 }

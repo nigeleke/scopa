@@ -43,3 +43,12 @@
 .radio-team-icon input[type="radio"]:focus + .cards-image {
     border-color: var(--control-colour-focused);
 }
+
+.team-header * {
+    font-size: x-large;
+    color: hsl(from var(--text-colour) h s 90%);
+}
+
+.team-leader-header * {
+    font-size: x-large;
+}
