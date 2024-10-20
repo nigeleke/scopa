@@ -19,7 +19,7 @@ html, body {
 } 
 
 body {
-    min-height: 100vh;
+    min-height: 100svh;
     margin: 0;
     overflow-x: auto;
 }
@@ -31,22 +31,22 @@ body {
 
 #main {
     color: var(--text-colour);
-    height: 100vh;
+    height: 100svh;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: stretch;
-    gap: 2vh;
+    gap: 2svh;
 }
 
 header, main, footer {
-    margin-left: 1vw;
-    margin-right: 1vw;
+    margin-left: 1svw;
+    margin-right: 1svw;
 } 
 
 header {
     align-self: center;
-    margin-top: 1vh;
+    margin-top: 1svh;
 }
 
 main {
@@ -55,7 +55,7 @@ main {
 
 footer {
     align-self: center;
-    margin-bottom: 1vh;
+    margin-bottom: 1svh;
 }
 
 footer * { 
