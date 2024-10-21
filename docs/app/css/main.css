@@ -66,6 +66,8 @@ button {
     border: none;
     background: var(--control-colour);
     border-radius: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 button:hover {
