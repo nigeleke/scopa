@@ -88,13 +88,24 @@ fn TeamHeader(
     is_leader: bool,
 ) -> Element {
     rsx! {
-        span {
-            class: if is_leader { "team-leader-header" } else { "team-header" },
-            Glow {
+        if is_leader {
+            span {
+                class: "team-leader-header",
+                Glow {
+                    TeamNameView { value: name }
+                    ": "
+                    PointsView { value: points }
+                }
+            }
+    
+        } else {
+            span {
+                class: "team-header",
                 TeamNameView { value: name }
                 ": "
                 PointsView { value: points }
             }
+    
         }
     }
 }

@@ -21,6 +21,7 @@ pub fn TeamNameEditor(
 ) -> Element {
 
     let mut team_name = use_signal(TeamName::default);
+    use_effect(move || onchange.call(team_name()));
 
     let update_team_name = move |event: Event<FormData>| {
         let new_team_name = TeamName::try_from(event.value()).unwrap();

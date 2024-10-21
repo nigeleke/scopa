@@ -66,12 +66,18 @@ fn AddTeam(
         onadd.call(team);
     };
 
+    let onclick = move |_| add_team(team_name());
+
     rsx! {
-        TeamNameEditor {
-            value: team_name(),
-            autofocus: true,
-            onchange: update_team_name,
-            oncommit: add_team,
+        span {
+            TeamNameEditor {
+                value: team_name(),
+                autofocus: true,
+                onchange: update_team_name,
+                oncommit: add_team,
+            }
+            " "
+            button { onclick, " + " }    
         }
     }
 }
