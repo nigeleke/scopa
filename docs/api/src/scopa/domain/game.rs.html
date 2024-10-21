@@ -394,9 +394,9 @@
     }
 
     <span class="attr">#[test]
-    </span><span class="kw">fn </span>a_new_game_default_target_will_be_16() {
+    </span><span class="kw">fn </span>a_new_game_default_target_will_be_11() {
         <span class="kw">let </span>game = Game::default();
-        <span class="macro">assert_eq!</span>(game.target(), <span class="number">16</span>.into());
+        <span class="macro">assert_eq!</span>(game.target(), <span class="number">11</span>.into());
     }
 
     <span class="attr">#[test]
@@ -432,7 +432,7 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>can_define_valid_new_target() {
         <span class="kw">let </span><span class="kw-2">mut </span>game = Game::default();
-        <span class="kw">let </span>target = <span class="number">11</span>.into();
+        <span class="kw">let </span>target = <span class="number">16</span>.into();
         <span class="macro">assert_ne!</span>(game.target(), target);
         game.set_target(target);
         <span class="macro">assert_eq!</span>(game.target(), target);

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["FinishedGame"],"struct":["FinishedGameProps"]};
+window.SIDEBAR_ITEMS = {"fn":["FinishedGame","TeamPoints"],"struct":["FinishedGameProps","TeamPointsProps"]};

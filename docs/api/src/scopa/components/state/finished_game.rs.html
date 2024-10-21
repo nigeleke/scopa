@@ -85,7 +85,36 @@
 <a href="#84" id="84">84</a>
 <a href="#85" id="85">85</a>
 <a href="#86" id="86">86</a>
-<a href="#87" id="87">87</a></pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::components::prelude::<span class="kw-2">*</span>;
+<a href="#87" id="87">87</a>
+<a href="#88" id="88">88</a>
+<a href="#89" id="89">89</a>
+<a href="#90" id="90">90</a>
+<a href="#91" id="91">91</a>
+<a href="#92" id="92">92</a>
+<a href="#93" id="93">93</a>
+<a href="#94" id="94">94</a>
+<a href="#95" id="95">95</a>
+<a href="#96" id="96">96</a>
+<a href="#97" id="97">97</a>
+<a href="#98" id="98">98</a>
+<a href="#99" id="99">99</a>
+<a href="#100" id="100">100</a>
+<a href="#101" id="101">101</a>
+<a href="#102" id="102">102</a>
+<a href="#103" id="103">103</a>
+<a href="#104" id="104">104</a>
+<a href="#105" id="105">105</a>
+<a href="#106" id="106">106</a>
+<a href="#107" id="107">107</a>
+<a href="#108" id="108">108</a>
+<a href="#109" id="109">109</a>
+<a href="#110" id="110">110</a>
+<a href="#111" id="111">111</a>
+<a href="#112" id="112">112</a>
+<a href="#113" id="113">113</a>
+<a href="#114" id="114">114</a>
+<a href="#115" id="115">115</a>
+<a href="#116" id="116">116</a></pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::components::prelude::<span class="kw-2">*</span>;
 <span class="kw">use </span><span class="kw">crate</span>::domain::prelude::<span class="kw-2">*</span>;
 
 <span class="kw">use </span>dioxus::prelude::<span class="kw-2">*</span>;
@@ -96,6 +125,13 @@
     onchange: EventHandler&lt;GameState&gt;,
 ) -&gt; Element {
     <span class="kw">let </span>winner = state.winner();
+
+    <span class="kw">let </span><span class="kw-2">mut </span>teams = Vec::from(state.teams());
+    teams.sort_by(|a, b| state.points(b.id()).cmp(<span class="kw-2">&amp;</span>state.points(a.id())));
+
+    <span class="kw">let </span>team_points = teams.into_iter()
+        .map(|team: Team| <span class="macro">rsx!</span>{ TeamPoints { state: state.clone(), team: team } })
+        .collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;();
 
     <span class="kw">let </span><span class="kw-2">mut </span>retain_players = use_signal(|| <span class="bool-val">true</span>);
 
@@ -113,7 +149,7 @@
         <span class="kw">let </span><span class="kw-2">mut </span>new_game = Game::default();
 
         <span class="kw">if </span>retain_players() {
-            <span class="kw">let </span>teams = state.teams();
+            <span class="kw">let </span>teams = Vec::from(state.teams());
             teams.iter().for_each(|t| {
                 <span class="kw">let </span>team = Team::new(<span class="kw-2">&amp;</span>t.name());
                 <span class="kw">let _ </span>= new_game.add_team(team); } 
@@ -137,6 +173,12 @@
             div {
                 class: <span class="string">"finished-game-winner-text"</span>,
                 Glow { <span class="string">"Winner - " </span>{ winner } }
+            }
+            div {
+                class: <span class="string">"finished-game-team-scores"</span>,
+                <span class="kw">for </span>team_points <span class="kw">in </span>team_points {
+                    {team_points}
+                }
             }
             div {
                 class: <span class="string">"finished-game-controls"</span>,
@@ -172,4 +214,19 @@
         }
     }
 }
-</code></pre></div></section></main></body></html>
+
+<span class="attr">#[component]
+</span><span class="kw">fn </span>TeamPoints(
+    state: FinishedState,
+    team: Team,
+) -&gt; Element {
+    <span class="kw">let </span>name = team.name();
+    <span class="kw">let </span>points = state.points(team.id());
+    rsx ! {
+        div {
+            class: <span class="string">"finished-game-team-score"</span>,
+            span { {name} }
+            span { {points.to_string()} }
+        }
+    }
+}</code></pre></div></section></main></body></html>
