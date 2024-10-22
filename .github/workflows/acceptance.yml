@@ -7,12 +7,15 @@
 name: Acceptance Cycle
 
 on:
-  push:
-    branches:
-      - develop
+  workflow_run:
+    workflows: ["Commit Cycle"]
+    branches: [develop]
+    types:
+      - completed
 
 jobs:
   acceptance:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
 
     steps:
