@@ -24,13 +24,13 @@ As of October 2024 the project is essentially complete but some further work wil
 ## Development
 
 ```bash
+dx build
 cargo test
-```
-
-## Run
-
-```bash
 dx serve
 ```
 
 - Open the browser to http://localhost:8080/scopa/app/
+
+## Acknowledgements
+
+- Original icons are no attribution `CC0` and `PD` svg files on [svgrepo.com](https://www.svgrepo.com/). Derived images can be found under `./design/images/`. 
