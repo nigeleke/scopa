@@ -3,6 +3,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
+    gap: 1.5svh;
 }
 
 .round-editor-row {

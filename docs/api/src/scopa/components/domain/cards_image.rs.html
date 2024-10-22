@@ -37,10 +37,10 @@
     checked: bool,
 ) -&gt; Element {
     <span class="kw">let </span>src = <span class="kw">match </span>group {
-        PointsGroup::CardsCount =&gt; <span class="macro">asset!</span>(<span class="string">"./assets/images/cards.png"</span>),
-        PointsGroup::CoinsCount =&gt; <span class="macro">asset!</span>(<span class="string">"./assets/images/coins.png"</span>),
-        PointsGroup::Settebello =&gt; <span class="macro">asset!</span>(<span class="string">"./assets/images/settebello.png"</span>),
-        PointsGroup::Premiera =&gt; <span class="macro">asset!</span>(<span class="string">"./assets/images/premiere.png"</span>),
+        PointsGroup::CardsCount =&gt; <span class="macro">asset!</span>(<span class="string">"./assets/images/punteggio_carte.png"</span>),
+        PointsGroup::CoinsCount =&gt; <span class="macro">asset!</span>(<span class="string">"./assets/images/punteggio_denari.png"</span>),
+        PointsGroup::Settebello =&gt; <span class="macro">asset!</span>(<span class="string">"./assets/images/punteggio_settebello.png"</span>),
+        PointsGroup::Premiera =&gt; <span class="macro">asset!</span>(<span class="string">"./assets/images/punteggio_premiere.png"</span>),
     };
 
     <span class="macro">rsx!</span> {
