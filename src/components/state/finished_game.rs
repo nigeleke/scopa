@@ -11,7 +11,7 @@ pub fn FinishedGame(
     let winner = state.winner();
 
     let mut teams = Vec::from(state.teams());
-    teams.sort_by(|a, b| state.points(b.id()).cmp(&state.points(a.id())));
+    teams.sort_by_key(|b| std::cmp::Reverse(state.points(b.id())));
 
     let team_points = teams.into_iter()
         .map(|team: Team| rsx!{ TeamPoints { state: state.clone(), team: team } })
