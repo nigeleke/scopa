@@ -36,12 +36,12 @@
 }
 
 
-.radio-team-icon input[type="radio"] + .cards-image {
+.radio-team-icon input[type="radio"] + .points-group-image {
     border: 2px solid transparent;
     border-radius: 20px;
 }
 
-.radio-team-icon input[type="radio"]:focus + .cards-image {
+.radio-team-icon input[type="radio"]:focus + .points-group-image {
     border-color: var(--control-colour-focused);
 }
 

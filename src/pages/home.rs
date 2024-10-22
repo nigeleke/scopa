@@ -14,8 +14,8 @@ pub fn Home() -> Element {
 
     rsx! {
         Link { rel: "stylesheet", href: asset!("./assets/css/main.css") }
-        Link { rel: "stylesheet", href: asset!("./assets/css/domain/cards_image.css") }
         Link { rel: "stylesheet", href: asset!("./assets/css/domain/points.css") }
+        Link { rel: "stylesheet", href: asset!("./assets/css/domain/points_group_image.css") }
         Link { rel: "stylesheet", href: asset!("./assets/css/domain/round_number.css") }
         Link { rel: "stylesheet", href: asset!("./assets/css/domain/round.css") }
         Link { rel: "stylesheet", href: asset!("./assets/css/domain/scopa_header.css") }
@@ -24,7 +24,6 @@ pub fn Home() -> Element {
         Link { rel: "stylesheet", href: asset!("./assets/css/state/playing_game.css") }
         Link { rel: "stylesheet", href: asset!("./assets/css/state/starting_game.css") }
         Link { rel: "stylesheet", href: asset!("./assets/css/ui/glow.css") }
-        Link { rel: "stylesheet", href: asset!("./assets/css/ui/icon.css") }
         header { ScopaHeader {} }
         main {
             match game() {

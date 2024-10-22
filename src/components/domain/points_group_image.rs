@@ -3,12 +3,13 @@ use dioxus::prelude::*;
 use super::prelude::PointsGroup;
 
 #[component]
-pub fn CardsImage(
+pub fn PointsGroupImage(
     group: PointsGroup,
     disabled: bool,
     checked: bool,
 ) -> Element {
     let src = match group {
+        PointsGroup::Scopa => asset!("./assets/images/punteggio_scopa.png"),
         PointsGroup::CardsCount => asset!("./assets/images/punteggio_carte.png"),
         PointsGroup::CoinsCount => asset!("./assets/images/punteggio_denari.png"),
         PointsGroup::Settebello => asset!("./assets/images/punteggio_settebello.png"),
@@ -17,7 +18,7 @@ pub fn CardsImage(
 
     rsx! {
         div {
-            class: "cards-image",
+            class: "points-group-image",
             class: if disabled { "disabled" },
             class: if checked { "checked" }, 
             img {

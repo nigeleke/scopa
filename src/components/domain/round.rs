@@ -113,7 +113,7 @@ fn TeamHeader(
 #[component]
 fn ScopaIcon() -> Element {
     rsx! {
-        Icon { src: asset!("./assets/images/punteggio_scopa.png") } 
+        PointsGroupImage { group: PointsGroup::Scopa, disabled: false, checked: true }
     }
 }
 
@@ -156,6 +156,7 @@ fn RadioTeamIcon(
 
     use_effect(move || {
         let selection = match group {
+            PointsGroup::Scopa => unreachable!(),
             PointsGroup::CardsCount => round.read().card_count(),
             PointsGroup::CoinsCount => round.read().coins_count(),
             PointsGroup::Settebello => round.read().settebello(),
@@ -167,6 +168,7 @@ fn RadioTeamIcon(
     
     let update_draft = move |_| {
         let new_round = match group {
+            PointsGroup::Scopa => unreachable!(),
             PointsGroup::CardsCount => round().with_highest_card_count(id),
             PointsGroup::CoinsCount => round().with_highest_coins_count(id),
             PointsGroup::Settebello => id.map_or(round(), |id| round().with_settobello(id)),
@@ -191,7 +193,7 @@ fn RadioTeamIcon(
                 checked: is_checked,
                 disabled: is_disabled,
             }
-            CardsImage {
+            PointsGroupImage {
                 group: group,
                 disabled: is_disabled,
                 checked: is_checked,

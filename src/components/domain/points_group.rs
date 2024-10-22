@@ -1,5 +1,6 @@
 #[derive(Clone, Copy, PartialEq)]
 pub enum PointsGroup {
+    Scopa,
     CardsCount,
     CoinsCount,
     Settebello,
@@ -10,6 +11,7 @@ impl std::fmt::Display for PointsGroup {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{}", {
             match self {
+                PointsGroup::Scopa => "scopa",
                 PointsGroup::CardsCount => "cards-count",
                 PointsGroup::CoinsCount => "coins-count",
                 PointsGroup::Settebello => "settebello",
