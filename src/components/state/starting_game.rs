@@ -57,13 +57,10 @@ fn AddTeam(
 ) -> Element {
     let mut team_name = use_signal(TeamName::default);
 
-    let update_team_name = move |new_name| {
-        team_name.set(new_name)
-    };
-
-    let add_team = move |value: TeamName| {
+    let mut add_team = move |value: TeamName| {
         let team = Team::new(&value);
         onadd.call(team);
+        team_name.set(TeamName::default());
     };
 
     let onclick = move |_| add_team(team_name());
@@ -71,10 +68,10 @@ fn AddTeam(
     rsx! {
         span {
             TeamNameEditor {
-                value: team_name(),
+                team_name: team_name,
                 autofocus: true,
-                onchange: update_team_name,
                 oncommit: add_team,
+                placeholder: "Add 2, 3, 4 or 6 teams",
             }
             " "
             button { onclick, " + " }    

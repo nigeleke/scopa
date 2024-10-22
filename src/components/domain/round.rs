@@ -113,7 +113,7 @@ fn TeamHeader(
 #[component]
 fn ScopaIcon() -> Element {
     rsx! {
-        Icon { src: asset!("./assets/images/broom.png") } 
+        Icon { src: asset!("./assets/images/punteggio_scopa.png") } 
     }
 }
 
