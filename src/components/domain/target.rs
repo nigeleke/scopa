@@ -1,3 +1,4 @@
+use crate::components::prelude::*;
 use crate::domain::prelude::*;
 
 use dioxus::prelude::*;
@@ -19,12 +20,10 @@ pub fn TargetView(
 pub fn TargetEditor (
     value: Target,
     onchange: EventHandler<Target>,
-    #[props(extends = input)]
-    attributes: Vec<Attribute>,
  ) -> Element {
 
-    let update_target = move |event: Event<FormData>| {
-        let result = Target::try_from(event.value());
+    let update_target = move |value| {
+        let result = Target::try_from(value);
         if let Ok(new_value) = result {
             onchange.call(new_value);
         };
@@ -33,14 +32,16 @@ pub fn TargetEditor (
     rsx! {
         Container {
             "Play to"
-            input {
-                value: value.to_string(),
-                oninput: update_target,
-                r#type: "number",
-                min: "11",
-                step: "5",
-                size: "3",
-                ..attributes,
+            label {
+                Input {
+                    typ: "number",
+                    value: value.to_string(),
+                    on_input: update_target,
+                    min: "11",
+                    step: "5",
+                    size: "3",
+                    aria_label: "Enter game target (default 11)",
+                }
             }
             "points"
         }

@@ -10,10 +10,10 @@ pub fn RoundEditor(
 ) -> Element {
     let teams = Vec::from(state.teams());
 
-    let first_active_team_id = teams.iter()
+    let first_active_team = teams.iter()
         .find(|t| t.is_playing())
-        .map(Team::id)
         .unwrap();
+    let first_active_team_id = first_active_team.id();
 
     let leading_team_score = teams.iter()
         .map(|team| state.points(team.id()))
@@ -23,10 +23,10 @@ pub fn RoundEditor(
     let none_column_components = [
         rsx! { Empty {} },
         rsx! { ScopaIcon {} },
-        rsx! { RadioTeamIcon { group: PointsGroup::CardsCount, id: None, round: round } },
-        rsx! { RadioTeamIcon { group: PointsGroup::CoinsCount, id: None, round: round } },
-        rsx! { RadioTeamIcon { group: PointsGroup::Settebello, id: None, round: round } },
-        rsx! { RadioTeamIcon { group: PointsGroup::Premiera, id: None, round: round } },
+        rsx! { RadioTeamIcon { group: PointsGroup::CardsCount, team: None, round: round } },
+        rsx! { RadioTeamIcon { group: PointsGroup::CoinsCount, team: None, round: round } },
+        rsx! { RadioTeamIcon { group: PointsGroup::Settebello, team: None, round: round } },
+        rsx! { RadioTeamIcon { group: PointsGroup::Premiera, team: None, round: round } },
     ];
 
     let rows_count = none_column_components.len();
@@ -39,11 +39,11 @@ pub fn RoundEditor(
         let is_not_playing = team.is_not_playing();
         [
             rsx! { TeamHeader { name: name, points: points, is_leader: is_leader } },
-            rsx! { ScopaScore { id: id, round: round, autofocus: id == first_active_team_id, disabled: is_not_playing } },
-            rsx! { RadioTeamIcon { group: PointsGroup::CardsCount, id: Some(id), round: round, disabled: is_not_playing } },
-            rsx! { RadioTeamIcon { group: PointsGroup::CoinsCount, id: Some(id), round: round, disabled: is_not_playing } },
-            rsx! { RadioTeamIcon { group: PointsGroup::Settebello, id: Some(id), round: round, disabled: is_not_playing } },
-            rsx! { RadioTeamIcon { group: PointsGroup::Premiera, id: Some(id), round: round, disabled: is_not_playing } },
+            rsx! { ScopaScore { team: team.clone(), round: round, autofocus: id == first_active_team_id, disabled: is_not_playing } },
+            rsx! { RadioTeamIcon { group: PointsGroup::CardsCount, team: Some(team.clone()), round: round, disabled: is_not_playing } },
+            rsx! { RadioTeamIcon { group: PointsGroup::CoinsCount, team: Some(team.clone()), round: round, disabled: is_not_playing } },
+            rsx! { RadioTeamIcon { group: PointsGroup::Settebello, team: Some(team.clone()), round: round, disabled: is_not_playing } },
+            rsx! { RadioTeamIcon { group: PointsGroup::Premiera, team: Some(team.clone()), round: round, disabled: is_not_playing } },
         ]
     };
 
@@ -119,11 +119,14 @@ fn ScopaIcon() -> Element {
 
 #[component]
 fn ScopaScore(
-    id: TeamId,
+    team: Team,
     round: Signal<Round>,
     autofocus: bool,
     disabled: bool,
 ) -> Element {
+    let id = (&team).id();
+    let name = &team.name();
+
     let mut draft = use_signal(Points::default);
 
     use_effect(move || {
@@ -140,6 +143,7 @@ fn ScopaScore(
             onchange: update_draft,
             autofocus: autofocus,
             disabled: disabled,
+            aria_label: format!("Scopa score for {}", name),
         }
     }
 }
@@ -147,11 +151,14 @@ fn ScopaScore(
 #[component]
 fn RadioTeamIcon(
     group: PointsGroup,
-    id: Option<TeamId>,
+    team: Option<Team>,
     round: Signal<Round>,
     #[props(default = false)]
     disabled: bool,
 ) -> Element {
+    let id = team.clone().map(|t| t.id());
+    let name = team.map(|t| t.name());
+
     let mut draft = use_signal(move || None);
 
     use_effect(move || {
@@ -185,11 +192,12 @@ fn RadioTeamIcon(
     rsx! {
         label {
             class: "radio-team-icon",
-            input {
-                r#type: "radio",
+            Input {
+                typ: "radio",
                 name: group.to_string(),
                 value: format!("{}-{}", group.to_string(), id.map_or("none".to_string(), |t| t.to_string())),
-                onchange: update_draft,
+                on_input: update_draft,
+                aria_label: format!("{} for {}", group.to_string(), name.map_or("no one".to_string(), |n| n.to_string())),
                 checked: is_checked,
                 disabled: is_disabled,
             }

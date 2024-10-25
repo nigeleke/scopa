@@ -5,11 +5,12 @@
     --theme-colour-light: hsl(from var(--theme-colour) h s 30%);
     --control-colour: hsl(from var(--theme-colour) h 50% 75%);
     --control-colour-hover: hsl(from var(--control-colour) h s 50%);
-    --control-text-colour: var(--theme-colour-light);
+    --control-text-colour: var(--theme-colour);
     --control-border: 1px solid transparent;
     --control-border-focused: 1px solid hsl(from var(--control-colour) h s 50%);
     --control-shadow: 2px 2px 5px var(--text-colour);
     --disabled-colour: silver;
+    --disabled-text-colour: darkslategray;
     --glow-colour: #0fa;
 }
 
@@ -76,4 +77,5 @@ button:hover {
 
 button:disabled {
     background-color: var(--disabled-colour);
+    color: var(--disabled-text-colour);
 }

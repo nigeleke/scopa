@@ -23,6 +23,7 @@ pub fn PointsGroupImage(
             class: if checked { "checked" }, 
             img {
                 src: src,
+                alt: format!("{} icon", group.to_string()),
             }
         } 
     }

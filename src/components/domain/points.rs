@@ -1,3 +1,4 @@
+use crate::components::prelude::*;
 use crate::domain::prelude::*;
 
 use dioxus::prelude::*;
@@ -19,14 +20,16 @@ pub fn PointsEditor(
     autofocus: bool,
     #[props(default = false)]
     disabled: bool,
+    aria_label: String,
 ) -> Element {
 
     let mut draft = use_signal(|| value.to_string());
 
-    let update_points = move |event: Event<FormData>| {
-        draft.set(event.value());
+    let update_points = move |value: String| {
+        let result = Points::try_from(value.clone());
 
-        let result = Points::try_from(event.value());
+        draft.set(value);
+
         if let Ok(value) = result {
             onchange.call(value);
         };
@@ -34,14 +37,17 @@ pub fn PointsEditor(
 
     rsx! {
         Container {
-            input {
-                value: value.to_string(),
-                oninput: update_points,
-                r#type: "number",
-                min: "0",
-                autofocus: autofocus,
-                disabled: disabled,
-            }
+            label {
+                Input {
+                    value: value.to_string(),
+                    typ: "number",
+                    on_input: update_points,
+                    min: "0",
+                    autofocus: autofocus,
+                    disabled: disabled,
+                    aria_label,
+                }
+        }
         }
     }
 }

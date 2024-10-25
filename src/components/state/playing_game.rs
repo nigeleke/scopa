@@ -51,9 +51,9 @@ fn ScoreButton(
     };
 
     rsx! {
-        button {
+        Button {
             disabled: !can_score,
-            onclick: record_score,
+            on_click: record_score,
             "Score"
         }
     }

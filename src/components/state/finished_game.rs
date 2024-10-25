@@ -19,17 +19,17 @@ pub fn FinishedGame(
 
     let mut retain_players = use_signal(|| true);
 
-    let update_retain_players = move |event: Event<FormData>| {
-        retain_players.set(event.checked());
+    let update_retain_players = move |value: String| {
+        retain_players.set(str::parse::<bool>(&value).unwrap());
     };
 
     let mut retain_target = use_signal(|| true);
 
-    let update_retain_target = move |event: Event<FormData>| {
-        retain_target.set(event.checked());
+    let update_retain_target = move |value: String| {
+        retain_target.set(str::parse::<bool>(&value).unwrap());
     };
 
-    let start_new_game = move |_| {
+    let start_new_game = move || {
         let mut new_game = Game::default();
 
         if retain_players() {
@@ -68,8 +68,8 @@ pub fn FinishedGame(
                 class: "finished-game-controls",
                 div {
                     class: "finished-game-start-game-button",
-                    button {
-                        onclick: start_new_game,
+                    Button {
+                        on_click: start_new_game,
                         "Start again"
                     }
                 }
@@ -77,19 +77,23 @@ pub fn FinishedGame(
                     class: "finished-game-retain-group",
                     div {
                         class: "finished-game-retain-checkbox",
-                        input {
-                            r#type: "checkbox",
+                        Input {
+                            typ: "checkbox",
+                            value: retain_players(),
                             checked: retain_players(),
-                            onchange: update_retain_players,
+                            on_input: update_retain_players,
+                            aria_label: "Check to use same players in new game",
                         }
                         { " Same players" }    
                     }
                     div {
                         class: "finished-game-retain-checkbox",
-                        input {
-                            r#type: "checkbox",
+                        Input {
+                            typ: "checkbox",
+                            value: retain_target(),
                             checked: retain_target(),
-                            onchange: update_retain_target,
+                            on_input: update_retain_target,
+                            aria_label: "Check to use same target in new game",
                         }
                         { " Same target" }    
                     }

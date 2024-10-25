@@ -63,7 +63,7 @@ fn AddTeam(
         team_name.set(TeamName::default());
     };
 
-    let onclick = move |_| add_team(team_name());
+    let add_team_button_action = move |_| add_team(team_name());
 
     rsx! {
         span {
@@ -74,7 +74,7 @@ fn AddTeam(
                 placeholder: "Add 2, 3, 4 or 6 teams",
             }
             " "
-            button { onclick, " + " }    
+            Button { on_click: add_team_button_action, " + " }    
         }
     }
 }
@@ -95,7 +95,7 @@ fn TeamRows(
     let team_row = move |team: &Team| {
         rsx! {
             tr { 
-                td { button { onclick: remove_team(team),  "-"  } }
+                td { Button { on_click: remove_team(team),  "-"  } }
                 td { TeamNameView { value: team.name() } }
             }
         }    
@@ -118,9 +118,9 @@ fn StartAction(
     let start = move |_| { onstart.call(()); };
 
     rsx! {
-        button {
+        Button {
             disabled: !can_start,
-            onclick: start,
+            on_click: start,
             "Start"
         }
     }
