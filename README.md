@@ -19,8 +19,6 @@ I decided to write this program:
   - to have a simpler way to score the game and
   - to complete a development using the [Dioxus](https://dioxuslabs.com/) framework (by way of a comparison against earlier work developed using [Leptos](https://www.leptos.dev/)).
 
-As of October 2024 the project is essentially complete but some further work will be done on the UI graphics and usability.
-
 ## Development
 
 ```bash
