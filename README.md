@@ -12,12 +12,14 @@
 
 ## Background
 
-I initially discovered Scopa during a holiday in Puglia in August 2024. For a beginner especially it's scoring seemed somewhat complicated and, at the time, I setup a quick spreadsheet to track each round of scores for each player. It worked but was not easy to navigate or reset or add additional players.
+I initially discovered Scopa during a holiday in Puglia in August 2024. For a beginner especially, the scoring seemed somewhat complicated. At the time I setup a quick spreadsheet to track each round of scores for each player. It worked but was not easy to navigate or reset or add additional players.
 
 I decided to write this program:
 
   - to have a simpler way to score the game and
   - to complete a development using the [Dioxus](https://dioxuslabs.com/) framework (by way of a comparison against earlier work developed using [Leptos](https://www.leptos.dev/)).
+
+Comments for improvement, and any other issues, can be raised on [scopa/issues](https://github.com/nigeleke/scopa/issues).
 
 ## Development
 
