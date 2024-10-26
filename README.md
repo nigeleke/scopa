@@ -19,7 +19,7 @@ I decided to write this program:
   - to have a simpler way to score the game and
   - to complete a development using the [Dioxus](https://dioxuslabs.com/) framework (by way of a comparison against earlier work developed using [Leptos](https://www.leptos.dev/)).
 
-Comments for improvement, and any other issues, can be raised on [scopa/issues](https://github.com/nigeleke/scopa/issues).
+Comments for improvements and any other issues, can be raised on [scopa/issues](https://github.com/nigeleke/scopa/issues).
 
 ## Development
 
