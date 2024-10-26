@@ -8,7 +8,7 @@ name: Publish Cycle
 on:
   workflow_run:
     workflows: ["Acceptance Cycle"]
-    branches: [develop]
+    branches: [main]
     types:
       - completed
 
