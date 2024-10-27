@@ -13,6 +13,7 @@ pub fn Home() -> Element {
     };
 
     rsx! {
+        Link { rel: "icon", href: asset!("./assets/favicon.ico") }
         Link { rel: "stylesheet", href: asset!("./assets/css/main.css") }
         Link { rel: "stylesheet", href: asset!("./assets/css/domain/points.css") }
         Link { rel: "stylesheet", href: asset!("./assets/css/domain/points_group_image.css") }

@@ -18,7 +18,7 @@ pub fn Input(
             value,
             r#type: typ,
             oninput: move |event| on_input.call(event.value()),
-            onkeydown: move |event: KeyboardEvent| if event.key() == Key::Enter { on_commit.map(|f| f.call(())); },
+            onkeydown: move |event: KeyboardEvent| if event.key() == Key::Enter { if let Some(f) = on_commit { f.call(()) } },
             aria_label,
             tabindex,
             ..attributes,
