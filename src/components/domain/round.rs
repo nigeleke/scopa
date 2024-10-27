@@ -124,7 +124,7 @@ fn ScopaScore(
     autofocus: bool,
     disabled: bool,
 ) -> Element {
-    let id = (&team).id();
+    let id = team.id();
     let name = &team.name();
 
     let mut draft = use_signal(Points::default);
