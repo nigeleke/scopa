@@ -55,7 +55,7 @@ jobs:
           rm -rf docs
           mv docs0 docs
           mkdir docs/app/
-          mv dist/* docs/app/
+          mv target/dx/scopa/release/web/public/* docs/app/
           git add .
           git commit -m "Release $VERSION"
           git push
