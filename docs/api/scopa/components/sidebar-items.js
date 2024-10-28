@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["domain","prelude","state","ui"]};
+window.SIDEBAR_ITEMS = {"mod":["core","domain","prelude","state","ui"]};

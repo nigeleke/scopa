@@ -1,0 +1,55 @@
+.round-editor-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 1.5svh;
+}
+
+.round-editor-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;    
+}
+  
+.round-editor-column {
+    flex-grow: 1;
+    text-align: center;
+    box-sizing: border-box;
+    width: 10svw;
+}
+
+.round-editor-column * input {
+    flex-shrink: 1;
+}
+
+.round-editor-row .round-editor-column:not(:last-child) {
+    margin-right: 5px;
+}
+
+.radio-team-icon input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+
+.radio-team-icon input[type="radio"] + .points-group-image {
+    border: 2px solid transparent;
+    border-radius: 20px;
+}
+
+.radio-team-icon input[type="radio"]:focus + .points-group-image {
+    border-color: var(--control-colour-focused);
+}
+
+.team-header * {
+    font-size: x-large;
+    color: hsl(from var(--text-colour) h s 90%);
+}
+
+.team-leader-header * {
+    font-size: x-large;
+}
