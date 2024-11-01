@@ -5,6 +5,7 @@ authors = ["Nigel Eke <nigeleke@gmail.com>"]
 edition = "2021"
 
 [dependencies]
+derive_more = { version = "1.0.0", features = ["add", "add_assign", "constructor", "deref", "display", "from"] }
 dioxus = { git = "https://github.com/DioxusLabs/dioxus.git", features = ["web", "asset"] }
 dioxus-logger = "0.5.1"
 getrandom = { version = "0.2.15", features = ["js"] }

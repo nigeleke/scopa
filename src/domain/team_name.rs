@@ -1,6 +1,9 @@
+use derive_more::*;
+
 use std::convert::Infallible;
 
-#[derive(Clone, Debug, Default, PartialEq, Eq, Hash)]
+#[derive(Clone, Debug, Default, Deref, Display, PartialEq, Eq, Hash)]
+#[deref(forward)]
 pub struct TeamName(String);
 
 impl From<&str> for TeamName {
@@ -9,24 +12,10 @@ impl From<&str> for TeamName {
     }
 }
 
-impl std::ops::Deref for TeamName {
-    type Target = str;
-
-    fn deref(&self) -> &Self::Target {
-        &self.0
-    }
-}
-
 impl TryFrom<String> for TeamName {
     type Error = Infallible;
 
     fn try_from(value: String) -> Result<Self, Self::Error> {
         Ok(Self(value))
-    }
-}
-
-impl std::fmt::Display for TeamName {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", self.0)
     }
 }

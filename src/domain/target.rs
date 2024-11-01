@@ -1,15 +1,11 @@
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+use derive_more::*;
+
+#[derive(Clone, Copy, Debug, Display, From, PartialEq, PartialOrd, Eq, Ord)]
 pub struct Target(pub usize);
 
 impl Default for Target {
     fn default() -> Self {
         Self(11)
-    }
-}
-
-impl From<usize> for Target {
-    fn from(value: usize) -> Self {
-        Self(value)
     }
 }
 
@@ -25,11 +21,5 @@ impl TryFrom<String> for Target {
                 .map(|p| p.into())
                 .map_err(|e| e.to_string())
         }
-    }
-}
-
-impl std::fmt::Display for Target {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", self.0)
     }
 }
