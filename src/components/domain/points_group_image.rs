@@ -9,11 +9,11 @@ pub fn PointsGroupImage(
     checked: bool,
 ) -> Element {
     let src = match group {
-        PointsGroup::Scopa => asset!("./assets/images/punteggio_scopa.png"),
-        PointsGroup::CardsCount => asset!("./assets/images/punteggio_carte.png"),
-        PointsGroup::CoinsCount => asset!("./assets/images/punteggio_denari.png"),
-        PointsGroup::Settebello => asset!("./assets/images/punteggio_settebello.png"),
-        PointsGroup::Premiera => asset!("./assets/images/punteggio_premiere.png"),
+        PointsGroup::Scopa => asset!("/assets/images/punteggio_scopa.png"),
+        PointsGroup::CardsCount => asset!("/assets/images/punteggio_carte.png"),
+        PointsGroup::CoinsCount => asset!("/assets/images/punteggio_denari.png"),
+        PointsGroup::Settebello => asset!("/assets/images/punteggio_settebello.png"),
+        PointsGroup::Premiera => asset!("/assets/images/punteggio_premiere.png"),
     };
 
     rsx! {

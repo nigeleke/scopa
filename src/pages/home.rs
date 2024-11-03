@@ -13,18 +13,18 @@ pub fn Home() -> Element {
     };
 
     rsx! {
-        Link { rel: "icon", href: asset!("./assets/favicon.ico") }
-        Link { rel: "stylesheet", href: asset!("./assets/css/main.css") }
-        Link { rel: "stylesheet", href: asset!("./assets/css/domain/points.css") }
-        Link { rel: "stylesheet", href: asset!("./assets/css/domain/points_group_image.css") }
-        Link { rel: "stylesheet", href: asset!("./assets/css/domain/round_number.css") }
-        Link { rel: "stylesheet", href: asset!("./assets/css/domain/round.css") }
-        Link { rel: "stylesheet", href: asset!("./assets/css/domain/scopa_header.css") }
-        Link { rel: "stylesheet", href: asset!("./assets/css/domain/target.css") }
-        Link { rel: "stylesheet", href: asset!("./assets/css/state/finished_game.css") }
-        Link { rel: "stylesheet", href: asset!("./assets/css/state/playing_game.css") }
-        Link { rel: "stylesheet", href: asset!("./assets/css/state/starting_game.css") }
-        Link { rel: "stylesheet", href: asset!("./assets/css/ui/glow.css") }
+        Link { rel: "icon", href: asset!("/assets/favicon.ico") }
+        Link { rel: "stylesheet", href: asset!("/assets/css/main.css") }
+        Link { rel: "stylesheet", href: asset!("/assets/css/domain/points.css") }
+        Link { rel: "stylesheet", href: asset!("/assets/css/domain/points_group_image.css") }
+        Link { rel: "stylesheet", href: asset!("/assets/css/domain/round_number.css") }
+        Link { rel: "stylesheet", href: asset!("/assets/css/domain/round.css") }
+        Link { rel: "stylesheet", href: asset!("/assets/css/domain/scopa_header.css") }
+        Link { rel: "stylesheet", href: asset!("/assets/css/domain/target.css") }
+        Link { rel: "stylesheet", href: asset!("/assets/css/state/finished_game.css") }
+        Link { rel: "stylesheet", href: asset!("/assets/css/state/playing_game.css") }
+        Link { rel: "stylesheet", href: asset!("/assets/css/state/starting_game.css") }
+        Link { rel: "stylesheet", href: asset!("/assets/css/ui/glow.css") }
         header { ScopaHeader {} }
         main {
             match game() {
