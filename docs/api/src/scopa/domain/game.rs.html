@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/domain/game.rs`."><title>game.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-590a400c.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="scopa" data-themes="" data-resource-suffix="" data-rustdoc-version="1.84.0-nightly (a0d98ff0e 2024-10-31)" data-channel="nightly" data-search-js="search-c5a66128.js" data-settings-js="settings-0f613d39.js" ><script src="../../../static.files/storage-59e33391.js"></script><script defer src="../../../static.files/src-script-56102188.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-5f194d8c.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">scopa/domain/</div>game.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/domain/game.rs`."><title>game.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-dbdb5eec.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="scopa" data-themes="" data-resource-suffix="" data-rustdoc-version="1.85.0-nightly (acabb5248 2024-12-04)" data-channel="nightly" data-search-js="search-92e6798f.js" data-settings-js="settings-0f613d39.js" ><script src="../../../static.files/storage-59e33391.js"></script><script defer src="../../../static.files/src-script-56102188.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-5f194d8c.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">scopa/domain/</div>game.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers">
 <a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
@@ -288,9 +288,29 @@
 <a href="#287" id="287">287</a>
 <a href="#288" id="288">288</a>
 <a href="#289" id="289">289</a>
-<a href="#290" id="290">290</a></pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::domain::prelude::<span class="kw-2">*</span>;
+<a href="#290" id="290">290</a>
+<a href="#291" id="291">291</a>
+<a href="#292" id="292">292</a>
+<a href="#293" id="293">293</a>
+<a href="#294" id="294">294</a>
+<a href="#295" id="295">295</a>
+<a href="#296" id="296">296</a>
+<a href="#297" id="297">297</a>
+<a href="#298" id="298">298</a>
+<a href="#299" id="299">299</a>
+<a href="#300" id="300">300</a>
+<a href="#301" id="301">301</a>
+<a href="#302" id="302">302</a>
+<a href="#303" id="303">303</a>
+<a href="#304" id="304">304</a>
+<a href="#305" id="305">305</a>
+<a href="#306" id="306">306</a>
+<a href="#307" id="307">307</a>
+<a href="#308" id="308">308</a></pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::domain::prelude::<span class="kw-2">*</span>;
 
-<span class="attr">#[derive(Clone, Debug)]
+<span class="kw">use </span>serde::{Deserialize, Serialize};
+
+<span class="attr">#[derive(Clone, Debug, Serialize, Deserialize)]
 </span><span class="kw">pub enum </span>GameState {
     Starting(Game&lt;StartingState&gt;),
     Playing(Game&lt;PlayingState&gt;),
@@ -317,7 +337,7 @@
 
 <span class="kw">pub trait </span>InternalGameState {}
 
-<span class="attr">#[derive(Clone, Debug, PartialEq)]
+<span class="attr">#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 </span><span class="kw">pub struct </span>Game&lt;T&gt; {
     state: T,
     _phantom: std::marker::PhantomData&lt;T&gt;,
@@ -325,7 +345,7 @@
 
 <span class="kw">impl</span>&lt;T&gt; Game&lt;T&gt;
 <span class="kw">where
-    </span>T: Clone
+    </span>T: Clone,
 {
     <span class="kw">pub fn </span>state(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; T {
         <span class="self">self</span>.state.clone()
@@ -350,7 +370,7 @@
     <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             state: StartingState::default(),
-            _phantom: std::marker::PhantomData
+            _phantom: std::marker::PhantomData,
         }
     }
 }
@@ -359,7 +379,7 @@
     <span class="kw">pub fn </span>new_playing_state(teams: <span class="kw-2">&amp;</span>[Team], target: Target) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             state: PlayingState::new(teams, target),
-            _phantom: std::marker::PhantomData
+            _phantom: std::marker::PhantomData,
         }
     }
 }
@@ -374,18 +394,23 @@
 }
 
 <span class="kw">impl </span>Game&lt;FinishedState&gt; {
-    <span class="kw">pub fn </span>new_finished_state(teams: <span class="kw-2">&amp;</span>[Team], rounds: <span class="kw-2">&amp;</span>[Round], target: Target, winner: TeamId) -&gt; <span class="self">Self </span>{
+    <span class="kw">pub fn </span>new_finished_state(
+        teams: <span class="kw-2">&amp;</span>[Team],
+        rounds: <span class="kw-2">&amp;</span>[Round],
+        target: Target,
+        winner: TeamId,
+    ) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             state: FinishedState::new(teams, rounds, target, winner),
-            _phantom: std::marker::PhantomData
+            _phantom: std::marker::PhantomData,
         }
     }
 }
 
 <span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>test {
-    <span class="kw">use </span><span class="kw">crate</span>::domain::result::Error;
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
+    <span class="kw">use </span><span class="kw">crate</span>::domain::result::Error;
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>a_new_game_will_have_no_teams() {
@@ -469,7 +494,9 @@
         <span class="kw">let _ </span>= game.add_team(team1).unwrap();
         <span class="kw">let _ </span>= game.add_team(team2).unwrap();
 
-        <span class="kw">let </span>GameState::Playing(game) = game.start().unwrap() <span class="kw">else </span>{ <span class="macro">panic!</span>(<span class="string">"Unexpected state"</span>)};
+        <span class="kw">let </span>GameState::Playing(game) = game.start().unwrap() <span class="kw">else </span>{
+            <span class="macro">panic!</span>(<span class="string">"Unexpected state"</span>)
+        };
         <span class="macro">assert_eq!</span>(game.points(id1), Points::from(<span class="number">0</span>));
         <span class="macro">assert_eq!</span>(game.points(id2), Points::from(<span class="number">0</span>));
     }
@@ -487,14 +514,18 @@
         <span class="kw">let _ </span>= game.add_team(team1).unwrap();
         <span class="kw">let _ </span>= game.add_team(team2).unwrap();
 
-        <span class="kw">let </span>GameState::Playing(game) = game.start().unwrap() <span class="kw">else </span>{ <span class="macro">panic!</span>(<span class="string">"Unexpected state"</span>) };
+        <span class="kw">let </span>GameState::Playing(game) = game.start().unwrap() <span class="kw">else </span>{
+            <span class="macro">panic!</span>(<span class="string">"Unexpected state"</span>)
+        };
         <span class="kw">let </span>score = Round::default()
             .with_scopas(id1, <span class="number">2</span>.into())
             .with_scopas(id2, <span class="number">3</span>.into());
 
-        <span class="kw">let </span>GameState::Playing(game) = game.score_round(<span class="kw-2">&amp;</span>score).unwrap() <span class="kw">else </span>{ <span class="macro">panic!</span>(<span class="string">"Unexpected state"</span>) };
+        <span class="kw">let </span>GameState::Playing(game) = game.score_round(<span class="kw-2">&amp;</span>score).unwrap() <span class="kw">else </span>{
+            <span class="macro">panic!</span>(<span class="string">"Unexpected state"</span>)
+        };
         <span class="macro">assert_eq!</span>(game.points(id1), Points::from(<span class="number">2</span>));
-        <span class="macro">assert_eq!</span>(game.points(id2), Points::from(<span class="number">3</span>));        
+        <span class="macro">assert_eq!</span>(game.points(id2), Points::from(<span class="number">3</span>));
     }
 
     <span class="kw">fn </span>test_is_finished(target: usize, score1: usize, score2: usize, is_finished: bool) {
@@ -510,7 +541,9 @@
         <span class="kw">let _ </span>= game.add_team(team1).unwrap();
         <span class="kw">let _ </span>= game.add_team(team2).unwrap();
 
-        <span class="kw">let </span>GameState::Playing(game) = game.start().unwrap() <span class="kw">else </span>{ <span class="macro">panic!</span>(<span class="string">"Unexpected state"</span>) };
+        <span class="kw">let </span>GameState::Playing(game) = game.start().unwrap() <span class="kw">else </span>{
+            <span class="macro">panic!</span>(<span class="string">"Unexpected state"</span>)
+        };
         <span class="kw">let </span>score = Round::default()
             .with_scopas(id1, score1.into())
             .with_scopas(id2, score2.into());
@@ -521,12 +554,12 @@
                 <span class="macro">assert_eq!</span>(game.points(id1), Points::from(score1));
                 <span class="macro">assert_eq!</span>(game.points(id2), Points::from(score2));
                 <span class="macro">assert!</span>(!is_finished);
-            },
+            }
             GameState::Finished(game) =&gt; {
                 <span class="macro">assert_eq!</span>(game.points(id1), Points::from(score1));
                 <span class="macro">assert_eq!</span>(game.points(id2), Points::from(score2));
                 <span class="macro">assert!</span>(is_finished);
-            },
+            }
         }
     }
 
@@ -563,18 +596,22 @@
         <span class="kw">let _ </span>= game.add_team(team2).unwrap();
         <span class="kw">let _ </span>= game.add_team(team3).unwrap();
 
-        <span class="kw">let </span>GameState::Playing(game) = game.start().unwrap() <span class="kw">else </span>{ <span class="macro">panic!</span>(<span class="string">"Unexpected state"</span>) };
+        <span class="kw">let </span>GameState::Playing(game) = game.start().unwrap() <span class="kw">else </span>{
+            <span class="macro">panic!</span>(<span class="string">"Unexpected state"</span>)
+        };
 
         <span class="kw">let </span>score = Round::default()
             .with_scopas(id1, <span class="number">2</span>.into())
             .with_scopas(id2, <span class="number">4</span>.into())
             .with_scopas(id3, <span class="number">4</span>.into());
-        <span class="kw">let </span>GameState::Playing(game) = game.score_round(<span class="kw-2">&amp;</span>score).unwrap() <span class="kw">else </span>{ <span class="macro">panic!</span>(<span class="string">"Unexpected state"</span>) };
+        <span class="kw">let </span>GameState::Playing(game) = game.score_round(<span class="kw-2">&amp;</span>score).unwrap() <span class="kw">else </span>{
+            <span class="macro">panic!</span>(<span class="string">"Unexpected state"</span>)
+        };
 
         <span class="kw">let </span>teams = game.teams();
         <span class="macro">assert!</span>(teams[<span class="number">0</span>].is_not_playing());
         <span class="macro">assert!</span>(!teams[<span class="number">1</span>].is_not_playing());
         <span class="macro">assert!</span>(!teams[<span class="number">2</span>].is_not_playing());
     }
-
-}</code></pre></div></section></main></body></html>
+}
+</code></pre></div></section></main></body></html>
