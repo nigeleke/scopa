@@ -3,6 +3,7 @@
 mod components;
 mod domain;
 mod pages;
+mod use_persistent;
 
 use crate::pages::home::Home;
 

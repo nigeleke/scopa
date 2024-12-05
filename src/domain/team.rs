@@ -1,12 +1,14 @@
+use serde::{Deserialize, Serialize};
+
 use crate::domain::prelude::*;
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 enum Engagement {
     Participating,
-    Eliminated
+    Eliminated,
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Team {
     id: TeamId,
     name: TeamName,
@@ -15,10 +17,10 @@ pub struct Team {
 
 impl Team {
     pub fn new(name: &str) -> Self {
-        Self { 
+        Self {
             id: TeamId::new(),
             name: name.into(),
-            engagement: Engagement::Participating,   
+            engagement: Engagement::Participating,
         }
     }
 

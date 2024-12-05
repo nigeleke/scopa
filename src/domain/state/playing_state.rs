@@ -1,7 +1,9 @@
-use crate::domain::{GameState, InternalGameState};
-use crate::domain::prelude::*;
+use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug, PartialEq)]
+use crate::domain::prelude::*;
+use crate::domain::{GameState, InternalGameState};
+
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct PlayingState {
     teams: Vec<Team>,
     rounds: Vec<Round>,
@@ -15,18 +17,20 @@ impl PlayingState {
         Self {
             teams: Vec::from(teams),
             rounds: Vec::default(),
-            target        }
+            target,
+        }
     }
 
     pub fn target(&self) -> Target {
-        self.target    
+        self.target
     }
 
     pub fn score_round(&self, round: &Round) -> Result<GameState> {
         let mut new_state = self.clone();
         new_state.rounds.push(round.clone());
 
-        let team_points = self.teams
+        let team_points = self
+            .teams
             .iter()
             .map(|team: &Team| {
                 let id = team.id();
@@ -47,16 +51,24 @@ impl PlayingState {
         let single_winner = || winners.len() == 1;
         let definitive_winner = || winners[0].1 > winners[1].1;
 
-        let game =
-            if no_winners() {
-                GameState::Playing(Game::from(new_state))
-            } else if single_winner() || definitive_winner() {
-                GameState::Finished(Game::new_finished_state(&self.teams, &new_state.rounds, self.target, winners[0].0.id()))
-            } else {
-                let loser_ids = losers.iter().map(|(t, _)| t.id()).collect::<Vec<_>>();
-                new_state.teams.iter_mut().for_each(|t| if loser_ids.contains(&t.id()) { t.set_not_playing(); });
-                GameState::Playing(Game::from(new_state))
-            };
+        let game = if no_winners() {
+            GameState::Playing(Game::from(new_state))
+        } else if single_winner() || definitive_winner() {
+            GameState::Finished(Game::new_finished_state(
+                &self.teams,
+                &new_state.rounds,
+                self.target,
+                winners[0].0.id(),
+            ))
+        } else {
+            let loser_ids = losers.iter().map(|(t, _)| t.id()).collect::<Vec<_>>();
+            new_state.teams.iter_mut().for_each(|t| {
+                if loser_ids.contains(&t.id()) {
+                    t.set_not_playing();
+                }
+            });
+            GameState::Playing(Game::from(new_state))
+        };
 
         Ok(game)
     }

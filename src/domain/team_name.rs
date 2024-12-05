@@ -1,8 +1,9 @@
 use derive_more::*;
+use serde::{Deserialize, Serialize};
 
 use std::convert::Infallible;
 
-#[derive(Clone, Debug, Default, Deref, Display, PartialEq, Eq, Hash)]
+#[derive(Clone, Debug, Default, Deref, Display, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[deref(forward)]
 pub struct TeamName(String);
 

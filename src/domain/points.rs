@@ -1,8 +1,24 @@
 use crate::domain::prelude::Target;
 
 use derive_more::*;
+use serde::{Deserialize, Serialize};
 
-#[derive(Add, AddAssign, Clone, Copy, Debug, Default, Display, From, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(
+    Add,
+    AddAssign,
+    Clone,
+    Copy,
+    Debug,
+    Default,
+    Display,
+    From,
+    PartialEq,
+    PartialOrd,
+    Eq,
+    Ord,
+    Serialize,
+    Deserialize,
+)]
 pub struct Points(pub usize);
 
 impl TryFrom<String> for Points {

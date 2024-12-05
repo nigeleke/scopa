@@ -1,6 +1,8 @@
 use crate::domain::prelude::*;
 
-#[derive(Clone, Debug)]
+use serde::{Deserialize, Serialize};
+
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub enum GameState {
     Starting(Game<StartingState>),
     Playing(Game<PlayingState>),
@@ -27,7 +29,7 @@ impl std::ops::Deref for GameState {
 
 pub trait InternalGameState {}
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Game<T> {
     state: T,
     _phantom: std::marker::PhantomData<T>,
@@ -35,7 +37,7 @@ pub struct Game<T> {
 
 impl<T> Game<T>
 where
-    T: Clone
+    T: Clone,
 {
     pub fn state(&self) -> T {
         self.state.clone()
@@ -60,7 +62,7 @@ impl Default for Game<StartingState> {
     fn default() -> Self {
         Self {
             state: StartingState::default(),
-            _phantom: std::marker::PhantomData
+            _phantom: std::marker::PhantomData,
         }
     }
 }
@@ -69,7 +71,7 @@ impl Game<PlayingState> {
     pub fn new_playing_state(teams: &[Team], target: Target) -> Self {
         Self {
             state: PlayingState::new(teams, target),
-            _phantom: std::marker::PhantomData
+            _phantom: std::marker::PhantomData,
         }
     }
 }
@@ -84,18 +86,23 @@ impl From<PlayingState> for Game<PlayingState> {
 }
 
 impl Game<FinishedState> {
-    pub fn new_finished_state(teams: &[Team], rounds: &[Round], target: Target, winner: TeamId) -> Self {
+    pub fn new_finished_state(
+        teams: &[Team],
+        rounds: &[Round],
+        target: Target,
+        winner: TeamId,
+    ) -> Self {
         Self {
             state: FinishedState::new(teams, rounds, target, winner),
-            _phantom: std::marker::PhantomData
+            _phantom: std::marker::PhantomData,
         }
     }
 }
 
 #[cfg(test)]
 mod test {
-    use crate::domain::result::Error;
     use super::*;
+    use crate::domain::result::Error;
 
     #[test]
     fn a_new_game_will_have_no_teams() {
@@ -179,7 +186,9 @@ mod test {
         let _ = game.add_team(team1).unwrap();
         let _ = game.add_team(team2).unwrap();
 
-        let GameState::Playing(game) = game.start().unwrap() else { panic!("Unexpected state")};
+        let GameState::Playing(game) = game.start().unwrap() else {
+            panic!("Unexpected state")
+        };
         assert_eq!(game.points(id1), Points::from(0));
         assert_eq!(game.points(id2), Points::from(0));
     }
@@ -197,14 +206,18 @@ mod test {
         let _ = game.add_team(team1).unwrap();
         let _ = game.add_team(team2).unwrap();
 
-        let GameState::Playing(game) = game.start().unwrap() else { panic!("Unexpected state") };
+        let GameState::Playing(game) = game.start().unwrap() else {
+            panic!("Unexpected state")
+        };
         let score = Round::default()
             .with_scopas(id1, 2.into())
             .with_scopas(id2, 3.into());
 
-        let GameState::Playing(game) = game.score_round(&score).unwrap() else { panic!("Unexpected state") };
+        let GameState::Playing(game) = game.score_round(&score).unwrap() else {
+            panic!("Unexpected state")
+        };
         assert_eq!(game.points(id1), Points::from(2));
-        assert_eq!(game.points(id2), Points::from(3));        
+        assert_eq!(game.points(id2), Points::from(3));
     }
 
     fn test_is_finished(target: usize, score1: usize, score2: usize, is_finished: bool) {
@@ -220,7 +233,9 @@ mod test {
         let _ = game.add_team(team1).unwrap();
         let _ = game.add_team(team2).unwrap();
 
-        let GameState::Playing(game) = game.start().unwrap() else { panic!("Unexpected state") };
+        let GameState::Playing(game) = game.start().unwrap() else {
+            panic!("Unexpected state")
+        };
         let score = Round::default()
             .with_scopas(id1, score1.into())
             .with_scopas(id2, score2.into());
@@ -231,12 +246,12 @@ mod test {
                 assert_eq!(game.points(id1), Points::from(score1));
                 assert_eq!(game.points(id2), Points::from(score2));
                 assert!(!is_finished);
-            },
+            }
             GameState::Finished(game) => {
                 assert_eq!(game.points(id1), Points::from(score1));
                 assert_eq!(game.points(id2), Points::from(score2));
                 assert!(is_finished);
-            },
+            }
         }
     }
 
@@ -273,18 +288,21 @@ mod test {
         let _ = game.add_team(team2).unwrap();
         let _ = game.add_team(team3).unwrap();
 
-        let GameState::Playing(game) = game.start().unwrap() else { panic!("Unexpected state") };
+        let GameState::Playing(game) = game.start().unwrap() else {
+            panic!("Unexpected state")
+        };
 
         let score = Round::default()
             .with_scopas(id1, 2.into())
             .with_scopas(id2, 4.into())
             .with_scopas(id3, 4.into());
-        let GameState::Playing(game) = game.score_round(&score).unwrap() else { panic!("Unexpected state") };
+        let GameState::Playing(game) = game.score_round(&score).unwrap() else {
+            panic!("Unexpected state")
+        };
 
         let teams = game.teams();
         assert!(teams[0].is_not_playing());
         assert!(!teams[1].is_not_playing());
         assert!(!teams[2].is_not_playing());
     }
-
 }

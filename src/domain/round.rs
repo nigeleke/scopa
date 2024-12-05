@@ -1,8 +1,10 @@
+use serde::{Deserialize, Serialize};
+
 use crate::domain::prelude::*;
 
 use std::collections::HashMap;
 
-#[derive(Clone, Debug, Default, PartialEq)]
+#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct Round {
     scopas: HashMap<TeamId, Points>,
     highest_card_count: Option<TeamId>,
@@ -38,7 +40,11 @@ impl Round {
     }
 
     pub fn points(&self, id: TeamId) -> Points {
-        let as_points = |maybe_id: Option<TeamId>| maybe_id.map_or(Points::default(), |id0| (if id0 == id { 1 } else { 0 }).into());
+        let as_points = |maybe_id: Option<TeamId>| {
+            maybe_id.map_or(Points::default(), |id0| {
+                (if id0 == id { 1 } else { 0 }).into()
+            })
+        };
         let scopas = self.scopas(id);
         let highest_card_count = as_points(self.highest_card_count);
         let highest_coins_count = as_points(self.highest_coins_count);
@@ -100,7 +106,7 @@ mod test {
         let round = Round::default()
             .with_scopas(id1, 1.into())
             .with_scopas(id2, 2.into());
-        assert_eq!(round.points(id1),Points::from(1));
+        assert_eq!(round.points(id1), Points::from(1));
         assert_eq!(round.points(id2), Points::from(2));
         assert_eq!(round.points(id3), Points::from(0));
     }
@@ -118,38 +124,34 @@ mod test {
     fn round_will_contain_card_count_winner() {
         let id1 = Team::new("name").id();
         let id2 = Team::new("name").id();
-        let round = Round::default()
-            .with_highest_card_count(Some(id1));
+        let round = Round::default().with_highest_card_count(Some(id1));
         assert_eq!(round.points(id1), Points::from(1));
         assert_eq!(round.points(id2), Points::from(0));
     }
-    
+
     #[test]
     fn round_will_contain_coins_count_winner() {
         let id1 = Team::new("name").id();
         let id2 = Team::new("name").id();
-        let round = Round::default()
-            .with_highest_coins_count(Some(id1));
+        let round = Round::default().with_highest_coins_count(Some(id1));
         assert_eq!(round.points(id1), Points::from(1));
         assert_eq!(round.points(id2), Points::from(0));
     }
-    
+
     #[test]
     fn round_will_contain_settobello_winner() {
         let id1 = Team::new("name").id();
         let id2 = Team::new("name").id();
-        let round = Round::default()
-            .with_settobello(id1);
+        let round = Round::default().with_settobello(id1);
         assert_eq!(round.points(id1), Points::from(1));
         assert_eq!(round.points(id2), Points::from(0));
     }
-    
+
     #[test]
     fn round_will_contain_premiere_winner() {
         let id1 = Team::new("name").id();
         let id2 = Team::new("name").id();
-        let round = Round::default()
-            .with_premiere(Some(id1));
+        let round = Round::default().with_premiere(Some(id1));
         assert_eq!(round.points(id1), Points::from(1));
         assert_eq!(round.points(id2), Points::from(0));
     }

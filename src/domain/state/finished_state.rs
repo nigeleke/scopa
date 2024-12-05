@@ -1,7 +1,10 @@
-use crate::domain::InternalGameState;
-use crate::domain::prelude::*;
+use serde::Deserialize;
+use serde::Serialize;
 
-#[derive(Clone, Debug, PartialEq)]
+use crate::domain::prelude::*;
+use crate::domain::InternalGameState;
+
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct FinishedState {
     target: Target,
     teams: Vec<Team>,
@@ -18,15 +21,16 @@ impl FinishedState {
             rounds: Vec::from(rounds),
             target,
             winner,
-        }        
+        }
     }
 
     pub fn target(&self) -> Target {
-        self.target    
+        self.target
     }
 
     pub fn winner(&self) -> TeamName {
-        self.teams().iter()
+        self.teams()
+            .iter()
             .find(|t| t.id() == self.winner)
             .map_or(TeamName::default(), |t| t.name())
     }

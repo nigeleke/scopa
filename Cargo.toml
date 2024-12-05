@@ -9,5 +9,7 @@ derive_more = { version = "1.0.0", features = ["add", "add_assign", "constructor
 dioxus = { git = "https://github.com/DioxusLabs/dioxus.git", features = ["web", "asset"] }
 dioxus-logger = "0.5.1"
 getrandom = { version = "0.2.15", features = ["js"] }
+gloo-storage = "0.3.0"
+serde = { version = "1.0.215", features = ["derive"] }
 thiserror = "1.0.66"
-uuid = { version = "1.10.0", features = ["v4"] }
+uuid = { version = "1.10.0", features = ["v4", "serde"] }

@@ -1,7 +1,9 @@
-use crate::domain::{GameState, InternalGameState};
-use crate::domain::prelude::*;
+use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug, Default, PartialEq)]
+use crate::domain::prelude::*;
+use crate::domain::{GameState, InternalGameState};
+
+#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct StartingState {
     teams: Vec<Team>,
     target: Target,
@@ -23,7 +25,7 @@ impl StartingState {
         if let Some(_existing_team) = self.find_team(id) {
             self.teams.retain(|t| t.id() != id);
             Ok(())
-        } else { 
+        } else {
             Err(Error::TeamNotFound(id))
         }
     }
@@ -36,7 +38,12 @@ impl StartingState {
         self.target = target;
     }
 
-    const VALID_TEAM_COUNTS: [TeamCount; 4] = [TeamCount::new(2), TeamCount::new(3), TeamCount::new(4), TeamCount::new(6)];
+    const VALID_TEAM_COUNTS: [TeamCount; 4] = [
+        TeamCount::new(2),
+        TeamCount::new(3),
+        TeamCount::new(4),
+        TeamCount::new(6),
+    ];
 
     pub fn can_start(&self) -> bool {
         Self::VALID_TEAM_COUNTS.contains(&self.team_count())
@@ -45,11 +52,13 @@ impl StartingState {
     pub fn start(&self) -> Result<GameState> {
         let team_count = self.team_count();
         if StartingState::VALID_TEAM_COUNTS.contains(&team_count) {
-            Ok(GameState::Playing(Game::new_playing_state(&self.teams, self.target)))
+            Ok(GameState::Playing(Game::new_playing_state(
+                &self.teams,
+                self.target,
+            )))
         } else {
             Err(Error::InvalidNumberOfTeams(team_count))
         }
-
     }
 }
 

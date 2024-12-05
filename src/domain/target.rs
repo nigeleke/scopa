@@ -1,6 +1,9 @@
 use derive_more::*;
+use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Copy, Debug, Display, From, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(
+    Clone, Copy, Debug, Display, From, PartialEq, PartialOrd, Eq, Ord, Serialize, Deserialize,
+)]
 pub struct Target(pub usize);
 
 impl Default for Target {

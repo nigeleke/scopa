@@ -1,7 +1,8 @@
 use derive_more::*;
+use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
-#[derive(Clone, Copy, Debug, Display, PartialEq, Eq, Hash)]
+#[derive(Clone, Copy, Debug, Display, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub struct TeamId(Uuid);
 
 impl TeamId {
