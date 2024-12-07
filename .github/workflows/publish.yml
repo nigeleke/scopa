@@ -45,7 +45,11 @@ jobs:
 
             - name: Build App
               run: |
+                  git status
+                  git diff
                   cargo install dioxus-cli --git https://github.com/DioxusLabs/dioxus.git
+                  git status
+                  git diff
                   dx build --release
                   git status
                   git diff

@@ -263,7 +263,7 @@ name = "dioxus"
 version = "0.6.0"
 source = "git+https://github.com/DioxusLabs/dioxus.git#e2e565c8895a489fbe530cad14fae63c673cd337"
 dependencies = [
- "dioxus-cli-config",
+ "dioxus-cli-config 0.6.0 (git+https://github.com/DioxusLabs/dioxus.git)",
  "dioxus-config-macro",
  "dioxus-core",
  "dioxus-core-macro",
@@ -273,11 +273,17 @@ dependencies = [
  "dioxus-history",
  "dioxus-hooks",
  "dioxus-html",
- "dioxus-logger 0.6.0",
+ "dioxus-logger 0.6.0 (git+https://github.com/DioxusLabs/dioxus.git)",
  "dioxus-signals",
  "dioxus-web",
  "manganis",
 ]
+
+[[package]]
+name = "dioxus-cli-config"
+version = "0.6.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "27a7caafe149ef8b1bb526ac7dfc6687a6b610a91a7fa8b9f9c2f64825538462"
 
 [[package]]
 name = "dioxus-cli-config"
@@ -491,11 +497,12 @@ dependencies = [
 
 [[package]]
 name = "dioxus-logger"
-version = "0.5.1"
+version = "0.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "81fe09dc9773dc1f1bb0d38529203d6555d08f67aadca5cf955ac3d1a9e69880"
+checksum = "86c9db554355b5418ce754c9a98482862f6f71ea1d87f00ee027cd081ad282e6"
 dependencies = [
  "console_error_panic_hook",
+ "dioxus-cli-config 0.6.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "tracing",
  "tracing-subscriber",
  "tracing-wasm",
@@ -507,7 +514,7 @@ version = "0.6.0"
 source = "git+https://github.com/DioxusLabs/dioxus.git#e2e565c8895a489fbe530cad14fae63c673cd337"
 dependencies = [
  "console_error_panic_hook",
- "dioxus-cli-config",
+ "dioxus-cli-config 0.6.0 (git+https://github.com/DioxusLabs/dioxus.git)",
  "tracing",
  "tracing-subscriber",
  "tracing-wasm",
@@ -547,7 +554,7 @@ source = "git+https://github.com/DioxusLabs/dioxus.git#e2e565c8895a489fbe530cad1
 dependencies = [
  "async-trait",
  "ciborium",
- "dioxus-cli-config",
+ "dioxus-cli-config 0.6.0 (git+https://github.com/DioxusLabs/dioxus.git)",
  "dioxus-core",
  "dioxus-core-types",
  "dioxus-devtools",
@@ -774,7 +781,7 @@ dependencies = [
  "pin-project",
  "serde",
  "serde_json",
- "thiserror",
+ "thiserror 1.0.69",
  "wasm-bindgen",
  "wasm-bindgen-futures",
  "web-sys",
@@ -790,7 +797,7 @@ dependencies = [
  "js-sys",
  "serde",
  "serde_json",
- "thiserror",
+ "thiserror 1.0.69",
  "wasm-bindgen",
  "web-sys",
 ]
@@ -1072,7 +1079,7 @@ version = "0.6.0"
 source = "git+https://github.com/DioxusLabs/dioxus.git#e2e565c8895a489fbe530cad14fae63c673cd337"
 dependencies = [
  "const-serialize",
- "dioxus-cli-config",
+ "dioxus-cli-config 0.6.0 (git+https://github.com/DioxusLabs/dioxus.git)",
  "dioxus-core-types",
  "serde",
 ]
@@ -1272,11 +1279,11 @@ version = "0.1.45"
 dependencies = [
  "derive_more",
  "dioxus",
- "dioxus-logger 0.5.1",
+ "dioxus-logger 0.6.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "getrandom",
  "gloo-storage",
  "serde",
- "thiserror",
+ "thiserror 2.0.4",
  "uuid",
 ]
 
@@ -1346,7 +1353,7 @@ checksum = "0431a35568651e363364210c91983c1da5eb29404d9f0928b67d4ebcfa7d330c"
 dependencies = [
  "percent-encoding",
  "serde",
- "thiserror",
+ "thiserror 1.0.69",
 ]
 
 [[package]]
@@ -1368,7 +1375,7 @@ dependencies = [
  "serde_json",
  "serde_qs",
  "server_fn_macro_default",
- "thiserror",
+ "thiserror 1.0.69",
  "url",
  "wasm-bindgen",
  "wasm-bindgen-futures",
@@ -1509,7 +1516,16 @@ version = "1.0.69"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b6aaf5339b578ea85b50e080feb250a3e8ae8cfcdff9a461c9ec2904bc923f52"
 dependencies = [
- "thiserror-impl",
+ "thiserror-impl 1.0.69",
+]
+
+[[package]]
+name = "thiserror"
+version = "2.0.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2f49a1853cf82743e3b7950f77e0f4d622ca36cf4317cba00c767838bac8d490"
+dependencies = [
+ "thiserror-impl 2.0.4",
 ]
 
 [[package]]
@@ -1517,6 +1533,17 @@ name = "thiserror-impl"
 version = "1.0.69"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4fee6c4efc90059e10f81e6d42c60a18f76588c3d74cb83a0b242a2b6c7504c1"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+]
+
+[[package]]
+name = "thiserror-impl"
+version = "2.0.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8381894bb3efe0c4acac3ded651301ceee58a15d47c2e34885ed1908ad667061"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -1610,7 +1637,7 @@ dependencies = [
  "log",
  "rand",
  "sha1",
- "thiserror",
+ "thiserror 1.0.69",
  "utf-8",
 ]
 
