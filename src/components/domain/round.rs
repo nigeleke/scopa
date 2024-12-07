@@ -4,29 +4,25 @@ use crate::domain::prelude::*;
 use dioxus::prelude::*;
 
 #[component]
-pub fn RoundEditor(
-    state: PlayingState,
-    round: Signal<Round>,
-) -> Element {
+pub fn RoundEditor(state: PlayingState, round: Signal<Round>) -> Element {
     let teams = Vec::from(state.teams());
 
-    let first_active_team = teams.iter()
-        .find(|t| t.is_playing())
-        .unwrap();
+    let first_active_team = teams.iter().find(|t| t.is_playing()).unwrap();
     let first_active_team_id = first_active_team.id();
 
-    let leading_team_score = teams.iter()
+    let leading_team_score = teams
+        .iter()
         .map(|team| state.points(team.id()))
         .max()
         .unwrap_or_default();
 
     let none_column_components = [
         rsx! { Empty {} },
-        rsx! { ScopaIcon {} },
-        rsx! { RadioTeamIcon { group: PointsGroup::CardsCount, team: None, round: round } },
-        rsx! { RadioTeamIcon { group: PointsGroup::CoinsCount, team: None, round: round } },
-        rsx! { RadioTeamIcon { group: PointsGroup::Settebello, team: None, round: round } },
-        rsx! { RadioTeamIcon { group: PointsGroup::Premiera, team: None, round: round } },
+        rsx! { ScopaIcon { hint: "Scopa" } },
+        rsx! { RadioTeamIcon { hint: "Cards count", group: PointsGroup::CardsCount, team: None, round: round } },
+        rsx! { RadioTeamIcon { hint: "Coins count", group: PointsGroup::CoinsCount, team: None, round: round } },
+        rsx! { RadioTeamIcon { hint: "Settebello", group: PointsGroup::Settebello, team: None, round: round } },
+        rsx! { RadioTeamIcon { hint: "Premiere", group: PointsGroup::Premiera, team: None, round: round } },
     ];
 
     let rows_count = none_column_components.len();
@@ -76,17 +72,13 @@ pub fn RoundEditor(
 fn Empty() -> Element {
     rsx! {
         div {
-            p { " " } 
+            p { " " }
         }
     }
 }
 
 #[component]
-fn TeamHeader(                                                                                                                                            
-    name: TeamName,
-    points: Points,
-    is_leader: bool,
-) -> Element {
+fn TeamHeader(name: TeamName, points: Points, is_leader: bool) -> Element {
     rsx! {
         if is_leader {
             span {
@@ -97,7 +89,7 @@ fn TeamHeader(
                     PointsView { value: points }
                 }
             }
-    
+
         } else {
             span {
                 class: "team-header",
@@ -105,38 +97,31 @@ fn TeamHeader(
                 ": "
                 PointsView { value: points }
             }
-    
+
         }
     }
 }
 
 #[component]
-fn ScopaIcon() -> Element {
+fn ScopaIcon(hint: Option<String>) -> Element {
     rsx! {
-        PointsGroupImage { group: PointsGroup::Scopa, disabled: false, checked: true }
+        PointsGroupImage { hint, group: PointsGroup::Scopa, disabled: false, checked: true }
     }
 }
 
 #[component]
-fn ScopaScore(
-    team: Team,
-    round: Signal<Round>,
-    autofocus: bool,
-    disabled: bool,
-) -> Element {
+fn ScopaScore(team: Team, round: Signal<Round>, autofocus: bool, disabled: bool) -> Element {
     let id = team.id();
     let name = &team.name();
 
     let mut draft = use_signal(Points::default);
 
-    use_effect(move || {
-        draft.set(round.read().scopas(id))
-    });
+    use_effect(move || draft.set(round.read().scopas(id)));
 
     let update_draft = move |points| {
         round.set(round().with_scopas(id, points));
     };
-    
+
     rsx! {
         PointsEditor {
             value: draft(),
@@ -150,11 +135,11 @@ fn ScopaScore(
 
 #[component]
 fn RadioTeamIcon(
+    hint: Option<String>,
     group: PointsGroup,
     team: Option<Team>,
     round: Signal<Round>,
-    #[props(default = false)]
-    disabled: bool,
+    #[props(default = false)] disabled: bool,
 ) -> Element {
     let id = team.clone().map(|t| t.id());
     let name = team.map(|t| t.name());
@@ -172,7 +157,7 @@ fn RadioTeamIcon(
 
         draft.set(selection);
     });
-    
+
     let update_draft = move |_| {
         let new_round = match group {
             PointsGroup::Scopa => unreachable!(),
@@ -186,7 +171,8 @@ fn RadioTeamIcon(
     };
 
     let is_checked = *draft.read() == id;
-    let settebello_none_disabled = group == PointsGroup::Settebello && id.is_none() && draft.read().is_some();
+    let settebello_none_disabled =
+        group == PointsGroup::Settebello && id.is_none() && draft.read().is_some();
     let is_disabled = disabled || settebello_none_disabled;
 
     rsx! {
@@ -202,10 +188,11 @@ fn RadioTeamIcon(
                 disabled: is_disabled,
             }
             PointsGroupImage {
+                hint,
                 group: group,
                 disabled: is_disabled,
                 checked: is_checked,
-            }    
+            }
         }
     }
 }

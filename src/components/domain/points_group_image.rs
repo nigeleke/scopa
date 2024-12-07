@@ -4,6 +4,7 @@ use super::prelude::PointsGroup;
 
 #[component]
 pub fn PointsGroupImage(
+    hint: Option<String>,
     group: PointsGroup,
     disabled: bool,
     checked: bool,
@@ -20,11 +21,17 @@ pub fn PointsGroupImage(
         div {
             class: "points-group-image",
             class: if disabled { "disabled" },
-            class: if checked { "checked" }, 
+            class: if checked { "checked" },
             img {
                 src: src,
                 alt: format!("{} icon", group.to_string()),
             }
-        } 
+            if let Some(hint) = hint {
+                span {
+                    class: "points-group-image-hint",
+                    "{hint}"
+                }
+            }
+        }
     }
 }

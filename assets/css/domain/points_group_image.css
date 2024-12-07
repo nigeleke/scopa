@@ -1,5 +1,7 @@
 .points-group-image {
     opacity: 50%;
+    position: relative;
+    display: inline-block;
 }
 
 .points-group-image:hover {
@@ -16,4 +18,27 @@
 
 .points-group-image img {
     height: 9svh;
+}
+
+.points-group-image-hint {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--control-colour);
+    color: var(--control-text-colour);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.8em;
+    white-space: nowrap;
+    transition:
+        opacity 0.3s ease,
+        visibility 0.3s ease;
+}
+
+.points-group-image:hover .points-group-image-hint {
+    opacity: 1;
+    visibility: visible;
 }
