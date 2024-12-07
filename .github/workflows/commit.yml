@@ -3,25 +3,25 @@
 name: Commit Cycle
 
 on:
-  push:
-    branches-ignore:
-      - main
+    push:
+        branches-ignore:
+            - main
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+    build:
+        runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
 
-      - name: Compile
-        run: |
-          cargo install dioxus-cli --git https://github.com/DioxusLabs/dioxus.git
-          dx build --verbose
+            - name: Compile
+              run: |
+                  cargo install dioxus-cli
+                  dx build --verbose
 
-      - name: Lint
-        run: cargo clippy
+            - name: Lint
+              run: cargo clippy
 
-      - name: Test
-        run: cargo test --verbose -- --show-output
+            - name: Test
+              run: cargo test --verbose -- --show-output
