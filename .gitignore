@@ -1,6 +1,10 @@
 # release
 docs0/
 
+# version amendments
+Cargo.*
+codecov.*
+
 # sbt
 target/
 
@@ -50,4 +54,3 @@ metals.sbt
 *.njsproj
 *.sln
 *.sw?
-
