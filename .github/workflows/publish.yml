@@ -47,7 +47,7 @@ jobs:
               run: |
                   git status
                   git diff
-                  cargo install dioxus-cli --git https://github.com/DioxusLabs/dioxus.git
+                  cargo install dioxus-cli
                   git status
                   git diff
                   dx build --release
