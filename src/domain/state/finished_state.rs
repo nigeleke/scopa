@@ -24,10 +24,6 @@ impl FinishedState {
         }
     }
 
-    pub fn target(&self) -> Target {
-        self.target
-    }
-
     pub fn winner(&self) -> TeamName {
         self.teams()
             .iter()

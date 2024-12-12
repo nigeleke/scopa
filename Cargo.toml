@@ -5,9 +5,18 @@ authors = ["Nigel Eke <nigeleke@gmail.com>"]
 edition = "2021"
 
 [dependencies]
-derive_more = { version = "1.0.0", features = ["add", "add_assign", "constructor", "deref", "display", "from"] }
+derive_more = { version = "1.0.0", features = [
+    "add",
+    "add_assign",
+    "constructor",
+    "deref",
+    "display",
+    "from",
+] }
 dioxus = { version = "0.6.0", features = ["web", "asset"] }
+dioxus-i18n = { git = "https://github.com/nigeleke/dioxus-i18n.git" }
 dioxus-logger = "0.6.0"
+dioxus-web = "0.6.0"
 getrandom = { version = "0.2.15", features = ["js"] }
 gloo-storage = "0.3.0"
 serde = { version = "1.0.215", features = ["derive"] }

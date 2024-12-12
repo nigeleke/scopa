@@ -2,6 +2,7 @@ use crate::components::prelude::*;
 use crate::domain::prelude::*;
 
 use dioxus::prelude::*;
+use dioxus_i18n::t;
 
 #[component]
 pub fn RoundEditor(state: PlayingState, round: Signal<Round>) -> Element {
@@ -18,11 +19,11 @@ pub fn RoundEditor(state: PlayingState, round: Signal<Round>) -> Element {
 
     let none_column_components = [
         rsx! { Empty {} },
-        rsx! { ScopaIcon { hint: "Scopa" } },
-        rsx! { RadioTeamIcon { hint: "Cards count", group: PointsGroup::CardsCount, team: None, round: round } },
-        rsx! { RadioTeamIcon { hint: "Coins count", group: PointsGroup::CoinsCount, team: None, round: round } },
-        rsx! { RadioTeamIcon { hint: "Settebello", group: PointsGroup::Settebello, team: None, round: round } },
-        rsx! { RadioTeamIcon { hint: "Premiere", group: PointsGroup::Premiera, team: None, round: round } },
+        rsx! { ScopaIcon { hint: t!("scopa-icon-hint") } },
+        rsx! { RadioTeamIcon { hint: t!("cards-count-icon-hint"), group: PointsGroup::CardsCount, team: None, round: round } },
+        rsx! { RadioTeamIcon { hint: t!("coins-count-icon-hint"), group: PointsGroup::CoinsCount, team: None, round: round } },
+        rsx! { RadioTeamIcon { hint: t!("settebello-icon-hint"), group: PointsGroup::Settebello, team: None, round: round } },
+        rsx! { RadioTeamIcon { hint: t!("premiera-icon-hint"), group: PointsGroup::Premiera, team: None, round: round } },
     ];
 
     let rows_count = none_column_components.len();
@@ -128,7 +129,7 @@ fn ScopaScore(team: Team, round: Signal<Round>, autofocus: bool, disabled: bool)
             onchange: update_draft,
             autofocus: autofocus,
             disabled: disabled,
-            aria_label: format!("Scopa score for {}", name),
+            aria_label: t!("score-scopa-editor-aria-label", teamname: name.to_string()),
         }
     }
 }
@@ -152,7 +153,7 @@ fn RadioTeamIcon(
             PointsGroup::CardsCount => round.read().card_count(),
             PointsGroup::CoinsCount => round.read().coins_count(),
             PointsGroup::Settebello => round.read().settebello(),
-            PointsGroup::Premiera => round.read().premiere(),
+            PointsGroup::Premiera => round.read().premiera(),
         };
 
         draft.set(selection);
@@ -164,7 +165,7 @@ fn RadioTeamIcon(
             PointsGroup::CardsCount => round().with_highest_card_count(id),
             PointsGroup::CoinsCount => round().with_highest_coins_count(id),
             PointsGroup::Settebello => id.map_or(round(), |id| round().with_settobello(id)),
-            PointsGroup::Premiera => round().with_premiere(id),
+            PointsGroup::Premiera => round().with_premiera(id),
         };
 
         round.set(new_round);
@@ -183,7 +184,7 @@ fn RadioTeamIcon(
                 name: group.to_string(),
                 value: format!("{}-{}", group.to_string(), id.map_or("none".to_string(), |t| t.to_string())),
                 on_input: update_draft,
-                aria_label: format!("{} for {}", group.to_string(), name.map_or("no one".to_string(), |n| n.to_string())),
+                aria_label: t!("score-group-icon-aria-label", group: group.to_string(), teamname: name.map_or("no one".to_string(), |n| n.to_string())),
                 checked: is_checked,
                 disabled: is_disabled,
             }

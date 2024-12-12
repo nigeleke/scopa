@@ -2,6 +2,7 @@ use crate::components::prelude::*;
 use crate::domain::prelude::*;
 
 use dioxus::prelude::*;
+use dioxus_i18n::t;
 
 #[component]
 pub fn FinishedGame(state: FinishedState, onchange: EventHandler<GameState>) -> Element {
@@ -44,7 +45,7 @@ pub fn FinishedGame(state: FinishedState, onchange: EventHandler<GameState>) -> 
             class: "finished-game-container",
             div {
                 class: "finished-game-winner-text",
-                Glow { "Winner - " { winner } }
+                Glow { {t!("winner-view", teamname: winner.to_string())} }
             }
             div {
                 class: "finished-game-team-scores",
@@ -58,7 +59,7 @@ pub fn FinishedGame(state: FinishedState, onchange: EventHandler<GameState>) -> 
                     class: "finished-game-start-game-button",
                     Button {
                         on_click: start_new_game,
-                        "Start again"
+                        {t!("start-new-game-button-text")}
                     }
                 }
                 div {
@@ -70,9 +71,9 @@ pub fn FinishedGame(state: FinishedState, onchange: EventHandler<GameState>) -> 
                             value: retain_settings(),
                             checked: retain_settings(),
                             on_input: update_retain_settings,
-                            aria_label: "Select to use same settings in new game",
+                            aria_label: t!("start-new-game-settings-aria-label"),
                         }
-                        { " Same settings" }
+                        { t!("start-new-game-settings-text") }
                     }
                 }
             }

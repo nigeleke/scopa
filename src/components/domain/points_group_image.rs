@@ -1,4 +1,5 @@
 use dioxus::prelude::*;
+use dioxus_i18n::t;
 
 use super::prelude::PointsGroup;
 
@@ -14,7 +15,7 @@ pub fn PointsGroupImage(
         PointsGroup::CardsCount => asset!("/assets/images/punteggio_carte.png"),
         PointsGroup::CoinsCount => asset!("/assets/images/punteggio_denari.png"),
         PointsGroup::Settebello => asset!("/assets/images/punteggio_settebello.png"),
-        PointsGroup::Premiera => asset!("/assets/images/punteggio_premiere.png"),
+        PointsGroup::Premiera => asset!("/assets/images/punteggio_premiera.png"),
     };
 
     rsx! {
@@ -24,7 +25,7 @@ pub fn PointsGroupImage(
             class: if checked { "checked" },
             img {
                 src: src,
-                alt: format!("{} icon", group.to_string()),
+                alt: t!(&format!("{}-icon-alt-text", group)),
             }
             if let Some(hint) = hint {
                 span {

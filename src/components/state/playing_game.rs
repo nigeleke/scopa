@@ -2,12 +2,10 @@ use crate::components::prelude::*;
 use crate::domain::prelude::*;
 
 use dioxus::prelude::*;
+use dioxus_i18n::t;
 
 #[component]
-pub fn PlayingGame(
-    state: PlayingState,
-    onchange: EventHandler<GameState>
-) -> Element {
+pub fn PlayingGame(state: PlayingState, onchange: EventHandler<GameState>) -> Element {
     let round_number = state.round_number();
     let target = state.target();
 
@@ -34,18 +32,14 @@ pub fn PlayingGame(
             }
             ScoreButton {
                 can_score: round.read().is_well_defined(),
-                onscore: score_round, 
+                onscore: score_round,
             }
         }
     }
 }
 
 #[component]
-fn ScoreButton(
-    can_score: bool,
-    onscore: EventHandler<()>
-) -> Element {
-
+fn ScoreButton(can_score: bool, onscore: EventHandler<()>) -> Element {
     let record_score = move |_| {
         onscore.call(());
     };
@@ -54,7 +48,7 @@ fn ScoreButton(
         Button {
             disabled: !can_score,
             on_click: record_score,
-            "Score"
+            {t!("score-button-text")}
         }
     }
 }

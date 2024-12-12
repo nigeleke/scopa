@@ -10,7 +10,7 @@ pub struct Round {
     highest_card_count: Option<TeamId>,
     highest_coins_count: Option<TeamId>,
     settobello: Option<TeamId>,
-    premiere: Option<TeamId>,
+    premiera: Option<TeamId>,
 }
 
 impl Round {
@@ -34,8 +34,8 @@ impl Round {
         self
     }
 
-    pub fn with_premiere(mut self, id: Option<TeamId>) -> Self {
-        self.premiere = id;
+    pub fn with_premiera(mut self, id: Option<TeamId>) -> Self {
+        self.premiera = id;
         self
     }
 
@@ -49,8 +49,8 @@ impl Round {
         let highest_card_count = as_points(self.highest_card_count);
         let highest_coins_count = as_points(self.highest_coins_count);
         let settobello = as_points(self.settobello);
-        let premiere = as_points(self.premiere);
-        scopas + highest_card_count + highest_coins_count + settobello + premiere
+        let premiera = as_points(self.premiera);
+        scopas + highest_card_count + highest_coins_count + settobello + premiera
     }
 
     pub fn scopas(&self, id: TeamId) -> Points {
@@ -69,8 +69,8 @@ impl Round {
         self.settobello
     }
 
-    pub fn premiere(&self) -> Option<TeamId> {
-        self.premiere
+    pub fn premiera(&self) -> Option<TeamId> {
+        self.premiera
     }
 
     pub fn is_well_defined(&self) -> bool {
@@ -148,10 +148,10 @@ mod test {
     }
 
     #[test]
-    fn round_will_contain_premiere_winner() {
+    fn round_will_contain_premiera_winner() {
         let id1 = Team::new("name").id();
         let id2 = Team::new("name").id();
-        let round = Round::default().with_premiere(Some(id1));
+        let round = Round::default().with_premiera(Some(id1));
         assert_eq!(round.points(id1), Points::from(1));
         assert_eq!(round.points(id2), Points::from(0));
     }

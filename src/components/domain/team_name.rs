@@ -2,12 +2,11 @@ use crate::components::prelude::*;
 use crate::domain::prelude::*;
 
 use dioxus::prelude::*;
+use dioxus_i18n::t;
 
 #[component]
-pub fn TeamNameView(
-    value: TeamName,
-) -> Element {
-    rsx! { 
+pub fn TeamNameView(value: TeamName) -> Element {
+    rsx! {
         span { { value.to_string() } }
     }
 }
@@ -19,13 +18,14 @@ pub fn TeamNameEditor(
     autofocus: bool,
     placeholder: String,
 ) -> Element {
-
     let update_team_name = move |value| {
         let new_team_name = TeamName::try_from(value).unwrap();
         team_name.set(new_team_name);
     };
 
-    let commit_team_edit = move |_| { oncommit.call(team_name()); };
+    let commit_team_edit = move |_| {
+        oncommit.call(team_name());
+    };
 
     rsx! {
         label {
@@ -33,10 +33,10 @@ pub fn TeamNameEditor(
                 typ: "text",
                 value: team_name().to_string(),
                 on_input: update_team_name,
-                on_commit: commit_team_edit, 
+                on_commit: commit_team_edit,
                 autofocus,
                 placeholder,
-                aria_label: "Enter team name",
+                aria_label: t!("team-name-editor-aria-label"),
             }
         }
     }

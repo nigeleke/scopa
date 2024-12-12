@@ -2,13 +2,10 @@ use crate::components::prelude::*;
 use crate::domain::prelude::*;
 
 use dioxus::prelude::*;
+use dioxus_i18n::t;
 
 #[component]
-pub fn StartingGame(
-    state: StartingState,
-    onchange: EventHandler<GameState>,
-) -> Element {
-
+pub fn StartingGame(state: StartingState, onchange: EventHandler<GameState>) -> Element {
     let mut state = use_signal(move || state);
 
     let target = state.read().target();
@@ -17,11 +14,11 @@ pub fn StartingGame(
     };
 
     let teams = Vec::from(state.read().teams());
-    let add_team = move |team| { 
+    let add_team = move |team| {
         state.write().add_team(team).unwrap();
     };
     let remove_team = move |id| {
-        state.write().remove_team(id).unwrap(); 
+        state.write().remove_team(id).unwrap();
     };
 
     let start_game = move |_| {
@@ -52,9 +49,7 @@ pub fn StartingGame(
 }
 
 #[component]
-fn AddTeam(
-    onadd: EventHandler<Team>,
-) -> Element {
+fn AddTeam(onadd: EventHandler<Team>) -> Element {
     let mut team_name = use_signal(TeamName::default);
 
     let mut add_team = move |value: TeamName| {
@@ -71,20 +66,16 @@ fn AddTeam(
                 team_name: team_name,
                 autofocus: true,
                 oncommit: add_team,
-                placeholder: "Add 2, 3, 4 or 6 teams",
+                placeholder: t!("team-name-editor-placeholder"),
             }
             " "
-            Button { on_click: add_team_button_action, " + " }    
+            Button { on_click: add_team_button_action, " + " }
         }
     }
 }
 
 #[component]
-fn TeamRows(
-    teams: Vec<Team>,
-    onremove: EventHandler<TeamId>,
-) -> Element {
-
+fn TeamRows(teams: Vec<Team>, onremove: EventHandler<TeamId>) -> Element {
     let remove_team = move |team: &Team| {
         let id = team.id();
         move |_event| {
@@ -94,11 +85,11 @@ fn TeamRows(
 
     let team_row = move |team: &Team| {
         rsx! {
-            tr { 
+            tr {
                 td { Button { on_click: remove_team(team),  "-"  } }
                 td { TeamNameView { value: team.name() } }
             }
-        }    
+        }
     };
 
     rsx! {
@@ -110,19 +101,16 @@ fn TeamRows(
 }
 
 #[component]
-fn StartAction(
-    can_start: bool,
-    onstart: EventHandler<()>,
-) -> Element {
-
-    let start = move |_| { onstart.call(()); };
+fn StartAction(can_start: bool, onstart: EventHandler<()>) -> Element {
+    let start = move |_| {
+        onstart.call(());
+    };
 
     rsx! {
         Button {
             disabled: !can_start,
             on_click: start,
-            "Start"
+            {t!("start-button-text")}
         }
     }
-   
 }
