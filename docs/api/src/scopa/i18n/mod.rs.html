@@ -19,15 +19,33 @@
 <a href="#18" id="18">18</a>
 <a href="#19" id="19">19</a>
 <a href="#20" id="20">20</a>
-<a href="#21" id="21">21</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::str::FromStr;
+<a href="#21" id="21">21</a>
+<a href="#22" id="22">22</a>
+<a href="#23" id="23">23</a>
+<a href="#24" id="24">24</a>
+<a href="#25" id="25">25</a>
+<a href="#26" id="26">26</a>
+<a href="#27" id="27">27</a>
+<a href="#28" id="28">28</a>
+<a href="#29" id="29">29</a>
+<a href="#30" id="30">30</a>
+<a href="#31" id="31">31</a>
+<a href="#32" id="32">32</a>
+<a href="#33" id="33">33</a>
+<a href="#34" id="34">34</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::str::FromStr;
 
 <span class="kw">use </span>dioxus_i18n::{prelude::<span class="kw-2">*</span>, <span class="kw-2">*</span>};
 <span class="kw">use </span>unic_langid::{langid, LanguageIdentifier};
 
 <span class="kw">pub fn </span>config(user_langid: <span class="kw-2">&amp;</span>str) -&gt; I18nConfig {
-    <span class="kw">let </span>default_langid = LanguageIdentifier::from_str(user_langid)
+    <span class="kw">let </span><span class="kw-2">mut </span>default_langid = LanguageIdentifier::from_str(user_langid)
         .ok()
         .unwrap_or(<span class="macro">langid!</span>(<span class="string">"en-GB"</span>));
+
+    <span class="kw">let </span>supported_dialects = [<span class="macro">langid!</span>(<span class="string">"en-GB"</span>), <span class="macro">langid!</span>(<span class="string">"it-IT"</span>)];
+    <span class="kw">if </span>!supported_dialects.contains(<span class="kw-2">&amp;</span>default_langid) {
+        default_langid = LanguageIdentifier::from_parts(default_langid.language, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>, <span class="kw-2">&amp;</span>[]);
+    }
 
     I18nConfig::new(default_langid)
         .with_locale(Locale::new_static(
@@ -36,6 +54,14 @@
         ))
         .with_locale(Locale::new_static(
             <span class="macro">langid!</span>(<span class="string">"it-IT"</span>),
+            <span class="macro">include_str!</span>(<span class="string">"./it-IT.ftl"</span>),
+        ))
+        .with_locale(Locale::new_static(
+            <span class="macro">langid!</span>(<span class="string">"en"</span>),
+            <span class="macro">include_str!</span>(<span class="string">"./en-GB.ftl"</span>),
+        ))
+        .with_locale(Locale::new_static(
+            <span class="macro">langid!</span>(<span class="string">"it"</span>),
             <span class="macro">include_str!</span>(<span class="string">"./it-IT.ftl"</span>),
         ))
         .with_fallback(<span class="macro">langid!</span>(<span class="string">"en-GB"</span>))
