@@ -1373,7 +1373,7 @@ dependencies = [
  "dioxus-web",
  "getrandom",
  "gloo-storage",
- "rand",
+ "lazy_static",
  "serde",
  "thiserror 2.0.4",
 ]
