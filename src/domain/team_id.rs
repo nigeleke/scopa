@@ -1,12 +1,13 @@
 use derive_more::*;
+use rand::Rng;
 use serde::{Deserialize, Serialize};
-use uuid::Uuid;
 
 #[derive(Clone, Copy, Debug, Display, PartialEq, Eq, Hash, Serialize, Deserialize)]
-pub struct TeamId(Uuid);
+pub struct TeamId(i64);
 
 impl TeamId {
     pub fn new() -> Self {
-        TeamId(Uuid::new_v4())
+        let mut rng = rand::thread_rng();
+        TeamId(rng.gen::<i64>())
     }
 }
