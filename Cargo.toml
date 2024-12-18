@@ -19,7 +19,8 @@ dioxus-logger = "0.6.0"
 dioxus-web = "0.6.0"
 getrandom = { version = "0.2.15", features = ["js"] }
 gloo-storage = "0.3.0"
-rand = "0.8.5"
+lazy_static = "1.5.0"
+# rand = "0.8.5"
 serde = { version = "1.0.215", features = ["derive"] }
 thiserror = "2.0.4"
 
