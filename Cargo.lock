@@ -477,7 +477,8 @@ dependencies = [
 [[package]]
 name = "dioxus-i18n"
 version = "0.3.0"
-source = "git+https://github.com/nigeleke/dioxus-i18n.git#6e03673fa286c84f25945b71b6f7619bc236424d"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "eaa2df724b94e2a93229609951a0570a4b8807215c588e78f88a8532bdde319f"
 dependencies = [
  "dioxus-lib",
  "fluent",
