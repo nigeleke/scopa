@@ -59,6 +59,8 @@ jobs:
 
             - uses: docker/build-push-action@v6
               with:
+                  file: docker/Dockerfile
+                  context: .
                   push: true
                   platforms: linux/arm64,linux/amd64
                   tags: nigeleke/scopa:latest
