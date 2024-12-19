@@ -6,7 +6,8 @@ asset_dir = "assets"
 
 [web.app]
 title = "Scopa Scorer"
-base_path = "scopa/app"
+#uncomment for gh-pages deploy.
+#base_path = "scopa/app"
 
 [web.watcher]
 reload_html = true
