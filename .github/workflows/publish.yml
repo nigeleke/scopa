@@ -49,6 +49,20 @@ jobs:
                   dx build --release
                   git stash
 
+            - name: Publish App & Documentation
+              run: |
+                  git config --global user.email "nigeleke@users.noreply.github.com"
+                  git config --global user.name "Nigel Eke"
+                  export VERSION=$(git describe --abbrev=0 --tags)
+                  git checkout gh-pages
+                  rm -rf docs
+                  mv docs0 docs
+                  mkdir docs/app/
+                  mv target/dx/scopa/release/web/public/* docs/app/
+                  git add .
+                  git commit -m "Release $VERSION"
+                  git push
+
             - name: Publish to DockerHub
               uses: docker/login-action@v3
               with:
@@ -68,17 +82,3 @@ jobs:
                   push: true
                   platforms: linux/arm64,linux/amd64
                   tags: nigeleke/scopa:latest
-
-            - name: Publish App & Documentation
-              run: |
-                  git config --global user.email "nigeleke@users.noreply.github.com"
-                  git config --global user.name "Nigel Eke"
-                  export VERSION=$(git describe --abbrev=0 --tags)
-                  git checkout gh-pages
-                  rm -rf docs
-                  mv docs0 docs
-                  mkdir docs/app/
-                  mv target/dx/scopa/release/web/public/* docs/app/
-                  git add .
-                  git commit -m "Release $VERSION"
-                  git push
