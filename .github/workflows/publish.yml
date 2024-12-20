@@ -43,10 +43,11 @@ jobs:
 
             - name: Build App
               run: |
-                  rm codecov*
+                  git stash
                   cargo install dioxus-cli
                   sed -i 's/#base_path/base_path/g' Dioxus.toml
                   dx build --release
+                  git stash
 
             - name: Publish to DockerHub
               uses: docker/login-action@v3
@@ -73,7 +74,6 @@ jobs:
                   git config --global user.email "nigeleke@users.noreply.github.com"
                   git config --global user.name "Nigel Eke"
                   export VERSION=$(git describe --abbrev=0 --tags)
-                  git stash
                   git checkout gh-pages
                   rm -rf docs
                   mv docs0 docs
