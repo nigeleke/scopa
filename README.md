@@ -29,8 +29,8 @@ cargo test
 dx serve
 ```
 
-- Open the browser to http://localhost:8080/scopa/app/
+- Open the browser to http://localhost:8080/
 
 ## Acknowledgements
 
-- Original icons are no attribution `CC0` and `PD` svg files on [svgrepo.com](https://www.svgrepo.com/). Derived images can be found under `./design/images/`. 
+- Original icons are no attribution `CC0` and `PD` svg files on [svgrepo.com](https://www.svgrepo.com/). Derived images can be found under `./design/images/`.
