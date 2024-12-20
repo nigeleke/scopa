@@ -1,4 +1,4 @@
-FROM nigeleke/docker-dioxus-cli as builder
+FROM nigeleke/docker-dioxus-cli AS builder
 WORKDIR /usr/src/app
 COPY .. .
 RUN dx bundle
