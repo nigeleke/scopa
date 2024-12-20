@@ -49,7 +49,7 @@ pub trait Teams {
     fn teams(&self) -> &[Team];
 
     fn team_count(&self) -> TeamCount {
-        self.teams().len().into()
+        TeamCount::new(self.teams().len())
     }
 
     fn find_team(&self, id: TeamId) -> Option<&Team> {

@@ -107,7 +107,7 @@ mod test {
     #[test]
     fn a_new_game_will_have_no_teams() {
         let game = Game::default();
-        assert_eq!(game.team_count(), 0.into());
+        assert_eq!(game.team_count(), TeamCount::new(0));
     }
 
     #[test]
@@ -121,7 +121,7 @@ mod test {
         let mut game = Game::default();
         let team = Team::new("name");
         let _ = game.add_team(team).unwrap();
-        assert_eq!(game.team_count(), 1.into());
+        assert_eq!(game.team_count(), TeamCount::new(1));
     }
 
     #[test]
@@ -132,7 +132,7 @@ mod test {
         let _ = game.add_team(team).unwrap();
         let result = game.remove_team(id);
         assert!(result.is_ok());
-        assert_eq!(game.team_count(), 0.into());
+        assert_eq!(game.team_count(), TeamCount::new(0));
     }
 
     #[test]
@@ -143,7 +143,7 @@ mod test {
         let invalid_team = Team::new("name");
         let result = game.remove_team(invalid_team.id());
         assert!(result.is_err());
-        assert_eq!(game.team_count(), 1.into());
+        assert_eq!(game.team_count(), TeamCount::new(1));
     }
 
     #[test]
@@ -163,12 +163,15 @@ mod test {
                 let team = Team::new("name");
                 let _ = game.add_team(team).unwrap();
             });
-            assert_eq!(game.team_count(), i.into());
+            assert_eq!(game.team_count(), TeamCount::new(i));
             let result = game.start();
             if [2, 3, 4, 6].contains(&i) {
                 assert!(result.is_ok())
             } else {
-                assert_eq!(result.unwrap_err(), Error::InvalidNumberOfTeams(i.into()))
+                assert_eq!(
+                    result.unwrap_err(),
+                    Error::InvalidNumberOfTeams(TeamCount::new(i))
+                )
             }
         });
     }

@@ -9,7 +9,7 @@ pub enum Error {
 
     #[error("team {0} not found")]
     TeamNotFound(TeamId),
-    
+
     #[error("scopa cannot be played with {0} teams. It must be played with 2, 3, 4 or 6 teams only; 2 and 3 teams can be a single player or pair of players")]
     InvalidNumberOfTeams(TeamCount),
 }
@@ -27,7 +27,7 @@ mod test {
         let errors = vec![
             Error::TeamExists(id),
             Error::TeamNotFound(id),
-            Error::InvalidNumberOfTeams(0.into()),
+            Error::InvalidNumberOfTeams(TeamCount::new(0)),
         ];
 
         let expected = vec![
@@ -37,7 +37,7 @@ mod test {
         ];
 
         assert_eq!(errors.len(), expected.len());
-        assert_eq!(errors.len(), std::mem::variant_count::<Error>()); 
+        assert_eq!(errors.len(), std::mem::variant_count::<Error>());
 
         for (i, error) in errors.into_iter().enumerate() {
             assert_eq!(error.to_string(), expected[i])
