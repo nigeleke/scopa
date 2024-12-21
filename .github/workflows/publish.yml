@@ -43,7 +43,7 @@ jobs:
 
             - name: Build App
               run: |
-                  git stash
+                  rm codecov*
                   cargo install dioxus-cli
                   sed -i 's/#base_path/base_path/g' Dioxus.toml
                   dx build --release
