@@ -1,7 +1,7 @@
 use crate::components::prelude::*;
 use crate::domain::prelude::*;
 
-use dioxus::prelude::*;
+use dioxus::prelude::{document::*, *};
 use dioxus_i18n::t;
 
 #[component]
@@ -48,6 +48,7 @@ pub fn RoundEditor(state: PlayingState, round: Signal<Round>) -> Element {
     let columns_count = some_column_components.len();
 
     rsx! {
+        Link { rel: "stylesheet", href: asset!("/assets/css/domain/round.css") }
         div {
             class: "round-editor-container",
             for i in 0..rows_count {

@@ -1,13 +1,12 @@
 use crate::components::prelude::*;
 use crate::domain::prelude::*;
 
-use dioxus::prelude::*;
+use dioxus::prelude::{document::*, *};
 
 #[component]
-pub fn PointsView(
-    value: Points
-) -> Element {
+pub fn PointsView(value: Points) -> Element {
     rsx! {
+        Link { rel: "stylesheet", href: asset!("/assets/css/domain/points.css") }
         span { { value.to_string() } }
     }
 }
@@ -16,13 +15,10 @@ pub fn PointsView(
 pub fn PointsEditor(
     value: Points,
     onchange: EventHandler<Points>,
-    #[props(default = false)]
-    autofocus: bool,
-    #[props(default = false)]
-    disabled: bool,
+    #[props(default = false)] autofocus: bool,
+    #[props(default = false)] disabled: bool,
     aria_label: String,
 ) -> Element {
-
     let mut draft = use_signal(|| value.to_string());
 
     let update_points = move |value: String| {
@@ -36,6 +32,7 @@ pub fn PointsEditor(
     };
 
     rsx! {
+        Link { rel: "stylesheet", href: asset!("/assets/css/domain/points.css") }
         Container {
             label {
                 Input {
@@ -53,9 +50,7 @@ pub fn PointsEditor(
 }
 
 #[component]
-fn Container(
-    children: Element
-) -> Element {
+fn Container(children: Element) -> Element {
     rsx! {
         div {
             class: "points",

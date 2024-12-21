@@ -1,7 +1,7 @@
 use crate::components::prelude::*;
 use crate::domain::prelude::*;
 
-use dioxus::prelude::*;
+use dioxus::prelude::{document::*, *};
 use dioxus_i18n::t;
 
 #[component]
@@ -41,6 +41,7 @@ pub fn FinishedGame(state: FinishedState, onchange: EventHandler<GameState>) -> 
     };
 
     rsx! {
+        Link { rel: "stylesheet", href: asset!("/assets/css/state/finished_game.css") }
         div {
             class: "finished-game-container",
             div {
