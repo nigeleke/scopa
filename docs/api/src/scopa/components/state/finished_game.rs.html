@@ -93,10 +93,11 @@
 <a href="#92" id="92">92</a>
 <a href="#93" id="93">93</a>
 <a href="#94" id="94">94</a>
-<a href="#95" id="95">95</a></pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::components::prelude::<span class="kw-2">*</span>;
+<a href="#95" id="95">95</a>
+<a href="#96" id="96">96</a></pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::components::prelude::<span class="kw-2">*</span>;
 <span class="kw">use </span><span class="kw">crate</span>::domain::prelude::<span class="kw-2">*</span>;
 
-<span class="kw">use </span>dioxus::prelude::<span class="kw-2">*</span>;
+<span class="kw">use </span>dioxus::prelude::{document::<span class="kw-2">*</span>, <span class="kw-2">*</span>};
 <span class="kw">use </span>dioxus_i18n::t;
 
 <span class="attr">#[component]
@@ -136,6 +137,7 @@
     };
 
     <span class="macro">rsx!</span> {
+        Link { rel: <span class="string">"stylesheet"</span>, href: <span class="macro">asset!</span>(<span class="string">"/assets/css/state/finished_game.css"</span>) }
         div {
             class: <span class="string">"finished-game-container"</span>,
             div {

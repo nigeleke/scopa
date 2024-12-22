@@ -58,21 +58,15 @@
 <a href="#57" id="57">57</a>
 <a href="#58" id="58">58</a>
 <a href="#59" id="59">59</a>
-<a href="#60" id="60">60</a>
-<a href="#61" id="61">61</a>
-<a href="#62" id="62">62</a>
-<a href="#63" id="63">63</a>
-<a href="#64" id="64">64</a>
-<a href="#65" id="65">65</a></pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::components::prelude::<span class="kw-2">*</span>;
+<a href="#60" id="60">60</a></pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::components::prelude::<span class="kw-2">*</span>;
 <span class="kw">use </span><span class="kw">crate</span>::domain::prelude::<span class="kw-2">*</span>;
 
-<span class="kw">use </span>dioxus::prelude::<span class="kw-2">*</span>;
+<span class="kw">use </span>dioxus::prelude::{document::<span class="kw-2">*</span>, <span class="kw-2">*</span>};
 
 <span class="attr">#[component]
-</span><span class="kw">pub fn </span>PointsView(
-    value: Points
-) -&gt; Element {
+</span><span class="kw">pub fn </span>PointsView(value: Points) -&gt; Element {
     <span class="macro">rsx!</span> {
+        Link { rel: <span class="string">"stylesheet"</span>, href: <span class="macro">asset!</span>(<span class="string">"/assets/css/domain/points.css"</span>) }
         span { { value.to_string() } }
     }
 }
@@ -81,13 +75,10 @@
 </span><span class="kw">pub fn </span>PointsEditor(
     value: Points,
     onchange: EventHandler&lt;Points&gt;,
-    <span class="attr">#[props(default = <span class="bool-val">false</span>)]
-    </span>autofocus: bool,
-    <span class="attr">#[props(default = <span class="bool-val">false</span>)]
-    </span>disabled: bool,
+    <span class="attr">#[props(default = <span class="bool-val">false</span>)] </span>autofocus: bool,
+    <span class="attr">#[props(default = <span class="bool-val">false</span>)] </span>disabled: bool,
     aria_label: String,
 ) -&gt; Element {
-
     <span class="kw">let </span><span class="kw-2">mut </span>draft = use_signal(|| value.to_string());
 
     <span class="kw">let </span>update_points = <span class="kw">move </span>|value: String| {
@@ -101,6 +92,7 @@
     };
 
     <span class="macro">rsx!</span> {
+        Link { rel: <span class="string">"stylesheet"</span>, href: <span class="macro">asset!</span>(<span class="string">"/assets/css/domain/points.css"</span>) }
         Container {
             label {
                 Input {
@@ -118,13 +110,12 @@
 }
 
 <span class="attr">#[component]
-</span><span class="kw">fn </span>Container(
-    children: Element
-) -&gt; Element {
+</span><span class="kw">fn </span>Container(children: Element) -&gt; Element {
     <span class="macro">rsx!</span> {
         div {
             class: <span class="string">"points"</span>,
             {children}
         }
     }
-}</code></pre></div></section></main></body></html>
+}
+</code></pre></div></section></main></body></html>

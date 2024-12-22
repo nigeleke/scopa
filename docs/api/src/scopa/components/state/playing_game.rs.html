@@ -52,10 +52,11 @@
 <a href="#51" id="51">51</a>
 <a href="#52" id="52">52</a>
 <a href="#53" id="53">53</a>
-<a href="#54" id="54">54</a></pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::components::prelude::<span class="kw-2">*</span>;
+<a href="#54" id="54">54</a>
+<a href="#55" id="55">55</a></pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::components::prelude::<span class="kw-2">*</span>;
 <span class="kw">use </span><span class="kw">crate</span>::domain::prelude::<span class="kw-2">*</span>;
 
-<span class="kw">use </span>dioxus::prelude::<span class="kw-2">*</span>;
+<span class="kw">use </span>dioxus::prelude::{document::<span class="kw-2">*</span>, <span class="kw-2">*</span>};
 <span class="kw">use </span>dioxus_i18n::t;
 
 <span class="attr">#[component]
@@ -73,6 +74,7 @@
     };
 
     <span class="macro">rsx!</span> {
+        Link { rel: <span class="string">"stylesheet"</span>, href: <span class="macro">asset!</span>(<span class="string">"/assets/css/state/playing_game.css"</span>) }
         div {
             class: <span class="string">"playing-game"</span>,
             div {

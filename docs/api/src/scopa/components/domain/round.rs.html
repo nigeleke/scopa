@@ -190,17 +190,10 @@
 <a href="#189" id="189">189</a>
 <a href="#190" id="190">190</a>
 <a href="#191" id="191">191</a>
-<a href="#192" id="192">192</a>
-<a href="#193" id="193">193</a>
-<a href="#194" id="194">194</a>
-<a href="#195" id="195">195</a>
-<a href="#196" id="196">196</a>
-<a href="#197" id="197">197</a>
-<a href="#198" id="198">198</a>
-<a href="#199" id="199">199</a></pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::components::prelude::<span class="kw-2">*</span>;
+<a href="#192" id="192">192</a></pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::components::prelude::<span class="kw-2">*</span>;
 <span class="kw">use </span><span class="kw">crate</span>::domain::prelude::<span class="kw-2">*</span>;
 
-<span class="kw">use </span>dioxus::prelude::<span class="kw-2">*</span>;
+<span class="kw">use </span>dioxus::prelude::{document::<span class="kw-2">*</span>, <span class="kw-2">*</span>};
 <span class="kw">use </span>dioxus_i18n::t;
 
 <span class="attr">#[component]
@@ -225,8 +218,6 @@
         <span class="macro">rsx!</span> { RadioTeamIcon { hint: <span class="macro">t!</span>(<span class="string">"premiera-icon-hint"</span>), group: PointsGroup::Premiera, team: <span class="prelude-val">None</span>, round: round } },
     ];
 
-    <span class="kw">let </span>rows_count = none_column_components.len();
-
     <span class="kw">let </span>team_column_components = <span class="kw">move </span>|team: <span class="kw-2">&amp;</span>Team| {
         <span class="kw">let </span>id = team.id();
         <span class="kw">let </span>name = team.name();
@@ -244,23 +235,18 @@
     };
 
     <span class="kw">let </span>some_column_components = teams.iter().map(team_column_components).collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;();
-    <span class="kw">let </span>columns_count = some_column_components.len();
+    <span class="kw">let </span>columns_count = some_column_components.len() + <span class="number">1</span>;
 
     <span class="macro">rsx!</span> {
+        Link { rel: <span class="string">"stylesheet"</span>, href: <span class="macro">asset!</span>(<span class="string">"/assets/css/domain/round.css"</span>) }
         div {
             class: <span class="string">"round-editor-container"</span>,
-            <span class="kw">for </span>i <span class="kw">in </span><span class="number">0</span>..rows_count {
-                div {
-                    class: <span class="string">"round-editor-row"</span>,
-                    div {
-                        class: <span class="string">"round-editor-column"</span>,
+            <span class="kw">for </span>j <span class="kw">in </span><span class="number">0</span>..columns_count {
+                <span class="kw">for </span>i <span class="kw">in </span><span class="number">0</span>..<span class="number">6 </span>{
+                    <span class="kw">if </span>j == <span class="number">0 </span>{
                         {none_column_components[i].clone()}
-                    }
-                    <span class="kw">for </span>j <span class="kw">in </span><span class="number">0</span>..columns_count {
-                        div {
-                            class: <span class="string">"round-editor-column"</span>,
-                            {some_column_components[j][i].clone()}
-                        }
+                    } <span class="kw">else </span>{
+                        {some_column_components[j-<span class="number">1</span>][i].clone()}
                     }
                 }
             }

@@ -26,14 +26,17 @@
 <a href="#25" id="25">25</a>
 <a href="#26" id="26">26</a>
 <a href="#27" id="27">27</a>
-<a href="#28" id="28">28</a></pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::domain::prelude::<span class="kw-2">*</span>;
+<a href="#28" id="28">28</a>
+<a href="#29" id="29">29</a>
+<a href="#30" id="30">30</a></pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::domain::prelude::<span class="kw-2">*</span>;
 
-<span class="kw">use </span>dioxus::prelude::<span class="kw-2">*</span>;
+<span class="kw">use </span>dioxus::prelude::{document::<span class="kw-2">*</span>, <span class="kw-2">*</span>};
 <span class="kw">use </span>dioxus_i18n::t;
 
 <span class="attr">#[component]
 </span><span class="kw">pub fn </span>RoundNumberView(value: RoundNumber) -&gt; Element {
     <span class="macro">rsx!</span> {
+        Link { rel: <span class="string">"stylesheet"</span>, href: <span class="macro">asset!</span>(<span class="string">"/assets/css/domain/round_number.css"</span>) }
         Container {
             {<span class="macro">t!</span>(<span class="string">"round-view"</span>)}
             { <span class="string">" " </span>}
@@ -45,6 +48,7 @@
 <span class="attr">#[component]
 </span><span class="kw">fn </span>Container(children: Element) -&gt; Element {
     <span class="macro">rsx!</span> {
+        Link { rel: <span class="string">"stylesheet"</span>, href: <span class="macro">asset!</span>(<span class="string">"/assets/css/domain/round_number.css"</span>) }
         div {
             class: <span class="string">"round-number-outer"</span>,
             div {

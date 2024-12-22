@@ -53,15 +53,18 @@
 <a href="#52" id="52">52</a>
 <a href="#53" id="53">53</a>
 <a href="#54" id="54">54</a>
-<a href="#55" id="55">55</a></pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::components::prelude::<span class="kw-2">*</span>;
+<a href="#55" id="55">55</a>
+<a href="#56" id="56">56</a>
+<a href="#57" id="57">57</a></pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::components::prelude::<span class="kw-2">*</span>;
 <span class="kw">use </span><span class="kw">crate</span>::domain::prelude::<span class="kw-2">*</span>;
 
-<span class="kw">use </span>dioxus::prelude::<span class="kw-2">*</span>;
+<span class="kw">use </span>dioxus::prelude::{document::<span class="kw-2">*</span>, <span class="kw-2">*</span>};
 <span class="kw">use </span>dioxus_i18n::t;
 
 <span class="attr">#[component]
 </span><span class="kw">pub fn </span>TargetView(value: Target) -&gt; Element {
     <span class="macro">rsx!</span> {
+        Link { rel: <span class="string">"stylesheet"</span>, href: <span class="macro">asset!</span>(<span class="string">"/assets/css/domain/target.css"</span>) }
         Container {
             {<span class="macro">t!</span>(<span class="string">"points-view-text"</span>, n: value.to_string())}
         }
@@ -78,6 +81,7 @@
     };
 
     <span class="macro">rsx!</span> {
+        Link { rel: <span class="string">"stylesheet"</span>, href: <span class="macro">asset!</span>(<span class="string">"/assets/css/domain/target.css"</span>) }
         Container {
             {<span class="macro">t!</span>(<span class="string">"points-editor-prefix"</span>)}
             label {
