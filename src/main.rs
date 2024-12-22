@@ -18,16 +18,18 @@ fn main() {
 }
 
 fn app() -> Element {
-    let language = use_resource(|| async move {
+    let mut i18n = use_init_i18n(i18n::config);
+
+    let document_language = use_resource(move || async move {
         let mut eval = document::eval("dioxus.send(navigator.language)");
         eval.recv::<String>().await.unwrap()
     });
 
-    match language.read_unchecked().as_ref() {
-        Some(language) => {
-            use_init_i18n(|| i18n::config(language.as_str()));
-            rsx! { Home {} }
+    use_effect(move || {
+        if let Some(l) = document_language() {
+            i18n.set_language(i18n::langid(&l))
         }
-        None => rsx! {},
-    }
+    });
+
+    rsx! { Home {} }
 }
