@@ -26,8 +26,6 @@ pub fn RoundEditor(state: PlayingState, round: Signal<Round>) -> Element {
         rsx! { RadioTeamIcon { hint: t!("premiera-icon-hint"), group: PointsGroup::Premiera, team: None, round: round } },
     ];
 
-    let rows_count = none_column_components.len();
-
     let team_column_components = move |team: &Team| {
         let id = team.id();
         let name = team.name();
@@ -45,24 +43,18 @@ pub fn RoundEditor(state: PlayingState, round: Signal<Round>) -> Element {
     };
 
     let some_column_components = teams.iter().map(team_column_components).collect::<Vec<_>>();
-    let columns_count = some_column_components.len();
+    let columns_count = some_column_components.len() + 1;
 
     rsx! {
         Link { rel: "stylesheet", href: asset!("/assets/css/domain/round.css") }
         div {
             class: "round-editor-container",
-            for i in 0..rows_count {
-                div {
-                    class: "round-editor-row",
-                    div {
-                        class: "round-editor-column",
+            for j in 0..columns_count {
+                for i in 0..6 {
+                    if j == 0 {
                         {none_column_components[i].clone()}
-                    }
-                    for j in 0..columns_count {
-                        div {
-                            class: "round-editor-column",
-                            {some_column_components[j][i].clone()}
-                        }
+                    } else {
+                        {some_column_components[j-1][i].clone()}
                     }
                 }
             }
