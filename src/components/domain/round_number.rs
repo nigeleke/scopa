@@ -1,11 +1,12 @@
 use crate::domain::prelude::*;
 
-use dioxus::prelude::*;
+use dioxus::prelude::{document::*, *};
 use dioxus_i18n::t;
 
 #[component]
 pub fn RoundNumberView(value: RoundNumber) -> Element {
     rsx! {
+        Link { rel: "stylesheet", href: asset!("/assets/css/domain/round_number.css") }
         Container {
             {t!("round-view")}
             { " " }
@@ -17,6 +18,7 @@ pub fn RoundNumberView(value: RoundNumber) -> Element {
 #[component]
 fn Container(children: Element) -> Element {
     rsx! {
+        Link { rel: "stylesheet", href: asset!("/assets/css/domain/round_number.css") }
         div {
             class: "round-number-outer",
             div {

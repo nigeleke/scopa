@@ -1,12 +1,13 @@
 use crate::components::prelude::*;
 use crate::domain::prelude::*;
 
-use dioxus::prelude::*;
+use dioxus::prelude::{document::*, *};
 use dioxus_i18n::t;
 
 #[component]
 pub fn TargetView(value: Target) -> Element {
     rsx! {
+        Link { rel: "stylesheet", href: asset!("/assets/css/domain/target.css") }
         Container {
             {t!("points-view-text", n: value.to_string())}
         }
@@ -23,6 +24,7 @@ pub fn TargetEditor(value: Target, onchange: EventHandler<Target>) -> Element {
     };
 
     rsx! {
+        Link { rel: "stylesheet", href: asset!("/assets/css/domain/target.css") }
         Container {
             {t!("points-editor-prefix")}
             label {

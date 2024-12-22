@@ -1,7 +1,7 @@
 use crate::components::prelude::*;
 use crate::domain::prelude::*;
 
-use dioxus::prelude::*;
+use dioxus::prelude::{document::*, *};
 use dioxus_i18n::t;
 
 #[component]
@@ -19,6 +19,7 @@ pub fn PlayingGame(state: PlayingState, onchange: EventHandler<GameState>) -> El
     };
 
     rsx! {
+        Link { rel: "stylesheet", href: asset!("/assets/css/state/playing_game.css") }
         div {
             class: "playing-game",
             div {

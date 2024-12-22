@@ -1,31 +1,12 @@
 .round-editor-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: stretch;
+    display: grid;
     gap: 1.5svh;
-}
-
-.round-editor-row {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;    
-}
-  
-.round-editor-column {
-    flex-grow: 1;
-    text-align: center;
-    box-sizing: border-box;
-    width: 10svw;
-}
-
-.round-editor-column * input {
-    flex-shrink: 1;
-}
-
-.round-editor-row .round-editor-column:not(:last-child) {
-    margin-right: 5px;
+    grid-template-rows: 1fr repeat(5, 2fr);
+    grid-template-columns: repeat(auto-fill, 1fr);
+    grid-auto-flow: column;
+    justify-content: space-evenly;
+    justify-items: center;
+    align-items: center;
 }
 
 .radio-team-icon input[type="radio"] {
@@ -34,7 +15,6 @@
     width: 0;
     height: 0;
 }
-
 
 .radio-team-icon input[type="radio"] + .points-group-image {
     border: 2px solid transparent;

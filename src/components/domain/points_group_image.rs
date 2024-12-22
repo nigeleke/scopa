@@ -1,4 +1,4 @@
-use dioxus::prelude::*;
+use dioxus::prelude::{document::*, *};
 use dioxus_i18n::t;
 
 use super::prelude::PointsGroup;
@@ -19,6 +19,7 @@ pub fn PointsGroupImage(
     };
 
     rsx! {
+        Link { rel: "stylesheet", href: asset!("/assets/css/domain/points_group_image.css") }
         div {
             class: "points-group-image",
             class: if disabled { "disabled" },
