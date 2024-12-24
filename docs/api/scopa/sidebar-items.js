@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["app","main"],"mod":["components","domain","i18n","pages","use_persistent"]};
+window.SIDEBAR_ITEMS = {"fn":["app","main"],"mod":["components","domain","i18n","pages"]};

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["config"]};
+window.SIDEBAR_ITEMS = {"mod":["config","error","language"]};
