@@ -61,3 +61,10 @@ start-new-game-button-text = Start again
 ## Start new game settings checkbox
 start-new-game-settings-text = Same settings
 start-new-game-settings-aria-label = Select to use same settings
+
+## Icon
+menu-icon-alt-text = Menu
+
+## Supported langauges
+lang-en-GB = English
+lang-it-IT = Italian

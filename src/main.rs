@@ -4,13 +4,14 @@ mod components;
 mod domain;
 mod i18n;
 mod pages;
-mod use_persistent;
 
-use crate::pages::home::Home;
+use i18n::Language;
+use pages::home::Home;
 
 use dioxus::prelude::*;
 use dioxus_i18n::prelude::use_init_i18n;
 use dioxus_logger::tracing::Level;
+use dioxus_sdk::storage::{use_storage, LocalStorage};
 
 fn main() {
     dioxus_logger::init(Level::DEBUG).expect("Cannot start logging");
@@ -18,16 +19,19 @@ fn main() {
 }
 
 fn app() -> Element {
-    let mut i18n = use_init_i18n(i18n::config);
-
     let document_language = use_resource(move || async move {
         let mut eval = document::eval("dioxus.send(navigator.language)");
-        eval.recv::<String>().await.unwrap()
+        Language::try_from(eval.recv::<String>().await.unwrap()).unwrap()
     });
 
+    #[allow(clippy::redundant_closure)]
+    let preferred_language = use_storage::<LocalStorage, _>("lang".into(), || document_language());
+    provide_context(preferred_language);
+
+    let mut i18n = use_init_i18n(i18n::config);
     use_effect(move || {
-        if let Some(l) = document_language() {
-            i18n.set_language(i18n::langid(&l))
+        if let Some(preferred_language) = preferred_language.read().as_ref() {
+            i18n.set_language(preferred_language.identifier());
         }
     });
 

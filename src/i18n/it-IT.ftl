@@ -61,3 +61,10 @@ start-new-game-button-text = Ricominciare
 ## Start new game settings checkbox
 start-new-game-settings-text = Stesse impostazioni
 start-new-game-settings-aria-label = Seleziona per utilizzare le stesse impostazioni
+
+## Icon
+menu-icon-alt-text = Tendina
+
+## Supported langauges
+lang-en-GB = Inglese
+lang-it-IT = Italiano

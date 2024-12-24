@@ -5,15 +5,15 @@ authors = ["Nigel Eke <nigeleke@gmail.com>"]
 edition = "2021"
 
 [dependencies]
-dioxus = { version = "0.6.0", features = ["web", "asset"] }
-dioxus-i18n = "0.3.0"
-dioxus-logger = "0.6.0"
-dioxus-web = "0.6.0"
-getrandom = { version = "0.2.15", features = ["js"] }
-gloo-storage = "0.3.0"
-lazy_static = "1.5.0"
-serde = { version = "1.0.215", features = ["derive"] }
-thiserror = "2.0.4"
+dioxus = { version = "0.6", features = ["web", "asset"] }
+dioxus-i18n = "0.3"
+dioxus-logger = "0.6"
+dioxus-sdk = { version = "0.6", features = ["storage"] }
+dioxus-web = "0.6"
+getrandom = { version = "0.2", features = ["js"] }
+gloo-storage = "0.3"
+serde = { version = "1.0", features = ["derive"] }
+thiserror = "2.0"
 
 [profile]
 

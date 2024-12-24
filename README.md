@@ -34,3 +34,4 @@ dx serve
 ## Acknowledgements
 
 - Original icons are no attribution `CC0` and `PD` svg files on [svgrepo.com](https://www.svgrepo.com/). Derived images can be found under `./design/images/`.
+- Flags by [flagicons](https://flagicons.lipis.dev/); Attribution: `./design/attribution/flags_license`.

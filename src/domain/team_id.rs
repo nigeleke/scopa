@@ -1,14 +1,12 @@
-use lazy_static::lazy_static;
 use serde::{Deserialize, Serialize};
 
 use std::sync::atomic::{AtomicI64, Ordering};
+use std::sync::LazyLock;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub struct TeamId(i64);
 
-lazy_static! {
-    static ref NEXT_ID: AtomicI64 = AtomicI64::new(0);
-}
+static NEXT_ID: LazyLock<AtomicI64> = LazyLock::new(|| AtomicI64::new(0));
 
 impl TeamId {
     pub fn new() -> Self {
