@@ -17,22 +17,34 @@
 }
 
 .scopa_header_popover_menu {
+    justify-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    background-color: var(--control-colour);
+    border: none;
     position: absolute;
     position-anchor: --scopa-header-menu-icon;
     margin: 0;
     inset: auto;
     top: anchor(bottom);
-    margin-block-start: 6px;
     left: anchor(left);
+    margin-block-start: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    opacity: 0;
+    transition:
+        display 250ms,
+        opacity 250ms;
+    transition-behavior: allow-discrete;
 }
 
 .scopa_header_popover_menu:popover-open {
     display: grid;
-    justify-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    background-color: var(--control-colour);
-    border: none;
+    opacity: 1;
+    @starting-style {
+        display: grid;
+        opacity: 0;
+    }
 }
 
 .scopa_header * img.flag {

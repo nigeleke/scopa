@@ -12,6 +12,8 @@
     --disabled-colour: silver;
     --disabled-text-colour: darkslategray;
     --glow-colour: #0fa;
+
+    interpolate-size: allow-keywords;
 }
 
 html,

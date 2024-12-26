@@ -24,7 +24,7 @@ fn Menu() -> Element {
             div {
                 class: "scopa_header_popover_menu",
                 id: MAIN_MENU_ID,
-                popover: true,
+                popover: "auto",
                 Flag { src: asset!("/assets/images/flags/gb.svg"), lang: "en-GB" }
                 Flag { src: asset!("/assets/images/flags/it.svg"), lang: "it-IT" }
             },
