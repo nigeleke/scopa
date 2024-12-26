@@ -64,6 +64,7 @@ start-new-game-settings-aria-label = Select to use same settings
 
 ## Icon
 menu-icon-alt-text = Menu
+restart-icon-alt-text = Restart
 
 ## Supported langauges
 lang-en-GB = English

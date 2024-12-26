@@ -1,4 +1,4 @@
-use crate::{components::prelude::*, i18n::Language};
+use crate::{components::prelude::*, domain::GameState, i18n::Language};
 
 use dioxus::prelude::{document::*, *};
 use dioxus_i18n::t;
@@ -27,6 +27,7 @@ fn Menu() -> Element {
                 popover: "auto",
                 Flag { src: asset!("/assets/images/flags/gb.svg"), lang: "en-GB" }
                 Flag { src: asset!("/assets/images/flags/it.svg"), lang: "it-IT" }
+                RestartMenuItem {}
             },
         }
     }
@@ -44,11 +45,25 @@ fn Flag(src: String, lang: String) -> Element {
     };
 
     rsx! {
-        img {
-            class: "flag",
-            src,
-            alt,
+        button {
             onclick: on_click,
+            img {
+                class: "flag",
+                src,
+                alt,
+            }
         }
+    }
+}
+
+#[component]
+fn RestartMenuItem() -> Element {
+    let mut state = use_context::<Signal<GameState>>();
+
+    let restart_game = move || state.set(GameState::default());
+
+    match state() {
+        GameState::Starting(_) => rsx! {},
+        _ => rsx! { RestartIcon { on_click: restart_game } },
     }
 }

@@ -63,10 +63,6 @@ footer {
     margin-bottom: 1svh;
 }
 
-footer * {
-    font-size: small;
-}
-
 button {
     border: none;
     background: var(--control-colour);

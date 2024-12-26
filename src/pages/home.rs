@@ -7,6 +7,7 @@ use dioxus_sdk::storage::{use_storage, LocalStorage};
 #[component]
 pub fn Home() -> Element {
     let mut game = use_storage::<LocalStorage, _>("game".into(), GameState::default);
+    provide_context(game);
 
     let update_game = move |new_game| {
         game.set(new_game);

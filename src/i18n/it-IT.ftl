@@ -64,6 +64,7 @@ start-new-game-settings-aria-label = Seleziona per utilizzare le stesse impostaz
 
 ## Icon
 menu-icon-alt-text = Tendina
+restart-icon-alt-text = Riprendere
 
 ## Supported langauges
 lang-en-GB = Inglese
