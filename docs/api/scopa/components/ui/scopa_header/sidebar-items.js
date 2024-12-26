@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["Flag","Menu","ScopaHeader"],"struct":["FlagProps"]};
+window.SIDEBAR_ITEMS = {"fn":["Flag","Menu","RestartMenuItem","ScopaHeader"],"struct":["FlagProps"]};
