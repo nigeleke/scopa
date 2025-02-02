@@ -7,19 +7,19 @@ pub fn config() -> I18nConfig {
     I18nConfig::new(DEFAULT_LANG_ID)
         .with_locale(Locale::new_static(
             langid!("en-GB"),
-            include_str!("./en-GB.ftl"),
+            include_str!("../../i18n/en-GB.ftl"),
         ))
         .with_locale(Locale::new_static(
             langid!("it-IT"),
-            include_str!("./it-IT.ftl"),
+            include_str!("../../i18n/it-IT.ftl"),
         ))
         .with_locale(Locale::new_static(
             langid!("en"),
-            include_str!("./en-GB.ftl"),
+            include_str!("../../i18n/en-GB.ftl"),
         ))
         .with_locale(Locale::new_static(
             langid!("it"),
-            include_str!("./it-IT.ftl"),
+            include_str!("../../i18n/it-IT.ftl"),
         ))
         .with_fallback(DEFAULT_LANG_ID)
 }
