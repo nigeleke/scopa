@@ -3,7 +3,7 @@ use super::error::Error;
 use dioxus_i18n::unic_langid::LanguageIdentifier;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Language(String);
 
 impl Language {

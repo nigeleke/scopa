@@ -18,6 +18,8 @@ pub fn PointsGroupImage(
         PointsGroup::Premiera => asset!("/assets/images/punteggio_premiera.png"),
     };
 
+    // TODO: Add after img::src - alt: t!(&format!("{}-icon-alt-text", group)),
+
     rsx! {
         Link { rel: "stylesheet", href: asset!("/assets/css/domain/points_group_image.css") }
         div {
@@ -26,7 +28,6 @@ pub fn PointsGroupImage(
             class: if checked { "checked" },
             img {
                 src: src,
-                alt: t!(&format!("{}-icon-alt-text", group)),
             }
             if let Some(hint) = hint {
                 span {

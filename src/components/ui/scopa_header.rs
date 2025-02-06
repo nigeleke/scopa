@@ -35,7 +35,7 @@ fn Menu() -> Element {
 
 #[component]
 fn Flag(src: String, lang: String) -> Element {
-    let alt = t!(&format!("lang-{}", lang));
+    // TODO: Add after img::src - let alt = t!(&format!("lang-{}", lang));
     let lang = Language::try_from(lang).ok();
 
     let mut i18n = use_context::<Signal<Option<Language>>>();
@@ -50,7 +50,6 @@ fn Flag(src: String, lang: String) -> Element {
             img {
                 class: "flag",
                 src,
-                alt,
             }
         }
     }
