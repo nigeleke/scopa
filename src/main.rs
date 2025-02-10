@@ -25,7 +25,16 @@ fn app() -> Element {
     });
 
     #[allow(clippy::redundant_closure)]
-    let preferred_language = use_storage::<LocalStorage, _>("lang".into(), || document_language());
+    let mut preferred_language =
+        use_storage::<LocalStorage, _>("lang".into(), || document_language());
+    let preferred_language_is_defined = use_signal(|| (*preferred_language.read()).is_some());
+
+    use_effect(move || {
+        if !*preferred_language_is_defined.read() {
+            preferred_language.set(document_language());
+        }
+    });
+
     provide_context(preferred_language);
 
     let mut i18n = use_init_i18n(i18n::config);
