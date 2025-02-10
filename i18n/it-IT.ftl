@@ -47,7 +47,7 @@ score-group-icon-aria-label = {$group} per {$teamname}
 
 ## Round number; status showing current round number.
 ## Displayed as "<round_text> <round number>"
-round-view = Round
+round-view = Turno
 
 ## Score button;
 score-button-text = Punto
