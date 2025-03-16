@@ -10,6 +10,7 @@ use pages::home::Home;
 
 use dioxus::prelude::*;
 use dioxus_i18n::prelude::use_init_i18n;
+use dioxus_i18n::unic_langid::langid;
 use dioxus_logger::tracing::Level;
 use dioxus_sdk::storage::{use_storage, LocalStorage};
 
@@ -37,9 +38,10 @@ fn app() -> Element {
 
     provide_context(preferred_language);
 
-    let mut i18n = use_init_i18n(i18n::config);
+    let mut i18n = use_init_i18n(|| i18n::config(langid!("en-GB")));
     use_effect(move || {
         if let Some(preferred_language) = preferred_language.read().as_ref() {
+            dioxus::logger::tracing::info!("Setting preferred language {:?}", preferred_language);
             i18n.set_language(preferred_language.identifier());
         }
     });

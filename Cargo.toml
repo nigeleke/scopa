@@ -6,7 +6,7 @@ edition = "2021"
 
 [dependencies]
 dioxus = { version = "0.6", features = ["web", "asset"] }
-dioxus-i18n = "0.3"
+dioxus-i18n = "0.4"
 dioxus-logger = "0.6"
 dioxus-sdk = { version = "0.6", features = ["storage"] }
 dioxus-web = "0.6"

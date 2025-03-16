@@ -1,7 +1,7 @@
 use crate::{components::prelude::*, domain::GameState, i18n::Language};
 
 use dioxus::prelude::{document::*, *};
-use dioxus_i18n::t;
+use dioxus_i18n::tid;
 
 #[component]
 pub fn ScopaHeader() -> Element {
@@ -10,7 +10,7 @@ pub fn ScopaHeader() -> Element {
         div {
             class: "scopa_header",
             Menu {}
-            Glow { {t!("scopa-title-text")} }
+            Glow { {tid!("scopa-app.title-text")} }
         }
     }
 }
@@ -35,7 +35,7 @@ fn Menu() -> Element {
 
 #[component]
 fn Flag(src: String, lang: String) -> Element {
-    let alt = t!(&format!("lang-{}", lang));
+    let alt = tid!(&format!("lang.{}", lang));
     let lang = Language::try_from(lang).ok();
 
     let mut i18n = use_context::<Signal<Option<Language>>>();

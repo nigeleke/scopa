@@ -2,7 +2,7 @@ use crate::components::prelude::*;
 use crate::domain::prelude::*;
 
 use dioxus::prelude::{document::*, *};
-use dioxus_i18n::t;
+use dioxus_i18n::tid;
 
 #[component]
 pub fn StartingGame(state: StartingState, onchange: EventHandler<GameState>) -> Element {
@@ -67,7 +67,7 @@ fn AddTeam(onadd: EventHandler<Team>) -> Element {
                 team_name: team_name,
                 autofocus: true,
                 oncommit: add_team,
-                placeholder: t!("team-name-editor-placeholder"),
+                placeholder: tid!("team-name-editor.placeholder"),
             }
             " "
             Button { on_click: add_team_button_action, " + " }
@@ -111,7 +111,7 @@ fn StartAction(can_start: bool, onstart: EventHandler<()>) -> Element {
         Button {
             disabled: !can_start,
             on_click: start,
-            {t!("start-button-text")}
+            {tid!("start-button.text")}
         }
     }
 }

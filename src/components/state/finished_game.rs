@@ -2,7 +2,7 @@ use crate::components::prelude::*;
 use crate::domain::prelude::*;
 
 use dioxus::prelude::{document::*, *};
-use dioxus_i18n::t;
+use dioxus_i18n::tid;
 
 #[component]
 pub fn FinishedGame(state: FinishedState, onchange: EventHandler<GameState>) -> Element {
@@ -46,7 +46,7 @@ pub fn FinishedGame(state: FinishedState, onchange: EventHandler<GameState>) -> 
             class: "finished-game-container",
             div {
                 class: "finished-game-winner-text",
-                Glow { {t!("winner-view", teamname: winner.to_string())} }
+                Glow { {tid!("winner-view.text", teamname: winner.to_string())} }
             }
             div {
                 class: "finished-game-team-scores",
@@ -60,7 +60,7 @@ pub fn FinishedGame(state: FinishedState, onchange: EventHandler<GameState>) -> 
                     class: "finished-game-start-game-button",
                     Button {
                         on_click: start_new_game,
-                        {t!("start-new-game-button-text")}
+                        {tid!("start-new-game-button.text")}
                     }
                 }
                 div {
@@ -72,9 +72,9 @@ pub fn FinishedGame(state: FinishedState, onchange: EventHandler<GameState>) -> 
                             value: retain_settings(),
                             checked: retain_settings(),
                             on_input: update_retain_settings,
-                            aria_label: t!("start-new-game-settings-aria-label"),
+                            aria_label: tid!("start-new-game-settings.aria-label"),
                         }
-                        { t!("start-new-game-settings-text") }
+                        { tid!("start-new-game-settings.text") }
                     }
                 }
             }

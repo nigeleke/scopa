@@ -2,7 +2,7 @@ use crate::components::prelude::*;
 use crate::domain::prelude::*;
 
 use dioxus::prelude::{document::*, *};
-use dioxus_i18n::t;
+use dioxus_i18n::tid;
 
 #[component]
 pub fn PlayingGame(state: PlayingState, onchange: EventHandler<GameState>) -> Element {
@@ -49,7 +49,7 @@ fn ScoreButton(can_score: bool, onscore: EventHandler<()>) -> Element {
         Button {
             disabled: !can_score,
             on_click: record_score,
-            {t!("score-button-text")}
+            {tid!("score-button.text")}
         }
     }
 }

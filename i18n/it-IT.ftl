@@ -1,71 +1,70 @@
-# See the [Fluent Syntax Guide](https://projectfluent.org/fluent/guide/index.html)
-# for instructions on editing the `.ftl` files.
-#
+scopa-app =
+    .title-text = Marcatore Scopa
+    .copyright-text = Copyright 2024 © Nigel Eke; Tutti i diritti riservati.
+    .version-text = v {$version}
 
-## Heading title of the application.
-scopa-title-text = Marcatore Scopa
+points-editor =
+    .prefix = Gioca fino a
+    .suffix = punti
+    .aria-label = Inserisci l'obiettivo del gioco (predefinito 11)
 
-## Copyright at footer of all pages.
-scopa-copyright-text = Copyright 2024 © Nigel Eke; Tutti i diritti riservati.
+points-view =
+    .text = Giocare a {$n} punti
 
-## Prefix to version number
-scopa-version-text = v {$version}
+team-name-editor =
+    .placeholder = Aggiungi 2, 3, 4 o 6 squadre
+    .aria-label = Inserisci il nome della squadra
 
-## Points editor; determine number of points to play to.
-## Displayed as "<points_editor_prefix> <points edit control> <points_editor_prefix>"
-points-editor-prefix = Gioca fino a
-points-editor-suffix = punti
-points-editor-aria-label = Inserisci l'obiettivo del gioco (predefinito 11)
+start-button =
+    .text = Inizio
 
-## Points; status showing points being played to in current game.
-points-view-text = Giocare a {$n} punti
+scopa-icon =
+    .hint = Scopa
+    .alt-text = Icona della scopa
 
-## Team name editor; allow teams to be created during initialisation of game.
-team-name-editor-placeholder = Aggiungi 2, 3, 4 o 6 squadre
-team-name-editor-aria-label = Inserisci il nome della squadra
+cards-count-icon =
+    .hint = Conteggio delle carte
+    .alt-text = Icona conteggio carte
 
-## Start button
-start-button-text = Inizio
+coins-count-icon =
+    .hint = Le monete contano
+    .alt-text = Icona conteggio monete
 
-## Hints on the icons displayed during scoring.
-scopa-icon-hint = Scopa
-scopa-icon-alt-text = Icona della scopa
-cards-count-icon-hint = Conteggio delle carte
-cards-count-icon-alt-text = Icona conteggio carte
-coins-count-icon-hint = Le monete contano
-coins-count-icon-alt-text = Icona conteggio monete
-settebello-icon-hint = Settebello
-settebello-icon-alt-text = Icona Settebello
-premiera-icon-hint = Premiera
-premiera-icon-alt-text = Icona di Premiera
+settebello-icon =
+    .hint = Settebello
+    .alt-text = Icona Settebello
 
-## Scopa editor; used to score number of Scopas during game play.
-score-scopa-editor-aria-label = Punteggio Scopa per {$teamname}
+premiera-icon =
+    .hint = Premiera
+    .alt-text = Icona di Premiera
 
-## Score group icons; used to select who won cards-count, coins-count, settebello & premiera.
-score-group-icon-aria-label = {$group} per {$teamname}
+score-scopa-editor =
+    .aria-label = Punteggio Scopa per {$teamname}
 
-## Round number; status showing current round number.
-## Displayed as "<round_text> <round number>"
-round-view = Turno
+score-group-icon =
+    .aria-label = {$group} per {$teamname}
 
-## Score button;
-score-button-text = Punto
+round-view =
+    .text = Turno
 
-## Winner; display the winning team name.
-winner-view = Vincitore - {$teamname}
+score-button =
+    .text = Punto
 
-## Start new game button
-start-new-game-button-text = Ricominciare
+winner-view =
+    .text = Vincitore - {$teamname}
 
-## Start new game settings checkbox
-start-new-game-settings-text = Stesse impostazioni
-start-new-game-settings-aria-label = Seleziona per utilizzare le stesse impostazioni
+start-new-game-button =
+    .text = Ricominciare
 
-## Icon
-menu-icon-alt-text = Tendina
-restart-icon-alt-text = Riprendere
+start-new-game-settings =
+    .text = Stesse impostazioni
+    .aria-label = Seleziona per utilizzare le stesse impostazioni
 
-## Supported langauges
-lang-en-GB = Inglese
-lang-it-IT = Italiano
+menu-icon =
+    .alt-text = Tendina
+restart-icon =
+    .alt-text = Riprendere
+
+lang =
+    .en-GB = Inglese
+    .it-IT = Italiano
