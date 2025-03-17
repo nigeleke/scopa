@@ -18,14 +18,18 @@
 <a href=#18 id=18 data-nosnippet>18</a>    <span class="macro">rsx!</span> {
 <a href=#19 id=19 data-nosnippet>19</a>        Link { rel: <span class="string">"icon"</span>, href: <span class="macro">asset!</span>(<span class="string">"/assets/favicon.ico"</span>) }
 <a href=#20 id=20 data-nosnippet>20</a>        Link { rel: <span class="string">"stylesheet"</span>, href: <span class="macro">asset!</span>(<span class="string">"/assets/css/main.css"</span>) }
-<a href=#21 id=21 data-nosnippet>21</a>        header { ScopaHeader {} }
-<a href=#22 id=22 data-nosnippet>22</a>        main {
-<a href=#23 id=23 data-nosnippet>23</a>            <span class="kw">match </span>game() {
-<a href=#24 id=24 data-nosnippet>24</a>                GameState::Starting(game) =&gt; <span class="macro">rsx!</span> { StartingGame { state: game.state(), onchange: update_game, } },
-<a href=#25 id=25 data-nosnippet>25</a>                GameState::Playing(game) =&gt; <span class="macro">rsx!</span> { PlayingGame { state: game.state(), onchange: update_game } },
-<a href=#26 id=26 data-nosnippet>26</a>                GameState::Finished(game) =&gt; <span class="macro">rsx!</span> { FinishedGame { state: game.state(), onchange: update_game } },
-<a href=#27 id=27 data-nosnippet>27</a>            }
-<a href=#28 id=28 data-nosnippet>28</a>        }
-<a href=#29 id=29 data-nosnippet>29</a>        footer { ScopaFooter {} }
-<a href=#30 id=30 data-nosnippet>30</a>    }
-<a href=#31 id=31 data-nosnippet>31</a>}</code></pre></div></section></main></body></html>
+<a href=#21 id=21 data-nosnippet>21</a>        Meta { name: <span class="string">"description"</span>, content: <span class="string">"Score your Scopa game using this website. This app is a free and easy to use program to help you score your Scopa card game." </span>}
+<a href=#22 id=22 data-nosnippet>22</a>        Meta { name: <span class="string">"category"</span>, content: <span class="string">"game" </span>}
+<a href=#23 id=23 data-nosnippet>23</a>        Meta { name: <span class="string">"keywords"</span>, content: <span class="string">"cards,game,scorer,scopa" </span>}
+<a href=#24 id=24 data-nosnippet>24</a>        Meta { name: <span class="string">"author"</span>, content: <span class="string">"Nigel Eke" </span>}
+<a href=#25 id=25 data-nosnippet>25</a>        header { ScopaHeader {} }
+<a href=#26 id=26 data-nosnippet>26</a>        main {
+<a href=#27 id=27 data-nosnippet>27</a>            <span class="kw">match </span>game() {
+<a href=#28 id=28 data-nosnippet>28</a>                GameState::Starting(game) =&gt; <span class="macro">rsx!</span> { StartingGame { state: game.state(), onchange: update_game, } },
+<a href=#29 id=29 data-nosnippet>29</a>                GameState::Playing(game) =&gt; <span class="macro">rsx!</span> { PlayingGame { state: game.state(), onchange: update_game } },
+<a href=#30 id=30 data-nosnippet>30</a>                GameState::Finished(game) =&gt; <span class="macro">rsx!</span> { FinishedGame { state: game.state(), onchange: update_game } },
+<a href=#31 id=31 data-nosnippet>31</a>            }
+<a href=#32 id=32 data-nosnippet>32</a>        }
+<a href=#33 id=33 data-nosnippet>33</a>        footer { ScopaFooter {} }
+<a href=#34 id=34 data-nosnippet>34</a>    }
+<a href=#35 id=35 data-nosnippet>35</a>}</code></pre></div></section></main></body></html>
