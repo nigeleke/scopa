@@ -2,10 +2,13 @@ use crate::components::prelude::*;
 use crate::domain::prelude::*;
 
 use dioxus::prelude::{document::*, *};
-use dioxus_i18n::t;
+use dioxus_i18n::tid;
+use dioxus_sdk::storage::{use_storage, LocalStorage};
 
 #[component]
 pub fn FinishedGame(state: FinishedState, onchange: EventHandler<GameState>) -> Element {
+    let default_target = use_storage::<LocalStorage, _>("default_target".into(), Target::default);
+
     let winner = state.winner();
 
     let mut teams = Vec::from(state.teams());
@@ -23,7 +26,7 @@ pub fn FinishedGame(state: FinishedState, onchange: EventHandler<GameState>) -> 
     };
 
     let start_new_game = move || {
-        let mut new_game = Game::default();
+        let mut new_game = Game::new_starting_state(default_target());
 
         if retain_settings() {
             let teams = Vec::from(state.teams());
@@ -46,7 +49,7 @@ pub fn FinishedGame(state: FinishedState, onchange: EventHandler<GameState>) -> 
             class: "finished-game-container",
             div {
                 class: "finished-game-winner-text",
-                Glow { {t!("winner-view", teamname: winner.to_string())} }
+                Glow { {tid!("winner-view.text", teamname: winner.to_string())} }
             }
             div {
                 class: "finished-game-team-scores",
@@ -60,7 +63,7 @@ pub fn FinishedGame(state: FinishedState, onchange: EventHandler<GameState>) -> 
                     class: "finished-game-start-game-button",
                     Button {
                         on_click: start_new_game,
-                        {t!("start-new-game-button-text")}
+                        {tid!("start-new-game-button.text")}
                     }
                 }
                 div {
@@ -72,9 +75,9 @@ pub fn FinishedGame(state: FinishedState, onchange: EventHandler<GameState>) -> 
                             value: retain_settings(),
                             checked: retain_settings(),
                             on_input: update_retain_settings,
-                            aria_label: t!("start-new-game-settings-aria-label"),
+                            aria_label: tid!("start-new-game-settings.aria-label"),
                         }
-                        { t!("start-new-game-settings-text") }
+                        { tid!("start-new-game-settings.text") }
                     }
                 }
             }

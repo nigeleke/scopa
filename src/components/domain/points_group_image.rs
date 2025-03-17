@@ -1,5 +1,5 @@
 use dioxus::prelude::{document::*, *};
-use dioxus_i18n::t;
+use dioxus_i18n::tid;
 
 use super::prelude::PointsGroup;
 
@@ -26,7 +26,7 @@ pub fn PointsGroupImage(
             class: if checked { "checked" },
             img {
                 src: src,
-                alt: t!(&format!("{}-icon-alt-text", group)),
+                alt: tid!(&format!("{}-icon.alt-text", group)),
             }
             if let Some(hint) = hint {
                 span {

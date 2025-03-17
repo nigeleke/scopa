@@ -1,5 +1,5 @@
 use dioxus::prelude::{document::*, *};
-use dioxus_i18n::t;
+use dioxus_i18n::tid;
 
 #[component]
 fn Icon(
@@ -28,7 +28,7 @@ pub fn MenuIcon(popovertarget: Option<String>) -> Element {
     rsx! {
         Icon {
             src: asset!("assets/images/icon-menu.png"),
-            alt: t!("menu-icon-alt-text"),
+            alt: tid!("menu-icon.alt-text"),
             popovertarget: if popovertarget.is_some() { popovertarget.unwrap() }
         }
     }
@@ -40,7 +40,7 @@ pub fn RestartIcon(on_click: EventHandler<()>) -> Element {
         Icon {
             on_click,
             src: asset!("assets/images/icon-restart.png"),
-            alt: t!("restart-icon-alt-text"),
+            alt: tid!("restart-icon.alt-text"),
         }
     }
 }

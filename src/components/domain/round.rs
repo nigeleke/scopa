@@ -2,7 +2,7 @@ use crate::components::prelude::*;
 use crate::domain::prelude::*;
 
 use dioxus::prelude::{document::*, *};
-use dioxus_i18n::t;
+use dioxus_i18n::tid;
 
 #[component]
 pub fn RoundEditor(state: PlayingState, round: Signal<Round>) -> Element {
@@ -19,11 +19,11 @@ pub fn RoundEditor(state: PlayingState, round: Signal<Round>) -> Element {
 
     let none_column_components = [
         rsx! { Empty {} },
-        rsx! { ScopaIcon { hint: t!("scopa-icon-hint") } },
-        rsx! { RadioTeamIcon { hint: t!("cards-count-icon-hint"), group: PointsGroup::CardsCount, team: None, round: round } },
-        rsx! { RadioTeamIcon { hint: t!("coins-count-icon-hint"), group: PointsGroup::CoinsCount, team: None, round: round } },
-        rsx! { RadioTeamIcon { hint: t!("settebello-icon-hint"), group: PointsGroup::Settebello, team: None, round: round } },
-        rsx! { RadioTeamIcon { hint: t!("premiera-icon-hint"), group: PointsGroup::Premiera, team: None, round: round } },
+        rsx! { ScopaIcon { hint: tid!("scopa-icon.hint") } },
+        rsx! { RadioTeamIcon { hint: tid!("cards-count-icon.hint"), group: PointsGroup::CardsCount, team: None, round: round } },
+        rsx! { RadioTeamIcon { hint: tid!("coins-count-icon.hint"), group: PointsGroup::CoinsCount, team: None, round: round } },
+        rsx! { RadioTeamIcon { hint: tid!("settebello-icon.hint"), group: PointsGroup::Settebello, team: None, round: round } },
+        rsx! { RadioTeamIcon { hint: tid!("premiera-icon.hint"), group: PointsGroup::Premiera, team: None, round: round } },
     ];
 
     let team_column_components = move |team: &Team| {
@@ -122,7 +122,7 @@ fn ScopaScore(team: Team, round: Signal<Round>, autofocus: bool, disabled: bool)
             onchange: update_draft,
             autofocus: autofocus,
             disabled: disabled,
-            aria_label: t!("score-scopa-editor-aria-label", teamname: name.to_string()),
+            aria_label: tid!("score-scopa-editor.aria-label", teamname: name.to_string()),
         }
     }
 }
@@ -177,7 +177,7 @@ fn RadioTeamIcon(
                 name: group.to_string(),
                 value: format!("{}-{}", group.to_string(), id.map_or("none".to_string(), |t| t.to_string())),
                 on_input: update_draft,
-                aria_label: t!("score-group-icon-aria-label", group: group.to_string(), teamname: name.map_or("no one".to_string(), |n| n.to_string())),
+                aria_label: tid!("score-group-icon.aria-label", group: group.to_string(), teamname: name.map_or("no one".to_string(), |n| n.to_string())),
                 checked: is_checked,
                 disabled: is_disabled,
             }
