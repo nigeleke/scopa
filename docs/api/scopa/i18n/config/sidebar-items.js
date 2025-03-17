@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"constant":["DEFAULT_LANG_ID"],"fn":["config"]};
+window.SIDEBAR_ITEMS = {"fn":["config"]};
