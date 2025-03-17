@@ -3,9 +3,12 @@ use crate::domain::prelude::*;
 
 use dioxus::prelude::{document::*, *};
 use dioxus_i18n::tid;
+use dioxus_sdk::storage::{use_storage, LocalStorage};
 
 #[component]
 pub fn FinishedGame(state: FinishedState, onchange: EventHandler<GameState>) -> Element {
+    let default_target = use_storage::<LocalStorage, _>("default_target".into(), Target::default);
+
     let winner = state.winner();
 
     let mut teams = Vec::from(state.teams());
@@ -23,7 +26,7 @@ pub fn FinishedGame(state: FinishedState, onchange: EventHandler<GameState>) -> 
     };
 
     let start_new_game = move || {
-        let mut new_game = Game::default();
+        let mut new_game = Game::new_starting_state(default_target());
 
         if retain_settings() {
             let teams = Vec::from(state.teams());

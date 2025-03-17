@@ -6,7 +6,9 @@ use dioxus_sdk::storage::{use_storage, LocalStorage};
 
 #[component]
 pub fn Home() -> Element {
-    let mut game = use_storage::<LocalStorage, _>("game".into(), GameState::default);
+    let default_target = use_storage::<LocalStorage, _>("default_target".into(), Target::default);
+    let mut game =
+        use_storage::<LocalStorage, _>("game".into(), || GameState::new(default_target()));
     provide_context(game);
 
     let update_game = move |new_game| {

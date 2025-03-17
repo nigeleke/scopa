@@ -6,7 +6,7 @@ scopa-app =
 points-editor =
     .prefix = Gioca fino a
     .suffix = punti
-    .aria-label = Inserisci l'obiettivo del gioco (predefinito 11)
+    .aria-label = Inserisci l'obiettivo del gioco
 
 points-view =
     .text = Giocare a {$n} punti
@@ -57,8 +57,8 @@ start-new-game-button =
     .text = Ricominciare
 
 start-new-game-settings =
-    .text = Stesse impostazioni
-    .aria-label = Seleziona per utilizzare le stesse impostazioni
+    .text = Stesse squadre
+    .aria-label = Seleziona per utilizzare le stesse squadre
 
 menu-icon =
     .alt-text = Tendina

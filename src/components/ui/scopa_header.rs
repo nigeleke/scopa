@@ -1,7 +1,12 @@
-use crate::{components::prelude::*, domain::GameState, i18n::Language};
+use crate::{
+    components::prelude::*,
+    domain::prelude::{GameState, Target},
+    i18n::Language,
+};
 
 use dioxus::prelude::{document::*, *};
 use dioxus_i18n::tid;
+use dioxus_sdk::storage::{use_storage, LocalStorage};
 
 #[component]
 pub fn ScopaHeader() -> Element {
@@ -58,9 +63,10 @@ fn Flag(src: String, lang: String) -> Element {
 
 #[component]
 fn RestartMenuItem() -> Element {
+    let default_target = use_storage::<LocalStorage, _>("default_target".into(), Target::default);
     let mut state = use_context::<Signal<GameState>>();
 
-    let restart_game = move || state.set(GameState::default());
+    let restart_game = move || state.set(GameState::new(default_target()));
 
     match state() {
         GameState::Starting(_) => rsx! {},

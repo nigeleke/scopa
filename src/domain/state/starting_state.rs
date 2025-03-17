@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 use crate::domain::prelude::*;
 use crate::domain::{GameState, InternalGameState};
 
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct StartingState {
     teams: Vec<Team>,
     target: Target,
@@ -12,6 +12,13 @@ pub struct StartingState {
 impl InternalGameState for StartingState {}
 
 impl StartingState {
+    pub fn new(target: Target) -> Self {
+        Self {
+            teams: Vec::default(),
+            target,
+        }
+    }
+
     pub fn add_team(&mut self, team: Team) -> Result<()> {
         if let Some(existing_team) = self.find_team(team.id()) {
             Err(Error::TeamExists(existing_team.id()))
@@ -73,9 +80,3 @@ impl Rounds for StartingState {
         unreachable!()
     }
 }
-
-// impl HasTarget for StartingState {
-//     fn target(&self) -> Target {
-//         self.target
-//     }
-// }

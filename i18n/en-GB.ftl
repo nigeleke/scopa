@@ -19,7 +19,7 @@ scopa-app =
 points-editor =
     .prefix = Play to
     .suffix = points
-    .aria-label = Enter game target (default 11)
+    .aria-label = Enter game target
 
 # Points; status showing points being played to in current game.
 points-view =
@@ -82,8 +82,8 @@ start-new-game-button =
 
 # Start new game settings checkbox
 start-new-game-settings =
-    .text = Same settings
-    .aria-label = Select to use same settings
+    .text = Same teams
+    .aria-label = Select to use same teams
 
 # Icon
 menu-icon =
