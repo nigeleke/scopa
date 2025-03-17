@@ -9,9 +9,9 @@ pub enum GameState {
     Finished(Game<FinishedState>),
 }
 
-impl Default for GameState {
-    fn default() -> Self {
-        GameState::Starting(Game::default())
+impl GameState {
+    pub fn new(target: Target) -> Self {
+        GameState::Starting(Game::new_starting_state(target))
     }
 }
 
@@ -58,10 +58,10 @@ impl<T> std::ops::DerefMut for Game<T> {
     }
 }
 
-impl Default for Game<StartingState> {
-    fn default() -> Self {
+impl Game<StartingState> {
+    pub fn new_starting_state(target: Target) -> Self {
         Self {
-            state: StartingState::default(),
+            state: StartingState::new(target),
             _phantom: std::marker::PhantomData,
         }
     }
@@ -106,19 +106,19 @@ mod test {
 
     #[test]
     fn a_new_game_will_have_no_teams() {
-        let game = Game::default();
+        let game = Game::new_starting_state(Target::default());
         assert_eq!(game.team_count(), TeamCount::new(0));
     }
 
     #[test]
     fn a_new_game_default_target_will_be_11() {
-        let game = Game::default();
+        let game = Game::new_starting_state(Target::default());
         assert_eq!(game.target(), 11.into());
     }
 
     #[test]
     fn teams_can_be_added_before_a_game_starts() {
-        let mut game = Game::default();
+        let mut game = Game::new_starting_state(Target::default());
         let team = Team::new("name");
         let _ = game.add_team(team).unwrap();
         assert_eq!(game.team_count(), TeamCount::new(1));
@@ -126,7 +126,7 @@ mod test {
 
     #[test]
     fn teams_can_be_removed_before_a_game_starts() {
-        let mut game = Game::default();
+        let mut game = Game::new_starting_state(Target::default());
         let team = Team::new("name");
         let id = team.id();
         let _ = game.add_team(team).unwrap();
@@ -137,7 +137,7 @@ mod test {
 
     #[test]
     fn teams_cannot_be_removed_if_they_havent_been_added() {
-        let mut game = Game::default();
+        let mut game = Game::new_starting_state(Target::default());
         let valid_team = Team::new("name");
         let _ = game.add_team(valid_team).unwrap();
         let invalid_team = Team::new("name");
@@ -148,7 +148,7 @@ mod test {
 
     #[test]
     fn can_define_valid_new_target() {
-        let mut game = Game::default();
+        let mut game = Game::new_starting_state(Target::default());
         let target = 16.into();
         assert_ne!(game.target(), target);
         game.set_target(target);
@@ -158,7 +158,7 @@ mod test {
     #[test]
     fn starting_a_game_requires_valid_team_count() {
         (0..=8).into_iter().for_each(|i| {
-            let mut game = Game::default();
+            let mut game = Game::new_starting_state(Target::default());
             (0..i).into_iter().for_each(|_| {
                 let team = Team::new("name");
                 let _ = game.add_team(team).unwrap();
@@ -178,7 +178,7 @@ mod test {
 
     #[test]
     fn all_teams_start_with_zero_score() {
-        let mut game = Game::default();
+        let mut game = Game::new_starting_state(Target::default());
 
         let team1 = Team::new("name");
         let id1 = team1.id();
@@ -198,7 +198,7 @@ mod test {
 
     #[test]
     fn each_round_of_play_will_be_scored() {
-        let mut game = Game::default();
+        let mut game = Game::new_starting_state(Target::default());
 
         let team1 = Team::new("name");
         let id1 = team1.id();
@@ -224,7 +224,7 @@ mod test {
     }
 
     fn test_is_finished(target: usize, score1: usize, score2: usize, is_finished: bool) {
-        let mut game = Game::default();
+        let mut game = Game::new_starting_state(Target::default());
         game.set_target(target.into());
 
         let team1 = Team::new("name");
@@ -275,7 +275,7 @@ mod test {
 
     #[test]
     fn target_reached_and_tied_by_multiple_teams_eliminates_lesser_teams() {
-        let mut game = Game::default();
+        let mut game = Game::new_starting_state(Target::default());
         game.set_target(3.into());
 
         let team1 = Team::new("name");

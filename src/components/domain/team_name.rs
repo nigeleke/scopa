@@ -2,7 +2,7 @@ use crate::components::prelude::*;
 use crate::domain::prelude::*;
 
 use dioxus::prelude::*;
-use dioxus_i18n::t;
+use dioxus_i18n::tid;
 
 #[component]
 pub fn TeamNameView(value: TeamName) -> Element {
@@ -36,7 +36,7 @@ pub fn TeamNameEditor(
                 on_commit: commit_team_edit,
                 autofocus,
                 placeholder,
-                aria_label: t!("team-name-editor-aria-label"),
+                aria_label: tid!("team-name-editor.aria-label"),
             }
         }
     }

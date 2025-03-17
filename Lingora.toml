@@ -1,0 +1,7 @@
+[lingora]
+reference = "./i18n/en-GB.ftl"
+
+[dioxus_i18n]
+shares = [["en", "en-GB"], ["it", "it-IT"]]
+with_locale = "includestr"
+fallback = "en-GB"

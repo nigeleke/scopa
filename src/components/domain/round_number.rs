@@ -1,14 +1,14 @@
 use crate::domain::prelude::*;
 
 use dioxus::prelude::{document::*, *};
-use dioxus_i18n::t;
+use dioxus_i18n::tid;
 
 #[component]
 pub fn RoundNumberView(value: RoundNumber) -> Element {
     rsx! {
         Link { rel: "stylesheet", href: asset!("/assets/css/domain/round_number.css") }
         Container {
-            {t!("round-view")}
+            {tid!("round-view.text")}
             { " " }
             { value.to_string() }
         }

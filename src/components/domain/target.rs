@@ -2,14 +2,14 @@ use crate::components::prelude::*;
 use crate::domain::prelude::*;
 
 use dioxus::prelude::{document::*, *};
-use dioxus_i18n::t;
+use dioxus_i18n::tid;
 
 #[component]
 pub fn TargetView(value: Target) -> Element {
     rsx! {
         Link { rel: "stylesheet", href: asset!("/assets/css/domain/target.css") }
         Container {
-            {t!("points-view-text", n: value.to_string())}
+            {tid!("points-view.text", n: value.to_string())}
         }
     }
 }
@@ -26,7 +26,7 @@ pub fn TargetEditor(value: Target, onchange: EventHandler<Target>) -> Element {
     rsx! {
         Link { rel: "stylesheet", href: asset!("/assets/css/domain/target.css") }
         Container {
-            {t!("points-editor-prefix")}
+            {tid!("points-editor.prefix")}
             label {
                 Input {
                     typ: "number",
@@ -35,10 +35,10 @@ pub fn TargetEditor(value: Target, onchange: EventHandler<Target>) -> Element {
                     min: "11",
                     step: "5",
                     size: "3",
-                    aria_label: t!("points-editor-aria-label"),
+                    aria_label: tid!("points-editor.aria-label"),
                 }
             }
-            {t!("points-editor-suffix")}
+            {tid!("points-editor.suffix")}
         }
     }
 }

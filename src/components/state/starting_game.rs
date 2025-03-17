@@ -2,15 +2,19 @@ use crate::components::prelude::*;
 use crate::domain::prelude::*;
 
 use dioxus::prelude::{document::*, *};
-use dioxus_i18n::t;
+use dioxus_i18n::tid;
+use dioxus_sdk::storage::{use_storage, LocalStorage};
 
 #[component]
 pub fn StartingGame(state: StartingState, onchange: EventHandler<GameState>) -> Element {
     let mut state = use_signal(move || state);
+    let mut default_target =
+        use_storage::<LocalStorage, _>("default_target".into(), Target::default);
 
     let target = state.read().target();
     let update_target = move |new_target| {
         state.write().set_target(new_target);
+        default_target.set(new_target);
     };
 
     let teams = Vec::from(state.read().teams());
@@ -67,7 +71,7 @@ fn AddTeam(onadd: EventHandler<Team>) -> Element {
                 team_name: team_name,
                 autofocus: true,
                 oncommit: add_team,
-                placeholder: t!("team-name-editor-placeholder"),
+                placeholder: tid!("team-name-editor.placeholder"),
             }
             " "
             Button { on_click: add_team_button_action, " + " }
@@ -111,7 +115,7 @@ fn StartAction(can_start: bool, onstart: EventHandler<()>) -> Element {
         Button {
             disabled: !can_start,
             on_click: start,
-            {t!("start-button-text")}
+            {tid!("start-button.text")}
         }
     }
 }

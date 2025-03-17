@@ -1,5 +1,5 @@
 use dioxus::prelude::{document::*, *};
-use dioxus_i18n::t;
+use dioxus_i18n::tid;
 
 #[component]
 pub fn ScopaFooter() -> Element {
@@ -10,8 +10,8 @@ pub fn ScopaFooter() -> Element {
         div {
             class: "scopa_footer",
             p {
-                {t!("scopa-copyright-text")},
-                {t!("scopa-version-text", version: version)},
+                {tid!("scopa-app.copyright-text")},
+                {tid!("scopa-app.version-text", version: version)},
             }
         }
     }
