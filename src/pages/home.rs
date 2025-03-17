@@ -18,6 +18,10 @@ pub fn Home() -> Element {
     rsx! {
         Link { rel: "icon", href: asset!("/assets/favicon.ico") }
         Link { rel: "stylesheet", href: asset!("/assets/css/main.css") }
+        Meta { name: "description", content: "Score your Scopa game using this website. This app is a free and easy to use program to help you score your Scopa card game." }
+        Meta { name: "category", content: "game" }
+        Meta { name: "keywords", content: "cards,game,scorer,scopa" }
+        Meta { name: "author", content: "Nigel Eke" }
         header { ScopaHeader {} }
         main {
             match game() {
