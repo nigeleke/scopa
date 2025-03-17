@@ -12,6 +12,7 @@ use dioxus::prelude::*;
 use dioxus_i18n::prelude::use_init_i18n;
 use dioxus_i18n::unic_langid::langid;
 use dioxus_logger::tracing::Level;
+use dioxus_logger::tracing::*;
 use dioxus_sdk::storage::{use_storage, LocalStorage};
 
 fn main() {
@@ -22,7 +23,9 @@ fn main() {
 fn app() -> Element {
     let document_language = use_resource(move || async move {
         let mut eval = document::eval("dioxus.send(navigator.language)");
-        Language::try_from(eval.recv::<String>().await.unwrap()).unwrap()
+        let lang = Language::try_from(eval.recv::<String>().await.unwrap()).unwrap();
+        info!("use_resource::lang: {:?}", lang);
+        lang
     });
 
     #[allow(clippy::redundant_closure)]

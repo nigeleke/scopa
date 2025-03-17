@@ -18,10 +18,10 @@ jobs:
             - name: Compile
               run: |
                   cargo install dioxus-cli
-                  dx build --verbose
+                  dx build
 
             - name: Lint
               run: cargo clippy
 
             - name: Test
-              run: cargo test --verbose -- --show-output
+              run: cargo test
