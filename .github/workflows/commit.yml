@@ -2,10 +2,7 @@
 #
 name: Commit Cycle
 
-on:
-    push:
-        branches-ignore:
-            - main
+on: push
 
 jobs:
     build:
@@ -16,9 +13,7 @@ jobs:
               uses: actions/checkout@v4
 
             - name: Compile
-              run: |
-                  cargo install dioxus-cli
-                  dx build
+              run: cargo build
 
             - name: Lint
               run: cargo clippy

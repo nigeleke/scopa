@@ -23,65 +23,41 @@ jobs:
               with:
                   fetch-depth: 0
 
-            - name: Build Site
+            - name: Coverage Tests
               run: |
-                  cargo doc --no-deps
                   rustup toolchain install nightly
                   rustup component add llvm-tools-preview --toolchain nightly
                   cargo install cargo-llvm-cov
-                  cargo llvm-cov --html
-                  mkdir docs0
-                  mkdir -p docs0/api
-                  mkdir -p docs0/coverage
-                  cp README.md docs0/
-                  cp -R target/doc/* docs0/api
-                  cp -R target/llvm-cov/* docs0/coverage/
-                  cargo llvm-cov --cobertura --output-path=cobertura.xml
+                  cargo llvm-cov --all-features --cobertura --output-path=cobertura.xml
 
             - name: Publish to Codecov
               uses: codecov/codecov-action@v5
               env:
                   CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
-            - name: Build App
+            - name: Publish to Codecov Housekeeping
               run: |
-                  rm codecov*
-                  cargo install dioxus-cli
-                  sed -i 's/#base_path/base_path/g' Dioxus.toml
-                  dx build --release
+                  rm cobertura.xml
+                  rm codecov
+                  rm codecov.SHA256SUM
+                  rm codecov.SHA256SUM.sig
 
-            - name: Publish App & Documentation
+            - name: Documentation
+              run: |
+                  cargo doc --no-deps
+                  mkdir docs0
+                  mkdir -p docs0/api
+                  cp README.md docs0/
+                  cp -R target/doc/* docs0/api
+
+            - name: Update gh-pages
               run: |
                   git config --global user.email "nigeleke@users.noreply.github.com"
                   git config --global user.name "Nigel Eke"
                   export VERSION=$(git describe --abbrev=0 --tags)
-                  git checkout Dioxus.toml
                   git checkout gh-pages
                   rm -rf docs
                   mv docs0 docs
-                  mkdir docs/app/
-                  mv target/dx/scopa/release/web/public/* docs/app/
                   git add .
                   git commit -m "Release $VERSION"
                   git push
-                  git checkout main
-
-            - name: Publish to DockerHub
-              uses: docker/login-action@v3
-              with:
-                  username: ${{ secrets.DOCKER_USERNAME }}
-                  password: ${{ secrets.DOCKER_PASSWORD }}
-
-            - uses: docker/setup-qemu-action@v3
-
-            - uses: docker/setup-buildx-action@v3
-              with:
-                  platforms: linux/arm64,linux/amd64
-
-            - uses: docker/build-push-action@v6
-              with:
-                  file: docker/Dockerfile
-                  context: .
-                  push: true
-                  platforms: linux/arm64,linux/amd64
-                  tags: nigeleke/scopa:latest
