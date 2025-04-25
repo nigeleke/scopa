@@ -1,9 +1,9 @@
-use super::error::Error;
-
 use dioxus_i18n::unic_langid::LanguageIdentifier;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+use super::error::Error;
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Language(String);
 
 impl Language {

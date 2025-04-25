@@ -5,18 +5,19 @@ authors = ["Nigel Eke <nigeleke@gmail.com>"]
 edition = "2021"
 
 [dependencies]
-dioxus = { version = "0.6", features = ["web", "asset"] }
-dioxus-i18n = "0.4"
-dioxus-logger = "0.6"
-dioxus-sdk = { version = "0.6", features = ["storage"] }
-dioxus-web = "0.6"
-getrandom = { version = "0.2", features = ["js"] }
-gloo-storage = "0.3"
-serde = { version = "1.0", features = ["derive"] }
+# dioxus = { version = "0.6", features = ["web", "asset"] }
+# dioxus-i18n = "0.4"
+# dioxus-logger = "0.6"
+# dioxus-sdk = { version = "0.6", features = ["storage"] }
+# dioxus-web = "0.6"
+# getrandom = { version = "0.2", features = ["js"] }
+# gloo-storage = "0.3"
+# serde = { version = "1.0", features = ["derive"] }
 thiserror = "2.0"
 
 [dev-dependencies]
-insta = { version = "1.42", features = ["yaml", "filters"] }
+# insta = { version = "1.42", features = ["yaml", "filters"] }
+pretty_assertions = "1.4.1"
 
 [profile]
 
@@ -29,3 +30,9 @@ inherits = "dev"
 
 [profile.android-dev]
 inherits = "dev"
+
+[lints]
+clippy.all = { level = "warn", priority = -1 }
+clippy.nursery = { level = "warn", priority = -1 }
+clippy.unwrap_used = "forbid"
+clippy.expect_used = "allow"

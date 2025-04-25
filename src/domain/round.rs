@@ -1,15 +1,13 @@
-use serde::{Deserialize, Serialize};
-
-use crate::domain::prelude::*;
-
 use std::collections::HashMap;
 
-#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+use super::{points::Points, teams::TeamId};
+
+#[derive(Clone, Debug, Default, PartialEq, Eq)]
 pub struct Round {
     scopas: HashMap<TeamId, Points>,
     highest_card_count: Option<TeamId>,
     highest_coins_count: Option<TeamId>,
-    settobello: Option<TeamId>,
+    settebello: Option<TeamId>,
     premiera: Option<TeamId>,
 }
 
@@ -19,93 +17,103 @@ impl Round {
         self
     }
 
-    pub fn with_highest_card_count(mut self, id: Option<TeamId>) -> Self {
+    pub const fn with_highest_card_count(mut self, id: Option<TeamId>) -> Self {
         self.highest_card_count = id;
         self
     }
 
-    pub fn with_highest_coins_count(mut self, id: Option<TeamId>) -> Self {
+    pub const fn with_highest_coins_count(mut self, id: Option<TeamId>) -> Self {
         self.highest_coins_count = id;
         self
     }
 
-    pub fn with_settobello(mut self, id: TeamId) -> Self {
-        self.settobello = Option::Some(id);
+    pub const fn with_settebello(mut self, id: TeamId) -> Self {
+        self.settebello = Option::Some(id);
         self
     }
 
-    pub fn with_premiera(mut self, id: Option<TeamId>) -> Self {
+    pub const fn with_premiera(mut self, id: Option<TeamId>) -> Self {
         self.premiera = id;
         self
     }
 
+    pub fn team_ids(&self) -> impl Iterator<Item = TeamId> + '_ {
+        self.scopas
+            .keys()
+            .copied()
+            .chain(self.highest_card_count)
+            .chain(self.highest_coins_count)
+            .chain(self.settebello)
+            .chain(self.premiera)
+    }
+
     pub fn points(&self, id: TeamId) -> Points {
         let as_points = |maybe_id: Option<TeamId>| {
-            maybe_id.map_or(Points::default(), |id0| {
+            maybe_id.map_or_else(Points::default, |id0| {
                 (if id0 == id { 1 } else { 0 }).into()
             })
         };
         let scopas = self.scopas(id);
         let highest_card_count = as_points(self.highest_card_count);
         let highest_coins_count = as_points(self.highest_coins_count);
-        let settobello = as_points(self.settobello);
+        let settobello = as_points(self.settebello);
         let premiera = as_points(self.premiera);
         scopas + highest_card_count + highest_coins_count + settobello + premiera
     }
 
     pub fn scopas(&self, id: TeamId) -> Points {
-        self.scopas.get(&id).map_or(Points::default(), |&p| p)
+        self.scopas.get(&id).map_or_else(Points::default, |&p| p)
     }
 
-    pub fn card_count(&self) -> Option<TeamId> {
+    pub const fn card_count(&self) -> Option<TeamId> {
         self.highest_card_count
     }
 
-    pub fn coins_count(&self) -> Option<TeamId> {
+    pub const fn coins_count(&self) -> Option<TeamId> {
         self.highest_coins_count
     }
 
-    pub fn settebello(&self) -> Option<TeamId> {
-        self.settobello
+    pub const fn settebello(&self) -> Option<TeamId> {
+        self.settebello
     }
 
-    pub fn premiera(&self) -> Option<TeamId> {
+    pub const fn premiera(&self) -> Option<TeamId> {
         self.premiera
     }
 
-    pub fn is_well_defined(&self) -> bool {
-        self.settobello.is_some()
-    }
-}
-
-pub trait Rounds {
-    fn rounds(&self) -> &[Round];
-
-    fn round_number(&self) -> RoundNumber {
-        (self.rounds().len() + 1).into()
-    }
-
-    fn points(&self, id: TeamId) -> Points {
-        self.rounds()
-            .iter()
-            .fold(Points::default(), |acc, r| acc + r.points(id))
+    pub const fn is_well_defined(&self) -> bool {
+        self.settebello.is_some()
     }
 }
 
 #[cfg(test)]
 mod test {
-    use crate::domain::team::Team;
-
     use super::*;
 
     #[test]
+    fn default_is_unscored() {
+        let round = Round::default();
+        assert!(round.scopas.is_empty());
+        assert!(round.highest_card_count.is_none());
+        assert!(round.highest_coins_count.is_none());
+        assert!(round.settebello.is_none());
+        assert!(!round.is_well_defined());
+        assert!(round.premiera.is_none());
+    }
+
+    #[test]
     fn round_will_contain_scopas() {
-        let id1 = Team::new("name").id();
-        let id2 = Team::new("name").id();
-        let id3 = Team::new("name").id();
+        let id1 = TeamId::default();
+        let id2 = TeamId::default();
+        let id3 = TeamId::default();
         let round = Round::default()
-            .with_scopas(id1, 1.into())
-            .with_scopas(id2, 2.into());
+            .with_scopas(id1, Points::from(1))
+            .with_scopas(id2, Points::from(2));
+
+        assert_eq!(round.scopas(id1), Points::from(1));
+        assert_eq!(round.scopas(id2), Points::from(2));
+        assert_eq!(round.scopas(id3), Points::from(0));
+
         assert_eq!(round.points(id1), Points::from(1));
         assert_eq!(round.points(id2), Points::from(2));
         assert_eq!(round.points(id3), Points::from(0));
@@ -113,8 +121,8 @@ mod test {
 
     #[test]
     fn round_may_contain_no_points_winners() {
-        let id1 = Team::new("name").id();
-        let id2 = Team::new("name").id();
+        let id1 = TeamId::default();
+        let id2 = TeamId::default();
         let round = Round::default();
         assert_eq!(round.points(id1), Points::from(0));
         assert_eq!(round.points(id2), Points::from(0));
@@ -122,36 +130,49 @@ mod test {
 
     #[test]
     fn round_will_contain_card_count_winner() {
-        let id1 = Team::new("name").id();
-        let id2 = Team::new("name").id();
+        let id1 = TeamId::default();
+        let id2 = TeamId::default();
         let round = Round::default().with_highest_card_count(Some(id1));
+
+        assert_eq!(round.card_count(), Some(id1));
+
         assert_eq!(round.points(id1), Points::from(1));
         assert_eq!(round.points(id2), Points::from(0));
     }
 
     #[test]
     fn round_will_contain_coins_count_winner() {
-        let id1 = Team::new("name").id();
-        let id2 = Team::new("name").id();
+        let id1 = TeamId::default();
+        let id2 = TeamId::default();
         let round = Round::default().with_highest_coins_count(Some(id1));
+
+        assert_eq!(round.coins_count(), Some(id1));
+
         assert_eq!(round.points(id1), Points::from(1));
         assert_eq!(round.points(id2), Points::from(0));
     }
 
     #[test]
-    fn round_will_contain_settobello_winner() {
-        let id1 = Team::new("name").id();
-        let id2 = Team::new("name").id();
-        let round = Round::default().with_settobello(id1);
+    fn round_will_contain_settebello_winner() {
+        let id1 = TeamId::default();
+        let id2 = TeamId::default();
+        let round = Round::default().with_settebello(id1);
+
+        assert_eq!(round.settebello(), Some(id1));
+        assert!(round.is_well_defined());
+
         assert_eq!(round.points(id1), Points::from(1));
         assert_eq!(round.points(id2), Points::from(0));
     }
 
     #[test]
     fn round_will_contain_premiera_winner() {
-        let id1 = Team::new("name").id();
-        let id2 = Team::new("name").id();
+        let id1 = TeamId::default();
+        let id2 = TeamId::default();
         let round = Round::default().with_premiera(Some(id1));
+
+        assert_eq!(round.premiera(), Some(id1));
+
         assert_eq!(round.points(id1), Points::from(1));
         assert_eq!(round.points(id2), Points::from(0));
     }

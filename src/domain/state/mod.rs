@@ -1,9 +1,9 @@
-mod finished_state;
-mod playing_state;
-mod starting_state;
+mod finished;
+mod playing;
+mod starting;
+mod traits;
 
-pub mod prelude {
-    pub use super::finished_state::FinishedState;
-    pub use super::playing_state::PlayingState;
-    pub use super::starting_state::StartingState;
-}
+pub use finished::Finished;
+pub use playing::Playing;
+pub use starting::Starting;
+pub use traits::{HasHistory, HasTarget, HasTeams, HasWinner};
