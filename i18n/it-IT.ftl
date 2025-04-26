@@ -68,3 +68,12 @@ restart-icon =
 lang =
     .en-GB = Inglese
     .it-IT = Italiano
+
+reset-button =
+    .text = Reset
+
+error =
+    .apology = Si è verificato un errore imprevisto
+    .report0 = Segnala un problema nella
+    .report1 = pagina dei problemi
+    .report2 = per farci sapere cosa è successo.
