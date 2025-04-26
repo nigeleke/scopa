@@ -5,14 +5,14 @@
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="UTF-8" />
-  <link rel="preload" as="script" href="/scopa/app/assets/scopa-e8fa0d404173b3b1.js" crossorigin><link rel="preload" as="fetch" type="application/wasm" href="/scopa/app/assets/scopa_bg-427778109fe3cff3.wasm" crossorigin></head>
+  <link rel="preload" as="script" href="/scopa/app/assets/scopa-e8fa0d404173b3b1.js" crossorigin><link rel="preload" as="fetch" type="application/wasm" href="/scopa/app/assets/scopa_bg-ee42f58b4826cb79.wasm" crossorigin></head>
   <body>
     <div id="main"></div>
   <script>
             // We can't use a module script here because we need to start the script immediately when streaming
             import("/scopa/app/assets/scopa-e8fa0d404173b3b1.js").then(
                 ({ default: init }) => {
-                init("/scopa/app/assets/scopa_bg-427778109fe3cff3.wasm").then((wasm) => {
+                init("/scopa/app/assets/scopa_bg-ee42f58b4826cb79.wasm").then((wasm) => {
                     if (wasm.__wbindgen_start == undefined) {
                     wasm.main();
                     }
