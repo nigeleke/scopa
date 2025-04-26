@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["Empty","RadioTeamIcon","RoundEditor","ScopaIcon","ScopaScore","TeamHeader"],"struct":["RadioTeamIconProps","RoundEditorProps","ScopaIconProps","ScopaScoreProps","TeamHeaderProps"]};

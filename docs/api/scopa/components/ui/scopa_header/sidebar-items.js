@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["Flag","Menu","RestartMenuItem","ScopaHeader"],"struct":["FlagProps"]};

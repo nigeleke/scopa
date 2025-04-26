@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"mod":["finished_state","playing_state","prelude","starting_state"]};

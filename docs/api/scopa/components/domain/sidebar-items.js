@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"mod":["points","points_group","points_group_image","prelude","round","round_number","target","team_name"]};

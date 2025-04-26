@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["Container","PointsEditor","PointsView"],"struct":["ContainerProps","PointsEditorProps","PointsViewProps"]};

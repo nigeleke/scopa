@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"mod":["core","domain","prelude","state","ui"]};

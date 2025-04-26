@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["Icon","MenuIcon","RestartIcon"],"struct":["IconProps","MenuIconProps","RestartIconProps"]};
