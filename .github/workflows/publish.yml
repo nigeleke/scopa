@@ -60,7 +60,7 @@ jobs:
                   cp README.md docs0/
                   cp -R target/doc/* docs0/api
                   mkdir -p docs0/app
-                  cp -R target/dx/scopa/release/web/public/ docs0/app
+                  cp -R target/dx/scopa/release/web/public/* docs0/app
 
             - name: Bundle Housekeeping
               run: |
