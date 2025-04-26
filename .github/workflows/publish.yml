@@ -46,6 +46,7 @@ jobs:
               run: |
                   cargo install cargo-binstall
                   cargo binstall dioxus-cli
+                  sed -i 's/#base_path/base_path/g' Dioxus.toml
                   dx bundle
 
             - name: Documentation
@@ -60,6 +61,10 @@ jobs:
                   cp -R target/doc/* docs0/api
                   mkdir -p docs0/app
                   cp -R target/dx/scopa/release/web/public/ docs0/app
+
+            - name: Bundle Housekeeping
+              run: |
+                  git checkout Dioxus.toml
 
             - name: Update gh-pages
               run: |
