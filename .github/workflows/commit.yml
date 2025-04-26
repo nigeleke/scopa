@@ -14,7 +14,7 @@ jobs:
 
             - name: Compile
               run: |
-                  cargo install binstall
+                  cargo install cargo-binstall
                   cargo binstall dioxus-cli
                   dx build
 
