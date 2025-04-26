@@ -1,0 +1,1 @@
+.playing-game{flex-direction:column;justify-content:flex-start;align-items:stretch;gap:3svh;animation:.25s playingGameFadeIn;display:flex}@keyframes playingGameFadeIn{0%{opacity:0}to{opacity:1}}.playing-game-header{flex-direction:row;justify-content:space-between;width:100%;display:flex}.playing-game button{align-self:center}
