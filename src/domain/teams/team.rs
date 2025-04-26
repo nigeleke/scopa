@@ -1,6 +1,8 @@
+use serde::{Deserialize, Serialize};
+
 use super::{id::Id, name::Name};
 
-#[derive(Clone, Debug, PartialEq, Eq)]
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Team {
     id: Id,
     name: Name,

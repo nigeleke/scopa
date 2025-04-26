@@ -1,17 +1,19 @@
+use serde::{Deserialize, Serialize};
+
 use super::traits::{HasTarget, HasTeams};
 use crate::domain::{
-    points::Points,
+    target::Target,
     teams::{Team, TeamId, Teams},
 };
 
-#[derive(Clone, Debug, PartialEq, Eq)]
+#[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Starting {
     teams: Teams,
-    target: Points,
+    target: Target,
 }
 
 impl Starting {
-    pub fn into_parts(self) -> (Teams, Points) {
+    pub fn into_parts(self) -> (Teams, Target) {
         (self.teams, self.target)
     }
 
@@ -23,7 +25,7 @@ impl Starting {
         self.teams.retain(|t| t.id() != id);
     }
 
-    pub const fn set_target(&mut self, target: Points) {
+    pub const fn set_target(&mut self, target: Target) {
         self.target = target;
     }
 
@@ -34,8 +36,8 @@ impl Starting {
     }
 }
 
-impl From<Points> for Starting {
-    fn from(value: Points) -> Self {
+impl From<Target> for Starting {
+    fn from(value: Target) -> Self {
         Self {
             teams: Teams::default(),
             target: value,
@@ -50,7 +52,7 @@ impl HasTeams for Starting {
 }
 
 impl HasTarget for Starting {
-    fn target(&self) -> Points {
+    fn target(&self) -> Target {
         self.target
     }
 }

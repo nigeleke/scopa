@@ -68,7 +68,7 @@ score-group-icon =
 round-view =
     .text = Round
 
-# Score button;
+# Score button.
 score-button =
     .text = Score
 
@@ -95,3 +95,14 @@ restart-icon =
 lang =
     .en-GB = English
     .it-IT = Italian
+
+# Reset button.
+reset-button =
+    .text = Reset
+
+# Error instructions.
+error =
+    .apology = An unexpected error occurred
+    .report0 = Please raise an issue on the
+    .report1 = issues page
+    .report2 = to let us know what happened.

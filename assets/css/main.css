@@ -1,5 +1,6 @@
 :root {
     --text-colour: ghostwhite;
+    --text-colour-dark: hsl(from var(--text-colour) h s 90%);
     --text-shadow: 2px 2px 4px var(--text-colour);
     --theme-colour: darkgreen;
     --theme-colour-light: hsl(from var(--theme-colour) h s 30%);
@@ -78,4 +79,12 @@ button:hover {
 button:disabled {
     background-color: var(--disabled-colour);
     color: var(--disabled-text-colour);
+}
+
+a {
+    color: inherit;
+}
+
+a:hover {
+    color: var(--text-colour-dark);
 }

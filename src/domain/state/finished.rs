@@ -1,20 +1,22 @@
+use serde::{Deserialize, Serialize};
+
 use super::traits::{HasHistory, HasTarget, HasTeams, HasWinner};
 use crate::domain::{
     history::History,
-    points::Points,
+    target::Target,
     teams::{TeamId, Teams},
 };
 
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Finished {
     teams: Teams,
     history: History,
     winner: TeamId,
-    target: Points,
+    target: Target,
 }
 
 impl Finished {
-    pub const fn new(teams: Teams, history: History, winner: TeamId, target: Points) -> Self {
+    pub const fn new(teams: Teams, history: History, winner: TeamId, target: Target) -> Self {
         Self {
             teams,
             history,
@@ -43,7 +45,7 @@ impl HasWinner for Finished {
 }
 
 impl HasTarget for Finished {
-    fn target(&self) -> Points {
+    fn target(&self) -> Target {
         self.target
     }
 }

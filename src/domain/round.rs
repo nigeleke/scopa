@@ -1,8 +1,10 @@
 use std::collections::HashMap;
 
+use serde::{Deserialize, Serialize};
+
 use super::{points::Points, teams::TeamId};
 
-#[derive(Clone, Debug, Default, PartialEq, Eq)]
+#[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Round {
     scopas: HashMap<TeamId, Points>,
     highest_card_count: Option<TeamId>,

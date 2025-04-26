@@ -1,6 +1,9 @@
 use std::num::ParseIntError;
 
+use serde::{Deserialize, Serialize};
 use thiserror::*;
+
+use super::target::Target;
 
 #[derive(Debug, Error)]
 pub enum PointsError {
@@ -11,7 +14,7 @@ pub enum PointsError {
     InvalidValue(#[from] ParseIntError),
 }
 
-#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
 pub struct Points(usize);
 
 impl std::str::FromStr for Points {
@@ -50,6 +53,18 @@ impl std::ops::AddAssign for Points {
 impl std::fmt::Display for Points {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         self.0.fmt(f)
+    }
+}
+
+impl PartialEq<Target> for Points {
+    fn eq(&self, other: &Target) -> bool {
+        self.0 == other.value()
+    }
+}
+
+impl PartialOrd<Target> for Points {
+    fn partial_cmp(&self, other: &Target) -> Option<std::cmp::Ordering> {
+        Some(self.0.cmp(&other.value()))
     }
 }
 
@@ -119,6 +134,17 @@ mod test {
                 Points::from(42)
             ])
         );
+    }
+
+    #[test]
+    fn can_compare_against_target() {
+        assert!(Points::from(0) < Target::from(1));
+        assert!(Points::from(0) <= Target::from(1));
+        assert!(Points::from(1) <= Target::from(1));
+        assert!(Points::from(1) == Target::from(1));
+        assert!(Points::from(1) >= Target::from(1));
+        assert!(Points::from(2) >= Target::from(1));
+        assert!(Points::from(2) > Target::from(1));
     }
 
     #[test]

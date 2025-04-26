@@ -1,15 +1,17 @@
-use super::traits::{HasHistory, HasTarget, HasTeams};
-use crate::domain::{history::History, points::Points, teams::Teams};
+use serde::{Deserialize, Serialize};
 
-#[derive(Debug)]
+use super::traits::{HasHistory, HasTarget, HasTeams};
+use crate::domain::{history::History, target::Target, teams::Teams};
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Playing {
     teams: Teams,
     history: History,
-    target: Points,
+    target: Target,
 }
 
 impl Playing {
-    pub const fn new(teams: Teams, history: History, target: Points) -> Self {
+    pub const fn new(teams: Teams, history: History, target: Target) -> Self {
         Self {
             teams,
             history,
@@ -17,7 +19,7 @@ impl Playing {
         }
     }
 
-    pub fn into_parts(self) -> (Teams, History, Points) {
+    pub fn into_parts(self) -> (Teams, History, Target) {
         (self.teams, self.history, self.target)
     }
 }
@@ -35,7 +37,7 @@ impl HasHistory for Playing {
 }
 
 impl HasTarget for Playing {
-    fn target(&self) -> Points {
+    fn target(&self) -> Target {
         self.target
     }
 }

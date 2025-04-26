@@ -1,3 +1,4 @@
+use serde::{Deserialize, Serialize};
 use thiserror::*;
 
 use super::{
@@ -5,7 +6,8 @@ use super::{
     points::Points,
     round::Round,
     state::*,
-    teams::{Team, TeamId, Teams},
+    target::Target,
+    teams::{Team, TeamId, TeamName, Teams},
 };
 
 #[derive(Debug, Error, PartialEq, Eq)]
@@ -22,7 +24,7 @@ pub enum GameError {
 
 type Result<T> = std::result::Result<T, GameError>;
 
-#[derive(Clone, Debug, PartialEq, Eq)]
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Game<T> {
     state: T,
     _phantom: std::marker::PhantomData<T>,
@@ -44,7 +46,7 @@ impl<T: HasTeams> HasTeams for Game<T> {
 }
 
 impl<T: HasTarget> HasTarget for Game<T> {
-    fn target(&self) -> Points {
+    fn target(&self) -> Target {
         self.state.target()
     }
 }
@@ -71,7 +73,7 @@ impl<T: HasTeams> Game<T> {
     }
 }
 
-impl<T: HasHistory + HasTeams> Game<T> {
+impl<T: HasHistory> Game<T> {
     fn validate_round(&self, round: &Round) -> Result<()> {
         if !round.is_well_defined() {
             return Err(GameError::RequiresSettebello);
@@ -82,13 +84,29 @@ impl<T: HasHistory + HasTeams> Game<T> {
         Ok(())
     }
 
-    fn points(&self, id: TeamId) -> Result<Points> {
+    pub fn points(&self, id: TeamId) -> Result<Points> {
         self.validate_team(id)?;
         Ok(self.history().points(id))
     }
 }
 
+impl<T: HasWinner> Game<T> {
+    pub fn winner_name(&self) -> Result<TeamName> {
+        self.validate_team(self.winner())?;
+        let team = self
+            .teams()
+            .iter()
+            .find(|t| t.id() == self.winner())
+            .expect("existing team");
+        Ok(team.name().clone())
+    }
+}
+
 impl Game<Starting> {
+    pub fn can_start(&self) -> bool {
+        self.state.can_start()
+    }
+
     pub fn add_team(&mut self, team: Team) {
         self.state.add_team(team);
     }
@@ -99,7 +117,7 @@ impl Game<Starting> {
         Ok(())
     }
 
-    pub const fn set_target(&mut self, target: Points) {
+    pub const fn set_target(&mut self, target: Target) {
         self.state.set_target(target);
     }
 
@@ -116,21 +134,22 @@ impl Game<Starting> {
     }
 }
 
-impl Default for Game<Starting> {
-    fn default() -> Self {
-        Self::from(Points::from(11))
-    }
-}
-
-impl From<Points> for Game<Starting> {
-    fn from(value: Points) -> Self {
+impl From<Target> for Game<Starting> {
+    fn from(value: Target) -> Self {
         let starting_state = Starting::from(value);
         Self::new(starting_state)
     }
 }
 
+impl Default for Game<Starting> {
+    fn default() -> Self {
+        let starting_state = Starting::default();
+        Self::new(starting_state)
+    }
+}
+
 #[derive(Debug)]
-enum ScoreRoundResult {
+pub enum ScoreRoundResult {
     Playing(Game<Playing>),
     Finished(Game<Finished>),
 }
@@ -144,7 +163,7 @@ impl Game<Playing> {
 
         let team_points = teams.iter_mut().map(|team: &mut Team| {
             let id = team.id();
-            let points = history.points(id) + round.points(id);
+            let points = history.points(id);
             (team, points)
         });
 
@@ -173,7 +192,6 @@ impl Game<Playing> {
                 .filter(|t| t.1 < winner_score)
                 .for_each(|t| t.0.set_inactive());
             let playing_state = Playing::new(teams, history, target);
-            println!("non def 2 {:?}", playing_state);
             ScoreRoundResult::Playing(Self::new(playing_state))
         };
 
@@ -197,7 +215,7 @@ mod test {
     #[test]
     fn default_game_target_will_be_11() {
         let game = Game::default();
-        assert_eq!(game.target(), Points::from(11));
+        assert_eq!(game.target(), Target::default());
     }
 
     #[test]
@@ -234,7 +252,7 @@ mod test {
     #[test]
     fn can_define_valid_new_target() {
         let mut game = Game::default();
-        let target = Points::from(16);
+        let target = Target::from(16);
         assert_ne!(game.target(), target);
         game.set_target(target);
         assert_eq!(game.target(), target);
@@ -379,7 +397,7 @@ mod test {
     }
 
     fn test_is_finished(target: usize, score1: usize, score2: usize, is_finished: bool) {
-        let mut game = Game::from(Points::from(target));
+        let mut game = Game::from(Target::from(target));
 
         let team1 = Team::from("name");
         let id1 = team1.id();
@@ -409,7 +427,7 @@ mod test {
                     Points::from(score2)
                 );
                 assert!(!is_finished);
-                assert_eq!(game.target(), Points::from(target));
+                assert_eq!(game.target(), Target::from(target));
             }
             ScoreRoundResult::Finished(game) => {
                 assert_eq!(
@@ -422,7 +440,7 @@ mod test {
                 );
                 assert!(is_finished);
                 assert_eq!(game.winner(), if score1 > score2 { id1 } else { id2 });
-                assert_eq!(game.target(), Points::from(target));
+                assert_eq!(game.target(), Target::from(target));
             }
         }
     }
@@ -449,7 +467,7 @@ mod test {
 
     #[test]
     fn target_reached_and_tied_by_multiple_teams_eliminates_lesser_teams() {
-        let mut game = Game::from(Points::from(3));
+        let mut game = Game::from(Target::from(3));
 
         let team1 = Team::from("name");
         let id1 = team1.id();

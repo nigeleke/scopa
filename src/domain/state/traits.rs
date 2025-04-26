@@ -1,6 +1,6 @@
 use crate::domain::{
     history::History,
-    points::Points,
+    target::Target,
     teams::{TeamId, Teams},
 };
 
@@ -9,13 +9,13 @@ pub trait HasTeams {
 }
 
 pub trait HasTarget {
-    fn target(&self) -> Points;
+    fn target(&self) -> Target;
 }
 
-pub trait HasHistory {
+pub trait HasHistory: HasTeams {
     fn history(&self) -> &History;
 }
 
-pub trait HasWinner {
+pub trait HasWinner: HasTeams {
     fn winner(&self) -> TeamId;
 }

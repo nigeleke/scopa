@@ -1,23 +1,22 @@
 [package]
 name = "scopa"
-version = "1.0.6"
+version = "2.0.0"
 authors = ["Nigel Eke <nigeleke@gmail.com>"]
-edition = "2021"
+edition = "2024"
 
 [dependencies]
-# dioxus = { version = "0.6", features = ["web", "asset"] }
-# dioxus-i18n = "0.4"
-# dioxus-logger = "0.6"
-# dioxus-sdk = { version = "0.6", features = ["storage"] }
-# dioxus-web = "0.6"
-# getrandom = { version = "0.2", features = ["js"] }
-# gloo-storage = "0.3"
-# serde = { version = "1.0", features = ["derive"] }
-thiserror = "2.0"
+dioxus = { version = "0.6.0", features = ["router"] }
+dioxus-i18n = "0.4.3"
+dioxus-sdk = { version = "0.6.0", features = ["storage"] }
+thiserror = "2.0.12"
+serde = { version = "1.0.219", features = ["derive"] }
 
 [dev-dependencies]
-# insta = { version = "1.42", features = ["yaml", "filters"] }
 pretty_assertions = "1.4.1"
+
+[features]
+default = ["web"]
+web = ["dioxus/web"]
 
 [profile]
 
@@ -33,6 +32,5 @@ inherits = "dev"
 
 [lints]
 clippy.all = { level = "warn", priority = -1 }
-clippy.nursery = { level = "warn", priority = -1 }
 clippy.unwrap_used = "forbid"
 clippy.expect_used = "allow"

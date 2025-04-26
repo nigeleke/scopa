@@ -1,9 +1,11 @@
 use std::sync::{
-    atomic::{AtomicI64, Ordering},
     LazyLock,
+    atomic::{AtomicI64, Ordering},
 };
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
+use serde::{Deserialize, Serialize};
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub struct Id(i64);
 
 static NEXT_ID: LazyLock<AtomicI64> = LazyLock::new(|| AtomicI64::new(0));

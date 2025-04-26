@@ -1,16 +1,19 @@
+use serde::{Deserialize, Serialize};
+
 use super::{
     points::Points,
     round::Round,
+    round_number::RoundNumber,
     teams::{TeamId, Teams},
 };
 
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 struct Entry {
     round: Round,
     teams: Teams,
 }
 
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 pub struct History(Vec<Entry>);
 
 impl History {
@@ -22,8 +25,8 @@ impl History {
         self.0.push(entry);
     }
 
-    pub const fn round_number(&self) -> usize {
-        self.0.len() + 1
+    pub fn round_number(&self) -> RoundNumber {
+        RoundNumber::from(self.0.len() + 1)
     }
 
     pub fn points(&self, id: TeamId) -> Points {
@@ -70,11 +73,11 @@ mod test {
         let teams = Teams::from([team1, team2]);
 
         let mut history = History::default();
-        assert_eq!(history.round_number(), 1);
+        assert_eq!(history.round_number(), RoundNumber::from(1));
         history.record(&teams, &round);
-        assert_eq!(history.round_number(), 2);
+        assert_eq!(history.round_number(), RoundNumber::from(2));
         history.record(&teams, &round);
-        assert_eq!(history.round_number(), 3);
+        assert_eq!(history.round_number(), RoundNumber::from(3));
     }
 
     #[test]

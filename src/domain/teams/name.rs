@@ -1,4 +1,6 @@
-#[derive(Clone, Debug, Default, PartialEq, Eq, Hash)]
+use serde::{Deserialize, Serialize};
+
+#[derive(Clone, Debug, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub struct Name(String);
 
 impl From<&str> for Name {
@@ -9,7 +11,7 @@ impl From<&str> for Name {
 
 impl std::fmt::Display for Name {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", self.0)
+        self.0.fmt(f)
     }
 }
 
