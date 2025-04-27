@@ -80,3 +80,7 @@ error =
     .report0 = Segnala un problema nella
     .report1 = pagina dei problemi
     .report2 = per farci sapere cosa è successo.
+
+not-found =
+    .heading = 404 - Pagina non trovata
+    .home = Home

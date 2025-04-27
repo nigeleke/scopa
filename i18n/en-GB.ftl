@@ -110,3 +110,8 @@ error =
     .report0 = Please raise an issue on the
     .report1 = issues page
     .report2 = to let us know what happened.
+
+# Not found page
+not-found =
+    .heading = 404 - Not Found
+    .home = Home
