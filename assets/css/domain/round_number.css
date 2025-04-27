@@ -18,3 +18,22 @@
     justify-content: space-around;
     align-items: baseline;
 }
+
+@keyframes round-number-pulse {
+    0% {
+        transform: scale(1);
+        background-color: var(--control-colour);
+    }
+    50% {
+        transform: scale(1.2);
+        background-color: var(--control-colour-highlight, #eee);
+    }
+    100% {
+        transform: scale(1);
+        background-color: var(--control-colour);
+    }
+}
+
+.round-number-pulse {
+    animation: round-number-pulse 0.9s ease-in-out;
+}
