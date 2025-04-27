@@ -70,7 +70,11 @@ round-view =
 
 # Score button.
 score-button =
-    .text = Score
+    .text = Score points
+
+# Undo button.
+undo-button =
+    .text = Undo
 
 # Winner; display the winning team name.
 winner-view =

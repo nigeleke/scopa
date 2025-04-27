@@ -11,6 +11,12 @@ pub fn PlayingGame(game: ReadOnlySignal<Game<Playing>>, onchange: EventHandler<S
     let round_number = game.read().history().round_number();
     let target = game.read().target();
 
+    let undo = move |_| {
+        let playing_state = game().undo()?;
+        onchange.call(State::from(playing_state));
+        Ok(())
+    };
+
     let mut round = use_signal(Round::default);
 
     let score_round = move |_| {
@@ -36,9 +42,16 @@ pub fn PlayingGame(game: ReadOnlySignal<Game<Playing>>, onchange: EventHandler<S
                 game: game(),
                 round: round,
             }
-            ScoreButton {
-                can_score: round.read().is_well_defined(),
-                onscore: score_round,
+            div {
+                class: "playing-game-controls",
+                ScoreButton {
+                    can_score: round.read().is_well_defined(),
+                    onscore: score_round,
+                }
+                UndoButton {
+                    can_undo: game.read().can_undo(),
+                    onundo: undo,
+                }
             }
         }
     }
@@ -50,9 +63,24 @@ fn ScoreButton(can_score: bool, onscore: EventHandler<()>) -> Element {
 
     rsx! {
         Button {
+            id: "score",
             disabled: !can_score,
             on_click: record_score,
             {tid!("score-button.text")}
+        }
+    }
+}
+
+#[component]
+fn UndoButton(can_undo: bool, onundo: EventHandler<()>) -> Element {
+    let undo = move |_| onundo.call(());
+
+    rsx! {
+        Button {
+            id: "undo",
+            disabled: !can_undo,
+            on_click: undo,
+            {tid!("undo-button.text")}
         }
     }
 }

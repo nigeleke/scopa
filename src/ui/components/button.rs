@@ -8,7 +8,7 @@ pub fn Button(
 
     #[props(optional)] children: Element,
 
-    #[props(extends = button)] attributes: Vec<Attribute>,
+    #[props(extends = button, extends = GlobalAttributes)] attributes: Vec<Attribute>,
 ) -> Element {
     rsx! {
         button {

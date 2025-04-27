@@ -13,7 +13,7 @@ pub fn FinishedGame(game: Game<Finished>, onchange: EventHandler<State>) -> Elem
     let game = use_signal(|| game);
     let default_target = use_storage::<LocalStorage, _>(STORAGE_TARGET.into(), Target::default);
 
-    let winner = game.read().winner_name()?;
+    let winner = game().winner_name().clone();
 
     let mut teams = Teams::from(game.read().teams().clone());
     teams.sort_by_key(|b| std::cmp::Reverse(game.read().points(b.id()).expect("valid points")));

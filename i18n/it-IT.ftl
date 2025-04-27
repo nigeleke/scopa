@@ -48,7 +48,10 @@ round-view =
     .text = Turno
 
 score-button =
-    .text = Punto
+    .text = Segna punti
+
+undo-button =
+    .text = Annulla
 
 winner-view =
     .text = Vincitore - {$teamname}

@@ -23,6 +23,20 @@
     justify-content: space-between;
 }
 
-.playing-game button {
+.playing-game-controls {
     align-self: center;
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.playing-game-controls button#score {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.playing-game-controls button#undo {
+    margin-left: auto;
 }

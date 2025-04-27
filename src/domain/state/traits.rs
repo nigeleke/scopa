@@ -1,7 +1,8 @@
 use crate::domain::{
+    RoundNumber,
     history::History,
     target::Target,
-    teams::{TeamId, Teams},
+    teams::{Team, TeamName, Teams},
 };
 
 pub trait HasTeams {
@@ -14,8 +15,16 @@ pub trait HasTarget {
 
 pub trait HasHistory: HasTeams {
     fn history(&self) -> &History;
+
+    fn round_number(&self) -> RoundNumber {
+        self.history().round_number()
+    }
 }
 
 pub trait HasWinner: HasTeams {
-    fn winner(&self) -> TeamId;
+    fn winner(&self) -> &Team;
+
+    fn winner_name(&self) -> &TeamName {
+        self.winner().name()
+    }
 }

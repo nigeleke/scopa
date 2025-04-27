@@ -5,9 +5,10 @@ use super::{
     history::History,
     points::Points,
     round::Round,
+    round_number::RoundNumber,
     state::*,
     target::Target,
-    teams::{Team, TeamId, TeamName, Teams},
+    teams::{Team, TeamId, Teams},
 };
 
 #[derive(Debug, Error, PartialEq, Eq)]
@@ -20,6 +21,9 @@ pub enum GameError {
 
     #[error("requires settebello to be assigned")]
     RequiresSettebello,
+
+    #[error("cannot undo; no history available")]
+    CannotUndo,
 }
 
 type Result<T> = std::result::Result<T, GameError>;
@@ -58,7 +62,7 @@ impl<T: HasHistory> HasHistory for Game<T> {
 }
 
 impl<T: HasWinner> HasWinner for Game<T> {
-    fn winner(&self) -> TeamId {
+    fn winner(&self) -> &Team {
         self.state.winner()
     }
 }
@@ -87,18 +91,6 @@ impl<T: HasHistory> Game<T> {
     pub fn points(&self, id: TeamId) -> Result<Points> {
         self.validate_team(id)?;
         Ok(self.history().points(id))
-    }
-}
-
-impl<T: HasWinner> Game<T> {
-    pub fn winner_name(&self) -> Result<TeamName> {
-        self.validate_team(self.winner())?;
-        let team = self
-            .teams()
-            .iter()
-            .find(|t| t.id() == self.winner())
-            .expect("existing team");
-        Ok(team.name().clone())
     }
 }
 
@@ -155,6 +147,17 @@ pub enum ScoreRoundResult {
 }
 
 impl Game<Playing> {
+    pub fn can_undo(&self) -> bool {
+        self.state.round_number() > RoundNumber::from(1)
+    }
+
+    pub fn undo(self) -> Result<Game<Playing>> {
+        let (_, mut history, target) = self.state.into_parts();
+        let previous_teams = history.undo().ok_or(GameError::CannotUndo)?;
+        let playing_state = Playing::new(previous_teams, history, target);
+        Ok(Self::new(playing_state))
+    }
+
     pub fn score_round(self, round: &Round) -> Result<ScoreRoundResult> {
         self.validate_round(round)?;
 
@@ -181,7 +184,7 @@ impl Game<Playing> {
             let playing_state = Playing::new(teams, history, target);
             ScoreRoundResult::Playing(Self::new(playing_state))
         } else if single_winner || definitive_winner() {
-            let winner = winners[0].0.id();
+            let winner = winners[0].0.clone();
             let finished_state = Finished::new(teams, history, winner, target);
             ScoreRoundResult::Finished(Game::<_>::new(finished_state))
         } else {
@@ -260,6 +263,7 @@ mod test {
 
     #[test]
     fn starting_a_game_requires_valid_team_count() {
+        const VALID_TEAM_SIZES: &[usize; 4] = &[2, 3, 4, 6];
         (0..=8).into_iter().for_each(|i| {
             let mut game = Game::default();
             (0..i).into_iter().for_each(|_| {
@@ -267,8 +271,9 @@ mod test {
                 game.add_team(team);
             });
             assert_eq!(game.teams().len(), i);
+            assert_eq!(game.can_start(), VALID_TEAM_SIZES.contains(&i));
             let result = game.start();
-            if [2, 3, 4, 6].contains(&i) {
+            if VALID_TEAM_SIZES.contains(&i) {
                 assert!(result.is_ok())
             } else {
                 assert_eq!(result.expect_err("invalid start"), GameError::CannotStart)
@@ -373,6 +378,27 @@ mod test {
     }
 
     #[test]
+    fn will_provide_points_for_valid_players() {
+        let mut game = Game::default();
+
+        let team1 = Team::from("name");
+        let id1 = team1.id();
+
+        let team2 = Team::from("name");
+        let id2 = team2.id();
+
+        game.add_team(team1);
+        game.add_team(team2);
+
+        let Ok(game) = game.start() else {
+            panic!("unexpected state")
+        };
+
+        assert_eq!(game.points(id1).expect("valid points"), Points::default());
+        assert_eq!(game.points(id2).expect("valid points"), Points::default());
+    }
+
+    #[test]
     fn will_not_provide_points_for_invalid_players() {
         let mut game = Game::default();
 
@@ -396,14 +422,127 @@ mod test {
         assert_eq!(id, invalid_team.id());
     }
 
-    fn test_is_finished(target: usize, score1: usize, score2: usize, is_finished: bool) {
-        let mut game = Game::from(Target::from(target));
+    #[test]
+    fn will_be_able_to_undo_history_if_previous_score() {
+        let mut game = Game::default();
 
         let team1 = Team::from("name");
         let id1 = team1.id();
 
         let team2 = Team::from("name");
         let id2 = team2.id();
+
+        let team3 = Team::from("name");
+        let id3 = team3.id();
+
+        game.add_team(team1);
+        game.add_team(team2);
+        game.add_team(team3);
+
+        let Ok(game0) = game.start() else {
+            panic!("unexpected state")
+        };
+        let teams0 = game0.teams().clone();
+        assert_eq!(game0.round_number(), RoundNumber::from(1));
+        assert!(!game0.can_undo());
+
+        let round = Round::default()
+            .with_scopas(id1, Points::from(5))
+            .with_scopas(id2, Points::from(5))
+            .with_settebello(id3);
+
+        let ScoreRoundResult::Playing(game1) =
+            game0.score_round(&round).expect("valid score round")
+        else {
+            panic!("unexpected state")
+        };
+
+        assert_eq!(game1.round_number(), RoundNumber::from(2));
+        assert!(game1.can_undo());
+        let game2 = game1.undo().expect("valid undo");
+
+        assert_eq!(game2.round_number(), RoundNumber::from(1));
+        assert!(!game2.can_undo());
+        assert_eq!(game2.teams(), &teams0);
+    }
+
+    #[test]
+    fn will_restore_team_active_state_on_undo_history() {
+        let mut game = Game::default();
+
+        let team1 = Team::from("name");
+        let id1 = team1.id();
+
+        let team2 = Team::from("name");
+        let id2 = team2.id();
+
+        let team3 = Team::from("name");
+        let id3 = team3.id();
+
+        game.add_team(team1);
+        game.add_team(team2);
+        game.add_team(team3);
+
+        let Ok(game0) = game.start() else {
+            panic!("unexpected state")
+        };
+
+        let round = Round::default()
+            .with_scopas(id1, Points::from(12))
+            .with_scopas(id2, Points::from(12))
+            .with_settebello(id3);
+
+        let ScoreRoundResult::Playing(game1) =
+            game0.score_round(&round).expect("valid score round")
+        else {
+            panic!("unexpected state")
+        };
+
+        let inactive_teams = game1
+            .teams()
+            .iter()
+            .filter_map(|t| t.is_not_playing().then_some(()))
+            .collect::<Vec<_>>();
+        assert_eq!(inactive_teams.len(), 1);
+
+        let game2 = game1.undo().expect("valid undo");
+        let inactive_teams = game2
+            .teams()
+            .iter()
+            .filter_map(|t| t.is_not_playing().then_some(()))
+            .collect::<Vec<_>>();
+        assert_eq!(inactive_teams.len(), 0);
+    }
+
+    #[test]
+    fn will_not_be_able_to_undo_history_if_no_score() {
+        let mut game = Game::default();
+
+        let team1 = Team::from("name");
+        let team2 = Team::from("name");
+
+        game.add_team(team1);
+        game.add_team(team2);
+
+        let Ok(game) = game.start() else {
+            panic!("unexpected state")
+        };
+
+        assert!(!game.can_undo());
+        let error = game.undo().expect_err("invalid undo");
+        assert_eq!(error, GameError::CannotUndo);
+    }
+
+    fn test_is_finished(target: usize, score1: usize, score2: usize, is_finished: bool) {
+        let mut game = Game::from(Target::from(target));
+
+        let team1 = Team::from("name1");
+        let id1 = team1.id();
+        let name1 = team1.name().clone();
+
+        let team2 = Team::from("name2");
+        let id2 = team2.id();
+        let name2 = team2.name().clone();
 
         game.add_team(team1);
         game.add_team(team2);
@@ -439,7 +578,11 @@ mod test {
                     Points::from(score2)
                 );
                 assert!(is_finished);
-                assert_eq!(game.winner(), if score1 > score2 { id1 } else { id2 });
+                assert_eq!(game.winner().id(), if score1 > score2 { id1 } else { id2 });
+                assert_eq!(
+                    game.winner_name(),
+                    if score1 > score2 { &name1 } else { &name2 }
+                );
                 assert_eq!(game.target(), Target::from(target));
             }
         }

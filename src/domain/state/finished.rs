@@ -4,19 +4,19 @@ use super::traits::{HasHistory, HasTarget, HasTeams, HasWinner};
 use crate::domain::{
     history::History,
     target::Target,
-    teams::{TeamId, Teams},
+    teams::{Team, Teams},
 };
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Finished {
     teams: Teams,
     history: History,
-    winner: TeamId,
+    winner: Team,
     target: Target,
 }
 
 impl Finished {
-    pub const fn new(teams: Teams, history: History, winner: TeamId, target: Target) -> Self {
+    pub const fn new(teams: Teams, history: History, winner: Team, target: Target) -> Self {
         Self {
             teams,
             history,
@@ -39,8 +39,8 @@ impl HasHistory for Finished {
 }
 
 impl HasWinner for Finished {
-    fn winner(&self) -> TeamId {
-        self.winner
+    fn winner(&self) -> &Team {
+        &self.winner
     }
 }
 

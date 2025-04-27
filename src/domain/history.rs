@@ -34,6 +34,10 @@ impl History {
             .iter()
             .fold(Points::default(), |acc, r| acc + r.round.points(id))
     }
+
+    pub fn undo(&mut self) -> Option<Teams> {
+        self.0.pop().map(|e| e.teams)
+    }
 }
 
 #[cfg(test)]
