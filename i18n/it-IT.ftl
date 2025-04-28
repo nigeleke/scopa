@@ -1,6 +1,6 @@
 scopa-app =
     .title-text = Marcatore Scopa
-    .copyright-text = Copyright 2024 © Nigel Eke; Tutti i diritti riservati.
+    .copyright-text = Copyright 2025 © Nigel Eke; Tutti i diritti riservati.
     .version-text = v {$version}
 
 points-editor =
@@ -45,13 +45,10 @@ score-group-icon =
     .aria-label = {$group} per {$teamname}
 
 round-view =
-    .text = Turno
+    .text = Giri
 
 score-button =
     .text = Segna punti
-
-undo-button =
-    .text = Annulla
 
 winner-view =
     .text = Vincitore - {$teamname}
@@ -67,6 +64,12 @@ menu-icon =
     .alt-text = Tendina
 restart-icon =
     .alt-text = Riprendere
+help-icon =
+    .alt-text = Aiuto
+home-icon =
+    .alt-text = Home
+undo-icon =
+    .alt-text = Annulla
 
 lang =
     .en-GB = Inglese
@@ -83,4 +86,44 @@ error =
 
 not-found =
     .heading = 404 - Pagina non trovata
+    .home = Home
+
+# Help page
+help =
+    .heading = Benvenuto
+    .intro =
+        Benvenuti a Scopa Scorer, il compagno perfetto per le vostre
+        serate di gioco a Scopa! Con questa utile utility potete tenere
+        traccia dei punteggi, gestire i round e mantenere il divertimento
+        a ritmo serrato.
+    .starting-heading = Imposta squadre e punti obiettivo
+    .starting-intro =
+        Prima che inizi il conteggio dei punti, la schermata iniziale consente
+        di impostare l'obiettivo per una partita vincente e di aggiungere i nomi
+        delle squadre o dei giocatori che partecipano.
+    .starting-points =
+        Clicca sul target per modificare l'obiettivo.
+    .starting-add-team =
+        Inserisci il nome di una squadra, quindi clicca sul pulsante "+" per aggiungerla
+        all'elenco dei partecipanti. Se giochi in coppia, aggiungi solo una squadra, ad
+        esempio "Abbot & Costello".
+    .starting-remove-team =
+        Clicca sul '-' per rimuovere le squadre prima che inizi il punteggio.
+    .starting-start-game =
+        Seleziona [inizio] per iniziare a segnare il primo round del gioco.
+    .scoring-heading = Giri di punteggio
+    .scoring-intro =
+        La schermata di punteggio permette di segnare ogni giro, fino a quando una persona
+        o una squadra viene dichiarata vincitrice.
+    .scoring-scopa =
+        Inserisci il numero di scopa fatte da ciascuna squadra nella loro casella di conteggio
+        delle scopate. Questo conteggio si riferisce solo al giro corrente che viene segnato.
+    .scoring-basics =
+        Per conteggiare le "carte", "monete", "settebello" e "premiere", seleziona l'icona
+        sotto la squadra.
+        L'icona "Nessuno" (l'icona più a sinistra) può essere selezionata per "carte", "monete"
+        e "premiere", ma per il "settebello" deve essere selezionata una squadra.
+    .scoring-undo =
+        Dopo il primo turno, è possibile annullare un punteggio o fare il rollback se vengono
+        commessi errori. Dopo il rollback, tutti i giri devono essere riapplicati manualmente.
     .home = Home

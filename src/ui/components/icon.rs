@@ -6,7 +6,7 @@ fn Icon(
     src: String,
     alt: String,
     #[props(optional)] on_click: EventHandler<()>,
-    #[props(extends = button)] attributes: Vec<Attribute>,
+    #[props(extends = button, extends=GlobalAttributes)] attributes: Vec<Attribute>,
 ) -> Element {
     rsx! {
         document::Link { rel: "stylesheet", href: asset!("/assets/css/ui/icon.css") }
@@ -35,12 +35,47 @@ pub fn MenuIcon(popovertarget: Option<String>) -> Element {
 }
 
 #[component]
+pub fn UndoIcon(can_undo: bool, on_click: EventHandler<()>) -> Element {
+    rsx! {
+        Icon {
+            id: "undo",
+            on_click,
+            src: asset!("/assets/images/icon-undo.png"),
+            alt: tid!("undo-icon.alt-text"),
+            disabled: !can_undo,
+        }
+    }
+}
+
+#[component]
 pub fn RestartIcon(on_click: EventHandler<()>) -> Element {
     rsx! {
         Icon {
             on_click,
             src: asset!("/assets/images/icon-restart.png"),
             alt: tid!("restart-icon.alt-text"),
+        }
+    }
+}
+
+#[component]
+pub fn HelpIcon(on_click: EventHandler<()>) -> Element {
+    rsx! {
+        Icon {
+            on_click,
+            src: asset!("/assets/images/icon-help.png"),
+            alt: tid!("help-icon.alt-text"),
+        }
+    }
+}
+
+#[component]
+pub fn HomeIcon(on_click: EventHandler<()>) -> Element {
+    rsx! {
+        Icon {
+            on_click,
+            src: asset!("/assets/images/icon-home.png"),
+            alt: tid!("home-icon.alt-text"),
         }
     }
 }

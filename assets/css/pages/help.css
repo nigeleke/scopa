@@ -1,0 +1,48 @@
+.help {
+    width: clamp(50%, max-content, 90%);
+    align-self: center;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: helpFadeIn 0.25s;
+}
+
+@keyframes helpFadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.help > div {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-bottom: 30px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--control-text-colour) var(--control-colour);
+}
+
+.help button {
+    align-self: center;
+}
+
+.help > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.help p {
+    max-width: 65ch;
+    padding-left: 2em;
+}
+
+.help > div > img {
+    align-self: center;
+    margin: 20px 30px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 0 12px rgba(248, 248, 255, 0.6);
+}

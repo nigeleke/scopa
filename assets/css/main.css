@@ -44,7 +44,6 @@ body {
     display: grid;
     grid-template-rows: 1fr 6fr 1fr;
     justify-items: stretch;
-    align-items: top;
     gap: 2svh;
 }
 
@@ -62,6 +61,13 @@ header {
 footer {
     align-self: end;
     margin-bottom: 1svh;
+}
+
+main {
+    max-height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 button {

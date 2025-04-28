@@ -18,6 +18,7 @@ mod team_name;
 
 pub use errors::Errors;
 pub use finished_game::FinishedGame;
+pub use icon::{HelpIcon, HomeIcon};
 pub use playing_game::PlayingGame;
 pub use scopa_footer::ScopaFooter;
 pub use scopa_header::ScopaHeader;

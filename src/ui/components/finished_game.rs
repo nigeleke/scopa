@@ -51,7 +51,7 @@ pub fn FinishedGame(game: Game<Finished>, onchange: EventHandler<State>) -> Elem
     };
 
     rsx! {
-        document::Link { rel: "stylesheet", href: asset!("/assets/css/state/finished_game.css") }
+        document::Link { rel: "stylesheet", href: asset!("/assets/css/pages/finished_game.css") }
         div {
             class: "finished-game-container",
             div {

@@ -72,10 +72,6 @@ round-view =
 score-button =
     .text = Score points
 
-# Undo button.
-undo-button =
-    .text = Undo
-
 # Winner; display the winning team name.
 winner-view =
     .text = Winner - {$teamname}
@@ -89,11 +85,17 @@ start-new-game-settings =
     .text = Same teams
     .aria-label = Select to use same teams
 
-# Icon
+# Icons
 menu-icon =
     .alt-text = Menu
 restart-icon =
     .alt-text = Restart
+help-icon =
+    .alt-text = Help
+home-icon =
+    .alt-text = Home
+undo-icon =
+    .alt-text = Undo
 
 # Supported langauges
 lang =
@@ -114,4 +116,40 @@ error =
 # Not found page
 not-found =
     .heading = 404 - Not Found
+    .home = Home
+
+# Help page
+help =
+    .heading = Welcome
+    .intro =
+        Welcome to Scopa Scorer, a companion for your Scopa card game nights!
+        You can track scores, manage rounds, and keep the fun flowing with this helpful utility.
+    .starting-heading = Set teams & target points
+    .starting-intro =
+        Before scoring starts, the initial screen allows you to set the target
+        for a winning game and add the names the teams or people playing.
+    .starting-points =
+        Click the target to set the target points for the game.
+    .starting-add-team =
+        Enter a team name, then click on the '+' to add that team to the list
+        of those playing. If you're playing in pairs, only a single team should
+        be added, for example "Abbot & Costello".
+    .starting-remove-team =
+        Click on the '-' to remove teams before the scoring starts.
+    .starting-start-game =
+        Select [start] to begin scoring the first round of the game.
+    .scoring-heading = Scoring rounds
+    .scoring-intro =
+        The scoring screen allows each round to be scored, until a person or team is declared the winner.
+    .scoring-scopa =
+        Score the scopas by entering the number of scopas made by each team in their scopa count box.
+        This count is only for the current round being scored.
+    .scoring-basics =
+        To score the "cards count", "coins count", "settebello" & "premiere" select the icon
+        under the team.
+        "No-one" (the left most icon) can be selected for "cards count", "coins count" and
+        "premiere", but a team must be selected for the "settebello".
+    .scoring-undo =
+        After the first round it is possible to rollback, or undo a score if mistakes are made.
+        After the rollback, all rounds need to be manually reapplied.
     .home = Home

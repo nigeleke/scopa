@@ -6,6 +6,5 @@ pub fn NotFound(route: Vec<String>) -> Element {
     rsx! {
         h1 { {tid!{"not-found.heading"}} }
         Link { to: "/", {tid!("not-found.home")} }
-
     }
 }

@@ -9,7 +9,7 @@ use super::{
 };
 use crate::{
     domain::*,
-    ui::{consts::STORAGE_TARGET, state::State},
+    ui::{components::HelpIcon, consts::STORAGE_TARGET, routes::Route, state::State},
 };
 
 #[component]
@@ -39,7 +39,7 @@ pub fn StartingGame(game: Game<Starting>, onchange: EventHandler<State>) -> Elem
     };
 
     rsx! {
-        document::Link { rel: "stylesheet", href: asset!("/assets/css/state/starting_game.css") }
+        document::Link { rel: "stylesheet", href: asset!("/assets/css/pages/starting_game.css") }
         div {
             class: "starting-game",
             TargetEditor {
@@ -57,6 +57,7 @@ pub fn StartingGame(game: Game<Starting>, onchange: EventHandler<State>) -> Elem
                 teams: teams,
                 onremove: remove_team,
             }
+            HelpAction {}
         }
     }
 }
@@ -125,5 +126,17 @@ fn StartAction(can_start: bool, onstart: EventHandler<()>) -> Element {
             on_click: start,
             {tid!("start-button.text")}
         }
+    }
+}
+
+#[component]
+fn HelpAction() -> Element {
+    let navigator = use_navigator();
+    let on_help = move |_| {
+        navigator.push(Route::Help);
+    };
+
+    rsx! {
+        HelpIcon { on_click: on_help }
     }
 }

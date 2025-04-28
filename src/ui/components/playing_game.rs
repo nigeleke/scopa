@@ -2,7 +2,8 @@ use dioxus::prelude::*;
 use dioxus_i18n::tid;
 
 use super::{
-    button::Button, round::RoundEditor, round_number::RoundNumberView, target::TargetView,
+    button::Button, icon::UndoIcon, round::RoundEditor, round_number::RoundNumberView,
+    target::TargetView,
 };
 use crate::{domain::*, ui::state::State};
 
@@ -30,7 +31,7 @@ pub fn PlayingGame(game: ReadOnlySignal<Game<Playing>>, onchange: EventHandler<S
     };
 
     rsx! {
-        document::Link { rel: "stylesheet", href: asset!("/assets/css/state/playing_game.css") }
+        document::Link { rel: "stylesheet", href: asset!("/assets/css/pages/playing_game.css") }
         div {
             class: "playing-game",
             div {
@@ -44,29 +45,15 @@ pub fn PlayingGame(game: ReadOnlySignal<Game<Playing>>, onchange: EventHandler<S
             }
             div {
                 class: "playing-game-controls",
-                UndoButton {
+                UndoIcon {
                     can_undo: game.read().can_undo(),
-                    onundo: undo,
+                    on_click: undo,
                 }
                 ScoreButton {
                     can_score: round.read().is_well_defined(),
                     onscore: score_round,
                 }
             }
-        }
-    }
-}
-
-#[component]
-fn UndoButton(can_undo: bool, onundo: EventHandler<()>) -> Element {
-    let undo = move |_| onundo.call(());
-
-    rsx! {
-        Button {
-            id: "undo",
-            disabled: !can_undo,
-            on_click: undo,
-            {tid!("undo-button.text")}
         }
     }
 }
