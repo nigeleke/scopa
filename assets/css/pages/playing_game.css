@@ -38,5 +38,6 @@
 }
 
 .playing-game-controls button#undo {
-    margin-right: auto;
+    position: absolute;
+    left: 5%;
 }

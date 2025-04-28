@@ -46,7 +46,7 @@ pub fn PlayingGame(game: ReadOnlySignal<Game<Playing>>, onchange: EventHandler<S
             div {
                 class: "playing-game-controls",
                 UndoIcon {
-                    can_undo: game.read().can_undo(),
+                    can_undo: game().can_undo(),
                     on_click: undo,
                 }
                 ScoreButton {
