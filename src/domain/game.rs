@@ -264,9 +264,9 @@ mod test {
     #[test]
     fn starting_a_game_requires_valid_team_count() {
         const VALID_TEAM_SIZES: &[usize; 4] = &[2, 3, 4, 6];
-        (0..=8).into_iter().for_each(|i| {
+        (0..=8).for_each(|i| {
             let mut game = Game::default();
-            (0..i).into_iter().for_each(|_| {
+            (0..i).for_each(|_| {
                 let team = Team::from("name");
                 game.add_team(team);
             });
