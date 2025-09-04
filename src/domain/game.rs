@@ -225,7 +225,7 @@ mod test {
     fn teams_can_be_added_before_a_game_starts() {
         let mut game = Game::default();
         let team = Team::from("name");
-        let _ = game.add_team(team);
+        game.add_team(team);
         assert_eq!(game.teams().len(), 1);
     }
 
