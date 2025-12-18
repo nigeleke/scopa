@@ -1,1 +1,0 @@
-searchState.loadedDescShard("scopa", 0, "")

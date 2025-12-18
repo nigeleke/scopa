@@ -1,0 +1,1 @@
+rd_("capp000escopagelement")
