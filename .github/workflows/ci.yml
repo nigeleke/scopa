@@ -19,6 +19,7 @@ jobs:
             platform: web
 
     publish:
+        name: Publish
         needs: [bundle]
-        uses: nigeleke/github/.github/workflows/gh-pages-publish.yml@main
+        uses: nigeleke/github/.github/workflows/rust-publish.yml@main
         secrets: inherit
