@@ -19,7 +19,6 @@ jobs:
             platform: web
 
     publish:
-        name: Publish
         needs: [bundle]
         uses: nigeleke/github/.github/workflows/rust-publish.yml@main
         secrets: inherit
