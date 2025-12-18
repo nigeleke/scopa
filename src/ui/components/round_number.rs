@@ -5,7 +5,7 @@ use gloo_timers::future::sleep;
 use crate::domain::*;
 
 #[component]
-pub fn RoundNumberView(value: ReadOnlySignal<RoundNumber>) -> Element {
+pub fn RoundNumberView(value: ReadSignal<RoundNumber>) -> Element {
     let mut pulse = use_signal(|| false);
 
     use_effect(move || {

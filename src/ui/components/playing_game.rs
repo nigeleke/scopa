@@ -8,7 +8,7 @@ use super::{
 use crate::{domain::*, ui::state::State};
 
 #[component]
-pub fn PlayingGame(game: ReadOnlySignal<Game<Playing>>, onchange: EventHandler<State>) -> Element {
+pub fn PlayingGame(game: ReadSignal<Game<Playing>>, onchange: EventHandler<State>) -> Element {
     let round_number = game.read().history().round_number();
     let target = game.read().target();
 

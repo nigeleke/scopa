@@ -15,7 +15,7 @@ pub fn Home() -> Element {
 
     rsx! {
         ErrorBoundary {
-            handle_error: |context| rsx! { Errors { context } },
+            handle_error: |errors| rsx! { Errors { errors } },
             match state() {
                 State::Starting(game) => rsx! { StartingGame { game, onchange: update_state, } },
                 State::Playing(game) => rsx! { PlayingGame { game, onchange: update_state } },
