@@ -18,7 +18,20 @@ jobs:
         with:
             platform: web
 
-    publish:
+    publish-docker-image:
+        needs: [bundle]
+        if: github.ref == 'refs/heads/main'
+        runs-on: ubuntu-latest
+        env:
+            DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+            DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        steps:
+            - uses: nigeleke/github/.github/actions/dockerhub-publish.yml@main
+              with:
+                  platform: linux/amd64,linux/arm64
+                  tags: nigeleke/scopa:latest,nigeleke/scopa:${{ github.sha }}
+
+    publish-site:
         needs: [bundle]
         uses: nigeleke/github/.github/workflows/rust-publish.yml@main
         secrets: inherit
