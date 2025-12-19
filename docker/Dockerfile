@@ -1,7 +1,7 @@
 FROM --platform=linux/amd64 nigeleke/docker-dioxus-cli AS builder
 WORKDIR /usr/src/app
 COPY .. .
-RUN dx bundle
+RUN dx bundle --release
 
 FROM nginx:alpine
 WORKDIR /usr/share/nginx/html/
