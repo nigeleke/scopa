@@ -29,7 +29,7 @@ jobs:
             - uses: nigeleke/github/.github/actions/rust-setup@main
             - uses: nigeleke/github/.github/actions/dockerhub-publish@main
               with:
-                  platform: linux/amd64,linux/arm64
+                  platforms: linux/amd64,linux/arm64
                   tags: nigeleke/scopa:latest,nigeleke/scopa:${{ github.sha }}
 
     publish-site:
