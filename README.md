@@ -2,11 +2,11 @@
 
 [![BSD 3 Clause License](https://img.shields.io/github/license/nigeleke/scopa?style=plastic)](https://github.com/nigeleke/scopa/blob/master/LICENSE)
 [![Language](https://img.shields.io/badge/language-Rust-blue.svg?style=plastic)](https://www.rust-lang.org/)
-[![Build](https://img.shields.io/github/actions/workflow/status/nigeleke/scopa/acceptance.yml?style=plastic)](https://github.com/nigeleke/scopa/actions/workflows/ci.yml)
+[![Build](https://img.shields.io/github/actions/workflow/status/nigeleke/scopa/ci.yml?style=plastic)](https://github.com/nigeleke/scopa/actions/workflows/ci.yml)
 [![Coverage](https://img.shields.io/codecov/c/github/nigeleke/scopa?style=plastic)](https://codecov.io/gh/nigeleke/scopa)
 ![Version](https://img.shields.io/github/v/tag/nigeleke/scopa?style=plastic)
 
-  [Site](https://nigeleke.github.io/scopa) \| [GitHub](https://github.com/nigeleke/scopa) \| [API](https://nigeleke.github.io/scopa/api/scopa/index.html) \| [Coverage Report](https://nigeleke.github.io/scopa/coverage/index.html) \| [App](https://nigeleke.github.io/scopa/app/)
+  [Site](https://nigeleke.github.io/scopa) \| [GitHub](https://github.com/nigeleke/scopa) \| [API](https://nigeleke.github.io/scopa/doc/scopa/index.html) \| [Coverage Report](https://nigeleke.github.io/scopa/llvm-cov/html/index.html) \| [App](https://nigeleke.github.io/scopa/app/)
 
 [Scopa](https://en.wikipedia.org/wiki/Scopa) is a popular Italian card game played by two to four players.
 
