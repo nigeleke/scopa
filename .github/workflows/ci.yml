@@ -10,13 +10,13 @@ jobs:
     qa:
         uses: nigeleke/github/.github/workflows/dioxus-qa.yml@main
         with:
-            platform: web
+            platform: all
 
     bundle:
         needs: [qa]
         uses: nigeleke/github/.github/workflows/dioxus-bundle.yml@main
         with:
-            platform: web
+            platform: all
 
     publish-docker-image:
         needs: [bundle]
@@ -36,3 +36,17 @@ jobs:
         needs: [bundle]
         uses: nigeleke/github/.github/workflows/rust-publish.yml@main
         secrets: inherit
+
+    publish-app:
+        needs: [publish-site]
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v6
+              with:
+                  fetch-depth: 0
+            - shell: bash
+              run: |
+                  echo "Publish App"
+                  git status
+                  ls .
+                  ls target/

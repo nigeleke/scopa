@@ -14,3 +14,7 @@ script = []
 
 [web.resource.dev]
 script = []
+
+[bundle]
+identifier = "io.github.nigeleke"
+publisher = "Nigel Eke"
