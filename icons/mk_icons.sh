@@ -17,7 +17,7 @@ magick "$SRC" -resize 128x128 "$TMP/128x128.png"
 magick "$SRC" -resize 256x256 "$TMP/128x128@2x.png"
 magick "$SRC" -resize 256x256 "$TMP/256x256.png"
 magick "$SRC" -resize 512x512 "$TMP/256x256@2x.png"
-magick "$SRC" -resize 512x512 "$TMP/512x12.png"
+magick "$SRC" -resize 512x512 "$TMP/512x512.png"
 
 magick "$TMP/*x*.png" icon.icns
 cp $TMP/*x*.png .
