@@ -46,7 +46,13 @@ jobs:
                   fetch-depth: 0
             - shell: bash
               run: |
-                  echo "Publish App"
+                  git checkout gh-pages
+            - uses: actions/download-artifact@v7
+              with:
+                  name: web-bundle
+                  path: artifacts/
+            - shell: bash
+              run: |
+                  ls -al .
                   git status
-                  ls .
-                  ls target/
+                  exit -1;
