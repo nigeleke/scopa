@@ -53,6 +53,8 @@ jobs:
                   path: artifacts/
             - shell: bash
               run: |
-                  ls -al .
-                  git status
-                  exit -1;
+                  mv artifacts/target/dx/*/release/web/public docs/app
+                  VERSION=$(git describe --abbrev=0 --tags 2>/dev/null || echo "dev")
+                  git add docs
+                  git commit -m "Release $VERSION" || echo "No changes"
+                  git push origin gh-pages
