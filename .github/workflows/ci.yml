@@ -56,5 +56,5 @@ jobs:
                   mv artifacts/target/dx/*/release/web/public docs/app
                   VERSION=$(git describe --abbrev=0 --tags 2>/dev/null || echo "dev")
                   git add docs
-                  git commit -m "Release $VERSION" || echo "No changes"
+                  git commit -m "Release app $VERSION" || echo "No changes"
                   git push origin gh-pages
