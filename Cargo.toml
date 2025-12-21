@@ -1,6 +1,6 @@
 [package]
 name = "scopa"
-version = "2.0.10"
+version = "2.0.11"
 authors = ["Nigel Eke <nigeleke@gmail.com>"]
 edition = "2024"
 
@@ -19,6 +19,7 @@ pretty_assertions = "1.4.1"
 default = ["web"]
 web = ["dioxus/web"]
 desktop = ["dioxus/desktop"]
+mobile = ["dioxus/mobile"]
 
 [profile]
 

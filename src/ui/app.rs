@@ -10,9 +10,6 @@ use super::{
 };
 use crate::domain::Target;
 
-const FAVICON: Asset = asset!("/assets/favicon.ico");
-const MAIN_CSS: Asset = asset!("/assets/css/main.css");
-
 #[component]
 pub fn App() -> Element {
     let _ = use_init_i18n(|| config(langid!("en-GB")));
@@ -26,8 +23,8 @@ pub fn App() -> Element {
     provide_context(state);
 
     rsx! {
-        document::Link { rel: "icon", href: FAVICON }
-        document::Link { rel: "stylesheet", href: MAIN_CSS }
+        document::Link { rel: "icon", href: asset!("/assets/favicon.ico") }
+        document::Stylesheet { href: asset!("/assets/css/main.css") }
         document::Meta { name: "description", content: "Score your Scopa game using this website. This app is a free and easy to use program to help you score your Scopa card game." }
         document::Meta { name: "category", content: "game" }
         document::Meta { name: "keywords", content: "cards,game,scorer,scopa" }

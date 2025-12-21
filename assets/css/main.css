@@ -25,26 +25,23 @@ body {
         var(--theme-colour)
     );
     background-attachment: fixed;
-}
-
-body {
-    min-height: 100svh;
-    margin: 0;
-    overflow-x: auto;
+    block-size: 100svh;
+    color: var(--text-colour);
 }
 
 * {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     font-size: 14pt;
+    box-sizing: border-box;
 }
 
 #main {
-    color: var(--text-colour);
-    height: 100svh;
     display: grid;
-    grid-template-rows: 1fr 6fr 1fr;
-    justify-items: stretch;
-    gap: 2svh;
+    grid-template-rows: auto 1fr auto;
+    overflow: hidden;
+    block-size: 100%;
+    justify-items: center;
+    gap: 2rem;
 }
 
 header,

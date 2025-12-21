@@ -11,7 +11,7 @@
 # Version number, e.g. v 1.42.0
 scopa-app =
     .title-text = Scopa Scorer
-    .copyright-text = Copyright 2025 © Nigel Eke; All rights reserved.
+    .copyright-text = Copyright 2025-2026 © Nigel Eke; All rights reserved.
     .version-text = v {$version}
 
 # Points editor; determine number of points to play to.
@@ -124,6 +124,39 @@ help =
     .intro =
         Welcome to Scopa Scorer, a companion for your Scopa card game nights!
         You can track scores, manage rounds, and keep the fun flowing with this helpful utility.
+    .rules-heading = Rules
+    .rules-teams =
+        For 2, 3, 4 or 6 players. Four players can play as two teams of two
+        or individually. Six players can play as three teams of two, two
+        teams of three or individually.
+    .rules-deal =
+        Deal three cards to each player. Deal four cards in the centre of the table, face up.
+    .rules-aim =
+        During play the main aims are to a) collect as many cards as possible, b) collect as many
+        coin cards as possible, c) collect the seven of coins (Settebello) and d) collect all the
+        current cards on the table in a single play (Scopa).
+    .rules-play-1 = Lay a card.
+    .rules-play-2 =
+            If the face value matches any other single card on the table, collect them
+            both and put them aside for later scoring.
+    .rules-play-3 =
+            If the face value doesn't match a single card then you can match more then one
+            card. Example, if a 7, 5, 4 and 3 are one the table and you play another 7, you
+            must take the 7 on the table and not the 4 & 3. However if you play an 8 instead,
+            then you can take the 5 & 3. Note: you don't have to play the 7 but, if you do
+            then you have to take that other 7.
+    .rules-play-4 =
+            If the face value of the card you play is the total of all the other cards, then
+            collect them for a Scopa, and record the fact that you also got a Scopa for later
+            scoring. It is normal to collect cards in a face down pile, but record each Scopa
+            with a single card face up.
+    .rules-play-5 =
+            If the previous player got a Scopa, the next player simply has to play a card.
+            There is not any re-deal of another four cards and the next player has no chance
+            to collect.
+    .rules-play-6 =
+            When all plays have been made, any cards on the table are awarded to the last
+            player to have collected cards. This does not count as a Scopa.
     .starting-heading = Set teams & target points
     .starting-intro =
         Before scoring starts, the initial screen allows you to set the target

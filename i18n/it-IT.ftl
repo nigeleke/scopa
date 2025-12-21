@@ -1,6 +1,6 @@
 scopa-app =
     .title-text = Marcatore Scopa
-    .copyright-text = Copyright 2025 © Nigel Eke; Tutti i diritti riservati.
+    .copyright-text = Copyright 2025-2026 © Nigel Eke; Tutti i diritti riservati.
     .version-text = v {$version}
 
 points-editor =
@@ -96,6 +96,42 @@ help =
         serate di gioco a Scopa! Con questa utile utility potete tenere
         traccia dei punteggi, gestire i round e mantenere il divertimento
         a ritmo serrato.
+    .rules-heading = Regole
+    .rules-teams =
+        Per 2, 3, 4 o 6 giocatori. Quattro giocatori possono giocare in due
+        squadre da due o individualmente. Sei giocatori possono giocare in
+        tre squadre da due, due squadre da tre o individualmente.
+    .rules-deal =
+        Distribuisci tre carte a ciascun giocatore. Distribuisci quattro carte
+        al centro del tavolo, scoperte.
+    .rules-aim =
+        Durante il gioco gli obiettivi principali sono a) raccogliere il maggior
+        numero di carte possibile, b) raccogliere il maggior numero di carte moneta
+        possibile, c) raccogliere il sette di denari (Settebello) e d) raccogliere
+        tutte le carte presenti sul tavolo in una singola giocata (Scopa).
+    .rules-play-1 = Disponi una carta
+    .rules-play-2 =
+        Se il valore nominale corrisponde a quello di un'altra carta singola sul
+        tavolo, prendile entrambe e mettile da parte per il conteggio successivo.
+    .rules-play-3 =
+        Se il valore nominale non corrisponde a una singola carta, puoi abbinarne
+        più di una. Ad esempio, se sul tavolo ci sono 7, 5, 4 e 3 e giochi un
+        altro 7, devi prendere il 7 sul tavolo e non il 4 e il 3. Tuttavia, se
+        giochi un 8, puoi prendere il 5 e il 3. Nota: non sei obbligato a giocare
+        il 7, ma se lo fai, devi prendere anche l'altro 7.
+    .rules-play-4 =
+        Se il valore nominale della carta che giochi è il totale di tutte le altre
+        carte, allora raccoglile per una Scopa e annota il fatto che hai ricevuto
+        anche una Scopa per il successivo conteggio. È normale raccogliere le carte
+        in un mazzo coperto, ma annota ogni Scopa con una singola carta scoperta.
+    .rules-play-5 =
+        Se il giocatore precedente ha ricevuto una Scopa, il giocatore successivo
+        deve semplicemente giocare una carta. Non è possibile distribuire altre
+        quattro carte e il giocatore successivo non ha alcuna possibilità di
+        riscuotere.
+    .rules-play-6 =
+        Una volta completate tutte le giocate, le carte sul tavolo vengono assegnate
+        all'ultimo giocatore che ha raccolto le carte. Questo non conta come una Scopa.
     .starting-heading = Imposta squadre e punti obiettivo
     .starting-intro =
         Prima che inizi il conteggio dei punti, la schermata iniziale consente
