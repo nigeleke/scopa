@@ -16,14 +16,14 @@
     }
 }
 
-.playing-game-header {
+.playing-game__header {
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
-.playing-game-controls {
+.playing-game__controls {
     align-self: center;
     width: 90%;
     display: flex;
@@ -31,13 +31,13 @@
     justify-content: space-between;
 }
 
-.playing-game-controls button#score {
+.playing-game__controls button#score {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
 }
 
-.playing-game-controls button#undo {
+.playing-game__controls button#undo {
     position: absolute;
     left: 5%;
 }

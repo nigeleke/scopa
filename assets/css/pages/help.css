@@ -1,11 +1,10 @@
 .help {
-    width: clamp(50%, max-content, 90%);
-    align-self: center;
-    max-height: 100%;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: 1fr;
     animation: helpFadeIn 0.25s;
+    block-size: 100%;
+    min-block-size: 0;
 }
 
 @keyframes helpFadeIn {
@@ -17,32 +16,31 @@
     }
 }
 
-.help > div {
-    flex-grow: 1;
-    overflow-y: auto;
-    margin-bottom: 30px;
-    scrollbar-width: thin;
-    scrollbar-color: var(--control-text-colour) var(--control-colour);
+.help__content {
+    display: grid;
+    grid-template-rows: 1fr auto;
+    gap: 2rem;
+    block-size: 100%;
+    min-block-size: 0;
 }
 
-.help button {
-    align-self: center;
+.help__rules {
+    align-content: center;
 }
 
-.help > div {
-    display: flex;
-    flex-direction: column;
+.help__content button {
+    justify-self: center;
 }
 
-.help p {
+.help__content p {
     max-width: 65ch;
     padding-left: 2em;
 }
 
-.help > div > img {
+.help__rules > img {
     align-self: center;
-    margin: 20px 30px;
     border: none;
     border-radius: 8px;
+    margin: 15px;
     box-shadow: 0 0 12px rgba(248, 248, 255, 0.6);
 }

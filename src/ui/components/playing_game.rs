@@ -35,7 +35,7 @@ pub fn PlayingGame(game: ReadSignal<Game<Playing>>, onchange: EventHandler<State
         div {
             class: "playing-game",
             div {
-                class: "playing-game-header",
+                class: "playing-game__header",
                 RoundNumberView { value: round_number, }
                 TargetView { value: target, }
             }
@@ -44,7 +44,7 @@ pub fn PlayingGame(game: ReadSignal<Game<Playing>>, onchange: EventHandler<State
                 round: round,
             }
             div {
-                class: "playing-game-controls",
+                class: "playing-game__controls",
                 UndoIcon {
                     can_undo: game().can_undo(),
                     on_click: undo,

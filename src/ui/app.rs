@@ -24,6 +24,7 @@ pub fn App() -> Element {
 
     rsx! {
         document::Link { rel: "icon", href: asset!("/assets/favicon.ico") }
+        document::Stylesheet { href: asset!("/assets/css/dx-components-theme.css") }
         document::Stylesheet { href: asset!("/assets/css/main.css") }
         document::Meta { name: "description", content: "Score your Scopa game using this website. This app is a free and easy to use program to help you score your Scopa card game." }
         document::Meta { name: "category", content: "game" }
