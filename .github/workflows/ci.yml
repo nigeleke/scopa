@@ -53,8 +53,8 @@ jobs:
                   path: artifacts/
             - shell: bash
               run: |
-                  ls -al artifacts
-                  mv artifacts/web-bundle/target/dx/*/release/web/public docs/app
+                  unzip artifacts/web-bundle.zip -d artifacts/extracted/
+                  mv artifacts/extracted/target/dx/*/release/web/public docs/app
                   VERSION=$(git describe --abbrev=0 --tags 2>/dev/null || echo "dev")
                   git add docs
                   git commit -m "Release app $VERSION" || echo "No changes"
