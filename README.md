@@ -24,9 +24,9 @@ Comments for improvements and any other issues, can be raised on [scopa/issues](
 ## Development
 
 ```bash
-dx build
+dx build --platform=web
 cargo test
-dx serve
+dx serve --platform=web
 ```
 
 - Open the browser to http://localhost:8080/

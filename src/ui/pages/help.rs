@@ -68,14 +68,20 @@ fn HelpContent() -> Element {
                     p { {tid!("help.rules-play-6")} }
                     h2 { {tid!("help.starting-heading")} }
                     p { {tid!("help.starting-intro")} }
-                    img { src: "{starting_image}" }
+                    img {
+                        class: "screenshot",
+                        src: "{starting_image}"
+                    }
                     p { {tid!("help.starting-points")} }
                     p { {tid!("help.starting-add-team")} }
                     p { {tid!("help.starting-remove-team")} }
                     p { {tid!("help.starting-start-game")} }
                     h2 { {tid!("help.scoring-heading")} }
                     p { {tid!("help.scoring-intro")} }
-                    img { src: "{scoring_image}" }
+                    img {
+                        class: "screenshot",
+                        src: "{scoring_image}"
+                    }
                     p { {tid!("help.scoring-scopa")} }
                     p { {tid!("help.scoring-basics")} }
                     p { {tid!("help.scoring-undo")} }

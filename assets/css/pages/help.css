@@ -34,13 +34,14 @@
 
 .help__content p {
     max-width: 65ch;
-    padding-left: 2em;
+    padding-inline-start: 2em;
 }
 
-.help__rules > img {
+.help__content img.screenshot {
     align-self: center;
     border: none;
     border-radius: 8px;
-    margin: 15px;
+    margin-inline-start: 2em;
+    max-inline-size: 90%;
     box-shadow: 0 0 12px rgba(248, 248, 255, 0.6);
 }
