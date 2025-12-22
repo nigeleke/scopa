@@ -2,14 +2,19 @@ use dioxus::prelude::*;
 use dioxus_i18n::tid;
 use dioxus_sdk::storage::{LocalStorage, use_storage};
 
-use super::{
-    button::Button,
-    target::TargetEditor,
-    team_name::{TeamNameEditor, TeamNameView},
-};
 use crate::{
     domain::*,
-    ui::{components::HelpIcon, consts::STORAGE_TARGET, routes::Route, state::State},
+    ui::{
+        components::{
+            HelpIcon,
+            button::Button,
+            target::TargetEditor,
+            team_name::{TeamNameEditor, TeamNameView},
+        },
+        consts::STORAGE_TARGET,
+        pages::Page,
+        state::State,
+    },
 };
 
 #[component]
@@ -131,9 +136,10 @@ fn StartAction(can_start: bool, onstart: EventHandler<()>) -> Element {
 
 #[component]
 fn HelpAction() -> Element {
-    let navigator = use_navigator();
+    let mut page = use_context::<Signal<Page>>();
+
     let on_help = move |_| {
-        navigator.push(Route::Help);
+        page.set(Page::Help);
     };
 
     rsx! {

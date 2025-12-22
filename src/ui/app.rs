@@ -2,13 +2,16 @@ use dioxus::prelude::*;
 use dioxus_i18n::{prelude::*, unic_langid::langid};
 use dioxus_sdk::storage::{LocalStorage, use_storage};
 
-use super::{
-    consts::{STORAGE_STATE, STORAGE_TARGET},
-    i18n::{config, use_user_preferred_language},
-    routes::Route,
-    state::State,
+use crate::{
+    domain::Target,
+    ui::{
+        components::{Errors, ScopaFooter, ScopaHeader},
+        consts::{STORAGE_PAGE, STORAGE_STATE, STORAGE_TARGET},
+        i18n::{config, use_user_preferred_language},
+        pages::{Help, Home, Page},
+        state::State,
+    },
 };
-use crate::domain::Target;
 
 #[component]
 pub fn App() -> Element {
@@ -22,6 +25,9 @@ pub fn App() -> Element {
     });
     provide_context(state);
 
+    let page = use_storage::<LocalStorage, _>(STORAGE_PAGE.into(), || Page::Home);
+    provide_context(page);
+
     rsx! {
         document::Link { rel: "icon", href: asset!("/assets/favicon.ico") }
         document::Stylesheet { href: asset!("/assets/css/dx-components-theme.css") }
@@ -31,6 +37,21 @@ pub fn App() -> Element {
         document::Meta { name: "keywords", content: "cards,game,scorer,scopa" }
         document::Meta { name: "author", content: "Nigel Eke" }
 
-        Router::<Route> {}
+        ErrorBoundary {
+            handle_error: |errors| rsx! { Errors { errors } },
+            match page() {
+                Page::Home => rsx! { Layout { Home { } } },
+                Page::Help => rsx! { Layout { Help { } } },
+            }
+        }
+    }
+}
+
+#[component]
+fn Layout(children: Element) -> Element {
+    rsx! {
+        header { ScopaHeader {} }
+        main { {children} }
+        footer { ScopaFooter {} }
     }
 }

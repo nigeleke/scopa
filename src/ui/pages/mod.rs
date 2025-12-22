@@ -1,7 +1,12 @@
 mod help;
 mod home;
-mod not_found;
 
 pub use help::Help;
 pub use home::Home;
-pub use not_found::NotFound;
+use serde::{Deserialize, Serialize};
+
+#[derive(Clone, PartialEq, Eq, Serialize, Deserialize)]
+pub enum Page {
+    Home,
+    Help,
+}

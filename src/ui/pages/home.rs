@@ -1,7 +1,7 @@
 use dioxus::prelude::*;
 
 use crate::ui::{
-    components::{Errors, FinishedGame, PlayingGame, StartingGame},
+    components::{FinishedGame, PlayingGame, StartingGame},
     state::State,
 };
 
@@ -14,13 +14,10 @@ pub fn Home() -> Element {
     };
 
     rsx! {
-        ErrorBoundary {
-            handle_error: |errors| rsx! { Errors { errors } },
-            match state() {
-                State::Starting(game) => rsx! { StartingGame { game, onchange: update_state, } },
-                State::Playing(game) => rsx! { PlayingGame { game, onchange: update_state } },
-                State::Finished(game) => rsx! { FinishedGame { game, onchange: update_state } },
-            }
+        match state() {
+            State::Starting(game) => rsx! { StartingGame { game, onchange: update_state, } },
+            State::Playing(game) => rsx! { PlayingGame { game, onchange: update_state } },
+            State::Finished(game) => rsx! { FinishedGame { game, onchange: update_state } },
         }
     }
 }

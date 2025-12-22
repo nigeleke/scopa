@@ -1,16 +1,20 @@
 use dioxus::prelude::*;
 use dioxus_i18n::tid;
 
-use super::button::Button;
-use crate::{domain::Game, ui::state::State};
+use crate::{
+    domain::Game,
+    ui::{components::button::Button, pages::Page, state::State},
+};
 
 #[component]
 pub fn Errors(errors: ErrorContext) -> Element {
     let mut state = use_context::<Signal<State>>();
+    let mut page = use_context::<Signal<Page>>();
 
     let onreset = move |_| {
         let game = Game::default();
         state.set(State::from(game));
+        page.set(Page::Home);
     };
 
     rsx! {
@@ -18,7 +22,7 @@ pub fn Errors(errors: ErrorContext) -> Element {
         p {
             {tid!("error.report0")}
             {" "}
-            Link { to: "https://github.com/nigeleke/scopa/issues", {tid!("error.report1")} }
+            a { href: "https://github.com/nigeleke/scopa/issues", {tid!("error.report1")} }
             {" "}
             {tid!("error.report2")}
         }

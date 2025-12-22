@@ -5,7 +5,7 @@ authors = ["Nigel Eke <nigeleke@gmail.com>"]
 edition = "2024"
 
 [dependencies]
-dioxus = { version = "0.7.2", features = ["router"] }
+dioxus = "0.7.2"
 dioxus-i18n = "0.5.0"
 dioxus-sdk = { version = "0.7.0", features = ["storage"] }
 thiserror = "2.0.17"
@@ -17,7 +17,7 @@ dioxus-primitives = { git = "https://github.com/DioxusLabs/components", version 
 pretty_assertions = "1.4.1"
 
 [features]
-default = ["web"]
+default = []
 web = ["dioxus/web"]
 desktop = ["dioxus/desktop"]
 mobile = ["dioxus/mobile"]

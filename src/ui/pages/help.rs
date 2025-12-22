@@ -2,9 +2,7 @@ use dioxus::prelude::*;
 use dioxus_i18n::{tid, unic_langid::langid};
 use dioxus_primitives::scroll_area::ScrollDirection;
 
-use crate::ui::{
-    components::HomeIcon, i18n::Language, kit::scroll_area::ScrollArea, routes::Route,
-};
+use crate::ui::{components::HomeIcon, i18n::Language, kit::scroll_area::ScrollArea, pages::Page};
 
 #[component]
 pub fn Help() -> Element {
@@ -46,10 +44,8 @@ fn HelpContent() -> Element {
         }
     });
 
-    let navigator = use_navigator();
-    let on_home = move |_| {
-        navigator.push(Route::Home);
-    };
+    let mut page = use_context::<Signal<Page>>();
+    let on_home = move |_| page.set(Page::Home);
 
     rsx! {
         div {
