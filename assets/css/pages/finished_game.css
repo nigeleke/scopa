@@ -1,4 +1,4 @@
-.finished-game-container {
+.finished-game__container {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -16,9 +16,10 @@
     }
 }
 
-.finished-game-winner-text {
+.finished-game__winner-text {
     text-align: center;
     animation: finishedGameWinnerSpin linear 0.25s 0.25s 8;
+    margin-block-start: 10rem;
 }
 
 @keyframes finishedGameWinnerSpin {
@@ -30,11 +31,11 @@
     }
 }
 
-.finished-game-winner-text * {
+.finished-game__winner-text * {
     font-size: xx-large;
 }
 
-.finished-game-team-scores {
+.finished-game__team-scores {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -43,31 +44,31 @@
     width: 25%;
 }
 
-.finished-game-team-score {
+.finished-game__team-score {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     flex-grow: 1;
 }
 
-.finished-game-controls {
+.finished-game__controls {
     display: flex;
     justify-content: center;
     align-items: flex-start;
     gap: 20px;
 }
 
-.finished-game-retain-group {
+.finished-game__retain-group {
     display: flex;
     flex-direction: column;
     align-items: right;
 }
 
-.finished-game-start-game-button {
+.finished-game__start-game-button {
     align-self: left;
 }
 
-.finished-game-start-game-button,
-.finished-game-retain-checkbox + label {
+.finished-game__start-game-button,
+.finished-game__retain-checkbox + label {
     margin-bottom: 5px;
 }

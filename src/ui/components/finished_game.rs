@@ -53,30 +53,30 @@ pub fn FinishedGame(game: Game<Finished>, onchange: EventHandler<State>) -> Elem
     rsx! {
         document::Link { rel: "stylesheet", href: asset!("/assets/css/pages/finished_game.css") }
         div {
-            class: "finished-game-container",
+            class: "finished-game__container",
             div {
-                class: "finished-game-winner-text",
+                class: "finished-game__winner-text",
                 Glow { {tid!("winner-view.text", teamname: winner.to_string())} }
             }
             div {
-                class: "finished-game-team-scores",
+                class: "finished-game__team-scores",
                 for team_points in team_points {
                     {team_points}
                 }
             }
             div {
-                class: "finished-game-controls",
+                class: "finished-game__controls",
                 div {
-                    class: "finished-game-start-game-button",
+                    class: "finished-game__start-game-button",
                     Button {
                         on_click: start_new_game,
                         {tid!("start-new-game-button.text")}
                     }
                 }
                 div {
-                    class: "finished-game-retain-group",
+                    class: "finished-game__retain-group",
                     div {
-                        class: "finished-game-retain-checkbox",
+                        class: "finished-game__retain-checkbox",
                         Input {
                             typ: "checkbox",
                             value: retain_settings(),
@@ -98,7 +98,7 @@ fn TeamPoints(game: Game<Finished>, team: Team) -> Element {
     let points = game.points(team.id())?;
     rsx! {
         div {
-            class: "finished-game-team-score",
+            class: "finished-game__team-score",
             span { {name.to_string()} }
             span { {points.to_string()} }
         }
