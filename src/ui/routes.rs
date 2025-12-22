@@ -13,10 +13,8 @@ pub enum Route {
     Home,
     #[route("/help/")]
     Help,
-    #[route("/:..route")]
-    NotFound {
-        route: Vec<String>,
-    },
+    #[route("/:.._route")]
+    NotFound { _route: Vec<String> },
 }
 
 #[component]

@@ -1,10 +1,14 @@
 use dioxus::prelude::*;
-use dioxus_i18n::tid;
+
+use crate::ui::routes::Route;
 
 #[component]
-pub fn NotFound(route: Vec<String>) -> Element {
-    rsx! {
-        h1 { {tid!{"not-found.heading"}} }
-        Link { to: "/", {tid!("not-found.home")} }
-    }
+pub fn NotFound(_route: Vec<String>) -> Element {
+    let navigator = use_navigator();
+
+    use_effect(move || {
+        navigator.replace(Route::Home);
+    });
+
+    rsx! {}
 }
