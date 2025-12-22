@@ -49,7 +49,7 @@ jobs:
               run: |
                   sed -i 's/#base_path/base_path/g' Dioxus.toml
                   dx bundle --release --debug-symbols=false
-                  git checkout Dioxus.html
+                  git checkout Dioxus.toml
                   git checkout gh-pages
 
                   mv target/dx/*/release/web/public docs/app
