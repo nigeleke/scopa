@@ -44,7 +44,7 @@ jobs:
             - uses: actions/checkout@v6
               with:
                   fetch-depth: 0
-            - uses: nigeleke/github/.github/actions/rust-setup@main
+            - uses: nigeleke/github/.github/actions/dioxus-setup@main
             - shell: bash
               run: |
                   sed -i 's/#base_path/base_path/g' Dioxus.toml
