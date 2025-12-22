@@ -48,7 +48,7 @@ jobs:
             - shell: bash
               run: |
                   sed -i 's/#base_path/base_path/g' Dioxus.toml
-                  dx bundle --release
+                  dx bundle --release --debug-symbols=false
                   git checkout Dioxus.html
                   git checkout gh-pages
 
