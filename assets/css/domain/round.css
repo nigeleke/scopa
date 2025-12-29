@@ -25,11 +25,11 @@
     border-color: var(--control-colour-focused);
 }
 
-.team-header * {
-    font-size: x-large;
+.team-header {
+    font-size: 1.25rem;
     color: hsl(from var(--text-colour) h s 90%);
 }
 
-.team-leader-header * {
-    font-size: x-large;
+.team-leader-header {
+    font-size: 1.25rem;
 }

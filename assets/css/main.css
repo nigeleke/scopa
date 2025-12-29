@@ -29,9 +29,12 @@ body {
     color: var(--text-colour);
 }
 
+html {
+    font-size: clamp(16px, 1.2vw + 0.5rem, 24px);
+}
+
 * {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 14pt;
     box-sizing: border-box;
 }
 
@@ -67,6 +70,15 @@ main {
     flex-direction: column;
 }
 
+input,
+textarea,
+select,
+button {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
 button {
     border: none;
     background: var(--control-colour);
@@ -74,6 +86,9 @@ button {
     padding-left: 15px;
     padding-right: 15px;
     inline-size: fit-content;
+    padding: 0.5rem 0.75rem;
+    min-inline-size: 2rem;
+    min-block-size: 2rem;
 }
 
 button:hover {

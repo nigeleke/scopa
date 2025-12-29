@@ -22,13 +22,13 @@
 .points__buttons button {
     width: 100%;
 }
-
+/*
 .points__button {
     font-size: 1.25rem;
     padding: 0.75rem 1rem;
     min-inline-size: 3rem;
     min-block-size: 3rem;
-}
+}*/
 
 .points__commands {
     display: flex;
