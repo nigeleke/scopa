@@ -98,9 +98,12 @@ fn TeamPoints(game: Game<Finished>, team: Team) -> Element {
     let points = game.points(team.id())?;
     rsx! {
         div {
-            class: "finished-game__team-score",
-            span { {name.to_string()} }
-            span { {points.to_string()} }
+           class: "finished-game__team-score__name",
+           {name.to_string()}
+        }
+        div {
+            class: "finished-game__team-score__points",
+            {points.to_string()}
         }
     }
 }

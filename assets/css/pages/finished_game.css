@@ -36,19 +36,22 @@
 }
 
 .finished-game__team-scores {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: stretch;
-    gap: 1svh;
-    width: 25%;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.5rem 1rem;
+    width: 50%;
+    align-items: center;
 }
 
-.finished-game__team-score {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    flex-grow: 1;
+.finished-game__team-score__name {
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.finished-game__team-score__points {
+    text-align: right;
 }
 
 .finished-game__controls {
