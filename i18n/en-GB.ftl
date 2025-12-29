@@ -106,6 +106,14 @@ lang =
 reset-button =
     .text = Reset
 
+# Cancel button.
+cancel-button =
+    .text = Cancel
+
+# More button.
+more-button =
+    .text = More...
+
 # Error instructions.
 error =
     .apology = An unexpected error occurred

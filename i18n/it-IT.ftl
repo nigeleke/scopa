@@ -78,6 +78,12 @@ lang =
 reset-button =
     .text = Reset
 
+cancel-button =
+    .text = Annulla
+
+more-button =
+    .text = Altro...
+
 error =
     .apology = Si è verificato un errore imprevisto
     .report0 = Segnala un problema nella

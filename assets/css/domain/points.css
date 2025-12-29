@@ -1,4 +1,41 @@
-.points input {
-    width: 50px;
-    text-align: center;
+.dialog-description {
+    display: grid;
+    grid-template-rows: 1fr auto;
+    gap: 1rem;
+    z-index: 1000;
+    background-color: ghostwhite;
+    padding: 1rem;
+    border: solid red;
+    width: fit-content;
+    position: fixed;
+    inset-inline-start: 50%;
+    inset-block-start: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.points__buttons {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.5rem;
+}
+
+.points__buttons button {
+    width: 100%;
+}
+
+.points__button {
+    font-size: 1.25rem;
+    padding: 0.75rem 1rem;
+    min-inline-size: 3rem;
+    min-block-size: 3rem;
+}
+
+.points__commands {
+    display: flex;
+    /*inline-size: 100%;*/
+    gap: 1rem;
+}
+
+.points__cancel-button {
+    margin-inline-start: auto;
 }
