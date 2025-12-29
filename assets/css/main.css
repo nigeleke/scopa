@@ -13,8 +13,6 @@
     --disabled-colour: silver;
     --disabled-text-colour: darkslategray;
     --glow-colour: #0fa;
-
-    interpolate-size: allow-keywords;
 }
 
 html,
@@ -30,12 +28,34 @@ body {
 }
 
 html {
-    font-size: clamp(16px, 1.2vw + 0.5rem, 24px);
+    font-size: clamp(24px, 6vw, 28px);
+    line-height: 1.6;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    html {
+        font-size: clamp(18px, 3vw + 0.5rem, 26px);
+    }
+}
+
+@media only screen and (min-width: 1025px) {
+    html {
+        font-size: clamp(18px, 1.5vw + 0.5rem, 28px);
+    }
 }
 
 * {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     box-sizing: border-box;
+}
+
+input,
+textarea,
+select,
+button {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
 }
 
 #main {
@@ -70,21 +90,10 @@ main {
     flex-direction: column;
 }
 
-input,
-textarea,
-select,
-button {
-    font-family: inherit;
-    font-size: inherit;
-    line-height: inherit;
-}
-
 button {
     border: none;
     background: var(--control-colour);
     border-radius: 10px;
-    padding-left: 15px;
-    padding-right: 15px;
     inline-size: fit-content;
     padding: 0.5rem 0.75rem;
     min-inline-size: 2rem;

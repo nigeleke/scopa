@@ -13,7 +13,7 @@
 }
 
 .scopa_header .glow * {
-    font-size: xx-large;
+    font-size: 2rem;
 }
 
 .scopa_header_popover_menu {
@@ -59,12 +59,12 @@
 
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
     .scopa_header .glow * {
-        font-size: larger;
+        font-size: 2rem;
     }
 }
 
 @media only screen and (max-width: 767px) {
     .scopa_header .glow * {
-        font-size: large;
+        font-size: 1.5rem;
     }
 }
