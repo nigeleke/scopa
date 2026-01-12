@@ -6,7 +6,7 @@ edition = "2024"
 
 [dependencies]
 dioxus = "0.7.2"
-dioxus-i18n = "0.5.0"
+dioxus-i18n = "0.5.1"
 dioxus-sdk = { version = "0.7.0", features = ["storage"] }
 thiserror = "2.0.17"
 serde = { version = "1.0.228", features = ["derive"] }
