@@ -6,7 +6,7 @@ pub fn Button(
 
     #[props(default = "0".into())] tabindex: String,
 
-    #[props(optional)] children: Element,
+    children: Element,
 
     #[props(extends = button, extends = GlobalAttributes)] attributes: Vec<Attribute>,
 ) -> Element {

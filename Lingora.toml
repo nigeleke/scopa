@@ -1,7 +1,8 @@
 [lingora]
-reference = "./i18n/en-GB.ftl"
+fluent_sources = ["./i18n/"]
+canonical = "en-GB"
+primaries = ["it-IT"]
 
 [dioxus_i18n]
-shares = [["en", "en-GB"], ["it", "it-IT"]]
-with_locale = "includestr"
-fallback = "en-GB"
+rust_sources = ["./src"]
+config_inclusion = "includestr"
