@@ -5,6 +5,9 @@ RUN dx bundle --platform=web --release
 
 FROM nginx:alpine
 WORKDIR /usr/share/nginx/html/
-RUN echo "scopa" > /etc/hostname
+
+RUN chown -R nginx:nginx /usr/share/nginx/html
+USER nginx
+
 COPY --from=builder /usr/src/app/target/dx/scopa/release/web/public/ .
 EXPOSE 80
