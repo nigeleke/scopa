@@ -18,7 +18,7 @@ pub fn Errors(errors: ErrorContext) -> Element {
     };
 
     rsx! {
-        h2 { {tid!("error.apology")} }
+        h2 { {tid!("error.apoology")} }
         p {
             {tid!("error.report0")}
             {" "}
