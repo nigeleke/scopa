@@ -7,65 +7,65 @@ on:
     pull_request:
 
 jobs:
-    # qa:
-    #     uses: nigeleke/github/.github/workflows/dioxus-qa.yml@main
-    #     with:
-    #         platform: all
+    qa:
+        uses: nigeleke/github/.github/workflows/dioxus-qa.yml@main
+        with:
+            platform: all
 
     i18n:
-        # needs: [qa]
+        needs: [qa]
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v6
-            - uses: nigeleke/lingora@v0.3.15
+            - uses: nigeleke/lingora@v0.3.16
 
-    # bundle:
-    #     needs: [i18n]
-    #     uses: nigeleke/github/.github/workflows/dioxus-bundle.yml@main
-    #     with:
-    #         platform: all
+    bundle:
+        needs: [i18n]
+        uses: nigeleke/github/.github/workflows/dioxus-bundle.yml@main
+        with:
+            platform: all
 
-    # publish-docker-image:
-    #     needs: [bundle]
-    #     if: github.ref == 'refs/heads/main'
-    #     runs-on: ubuntu-latest
-    #     env:
-    #         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-    #         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-    #     steps:
-    #         - uses: nigeleke/github/.github/actions/rust-setup@main
-    #         - uses: nigeleke/github/.github/actions/dockerhub-publish@main
-    #           with:
-    #               platforms: linux/amd64,linux/arm64
-    #               tags: nigeleke/scopa:latest,nigeleke/scopa:${{ github.sha }}
+    publish-docker-image:
+        needs: [bundle]
+        if: github.ref == 'refs/heads/main'
+        runs-on: ubuntu-latest
+        env:
+            DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+            DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        steps:
+            - uses: nigeleke/github/.github/actions/rust-setup@main
+            - uses: nigeleke/github/.github/actions/dockerhub-publish@main
+              with:
+                  platforms: linux/amd64,linux/arm64
+                  tags: nigeleke/scopa:latest,nigeleke/scopa:${{ github.sha }}
 
-    # publish-site:
-    #     needs: [bundle]
-    #     uses: nigeleke/github/.github/workflows/rust-publish.yml@main
-    #     secrets: inherit
+    publish-site:
+        needs: [bundle]
+        uses: nigeleke/github/.github/workflows/rust-publish.yml@main
+        secrets: inherit
 
-    # publish-app:
-    #     needs: [publish-site]
-    #     runs-on: ubuntu-latest
-    #     steps:
-    #         - uses: actions/checkout@v6
-    #           with:
-    #               fetch-depth: 0
-    #         - uses: nigeleke/github/.github/actions/dioxus-setup@main
-    #         - shell: bash
-    #           run: |
-    #               sed -i 's/#base_path/base_path/g' Dioxus.toml
-    #               dx bundle --release --platform=web --debug-symbols=false
-    #               git checkout Dioxus.toml
-    #               git checkout gh-pages
+    publish-app:
+        needs: [publish-site]
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v6
+              with:
+                  fetch-depth: 0
+            - uses: nigeleke/github/.github/actions/dioxus-setup@main
+            - shell: bash
+              run: |
+                  sed -i 's/#base_path/base_path/g' Dioxus.toml
+                  dx bundle --release --platform=web --debug-symbols=false
+                  git checkout Dioxus.toml
+                  git checkout gh-pages
 
-    #               mv target/dx/*/release/web/public docs/app
+                  mv target/dx/*/release/web/public docs/app
 
-    #               git config --global user.email "nigeleke@users.noreply.github.com"
-    #               git config --global user.name "Nigel Eke"
+                  git config --global user.email "nigeleke@users.noreply.github.com"
+                  git config --global user.name "Nigel Eke"
 
-    #               VERSION=$(git describe --abbrev=0 --tags 2>/dev/null || echo "dev")
+                  VERSION=$(git describe --abbrev=0 --tags 2>/dev/null || echo "dev")
 
-    #               git add docs
-    #               git commit -m "Release app $VERSION" || echo "No changes"
-    #               git push origin gh-pages
+                  git add docs
+                  git commit -m "Release app $VERSION" || echo "No changes"
+                  git push origin gh-pages
