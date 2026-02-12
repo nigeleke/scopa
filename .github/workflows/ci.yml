@@ -17,7 +17,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v6
-            - uses: nigeleke/lingora@v0.3.14
+            - uses: nigeleke/lingora@v0.3.15
 
     # bundle:
     #     needs: [i18n]
