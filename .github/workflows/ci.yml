@@ -13,7 +13,7 @@ jobs:
     #         platform: all
 
     i18n:
-        needs: [qa]
+        # needs: [qa]
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v6
