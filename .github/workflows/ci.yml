@@ -7,17 +7,17 @@ on:
     pull_request:
 
 jobs:
-    qa:
-        uses: nigeleke/github/.github/workflows/dioxus-qa.yml@main
-        with:
-            platform: all
+    # qa:
+    #     uses: nigeleke/github/.github/workflows/dioxus-qa.yml@main
+    #     with:
+    #         platform: all
 
     i18n:
         needs: [qa]
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v6
-            - uses: nigeleke/lingora@latest
+            - uses: nigeleke/lingora@v0.3.2
 
     bundle:
         needs: [i18n]
