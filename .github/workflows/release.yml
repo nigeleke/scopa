@@ -12,7 +12,8 @@ jobs:
             - uses: actions/checkout@v6
             - uses: nigeleke/github/.github/actions/cargo-verify-version-vs-tag@main
             - shell: bash
-              run: echo "checkout"
+              run: |
+                  echo "checkout"
                   git status
 
     bundle:
@@ -30,14 +31,16 @@ jobs:
         steps:
             - uses: nigeleke/github/.github/actions/rust-setup@main
             - shell: bash
-              run: echo "rust setup"
+              run: |
+                  echo "rust setup"
                   git status
             - uses: nigeleke/github/.github/actions/dockerhub-publish@main
               with:
                   platforms: linux/amd64,linux/arm64
                   tags: nigeleke/scopa:latest,nigeleke/scopa:${{ github.sha }}
             - shell: bash
-              run: echo "dockerhub publish"
+              run: |
+                  echo "dockerhub publish"
                   git status
 
     publish-site:
@@ -53,7 +56,8 @@ jobs:
               with:
                   fetch-depth: 0
             - shell: bash
-              run: echo "checkout 2"
+              run: |
+                  echo "checkout 2"
                   git status
             - uses: nigeleke/github/.github/actions/dioxus-setup@main
             - shell: bash
