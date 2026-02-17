@@ -6,15 +6,15 @@ edition = "2024"
 
 [dependencies]
 dioxus = "0.7"
-dioxus-i18n = "0.5.1"
+dioxus-i18n = "0.5"
 dioxus-sdk = { version = "0.7", features = ["storage"] }
-thiserror = "2.0.17"
-serde = { version = "1.0.228", features = ["derive"] }
+thiserror = "2.0"
+serde = { version = "1.0", features = ["derive"] }
 gloo-timers = { version = "0.3.0", features = ["futures"] }
 dioxus-primitives = { git = "https://github.com/DioxusLabs/components", version = "0.0.1", default-features = false }
 
 [dev-dependencies]
-pretty_assertions = "1.4.1"
+pretty_assertions = "1.4"
 
 [features]
 default = []
