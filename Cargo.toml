@@ -1,6 +1,6 @@
 [package]
 name = "scopa"
-version = "2.0.19"
+version = "2.0.20"
 authors = ["Nigel Eke <nigeleke@gmail.com>"]
 edition = "2024"
 
