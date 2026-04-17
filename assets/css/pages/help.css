@@ -5,6 +5,7 @@
     animation: helpFadeIn 0.25s;
     block-size: 100%;
     min-block-size: 0;
+    overflow: auto;
 }
 
 @keyframes helpFadeIn {
@@ -21,11 +22,15 @@
     grid-template-rows: 1fr auto;
     gap: 2rem;
     block-size: 100%;
+    inline-size: 100%;
     min-block-size: 0;
+    min-inline-size: 0;
 }
 
 .help__rules {
     align-content: center;
+    inline-size: 100%;
+    min-inline-size: 0;
 }
 
 .help__content button {
@@ -43,5 +48,6 @@
     border-radius: 8px;
     margin-inline-start: 2em;
     max-inline-size: 90%;
+    min-inline-size: 0;
     box-shadow: 0 0 12px rgba(248, 248, 255, 0.6);
 }

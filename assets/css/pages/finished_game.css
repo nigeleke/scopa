@@ -1,9 +1,9 @@
 .finished-game__container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    height: 100%;
+    display: grid;
+    grid-template-rows: 1fr 1fr auto;
+    place-items: center;
+    block-size: 100%;
+    gap: 0.5rem;
     animation: finishedGameFadeIn 0.25s;
 }
 
@@ -19,7 +19,6 @@
 .finished-game__winner-text {
     text-align: center;
     animation: finishedGameWinnerSpin linear 0.25s 0.25s 8;
-    margin-block-start: 10rem;
 }
 
 @keyframes finishedGameWinnerSpin {
@@ -39,7 +38,8 @@
     display: grid;
     grid-template-columns: 1fr auto;
     gap: 0.5rem 1rem;
-    width: 50%;
+    min-inline-size: 100px;
+    max-inline-size: 200px;
     align-items: center;
 }
 
@@ -73,5 +73,5 @@
 
 .finished-game__start-game-button,
 .finished-game__retain-checkbox + label {
-    margin-bottom: 5px;
+    margin-block-end: 5px;
 }

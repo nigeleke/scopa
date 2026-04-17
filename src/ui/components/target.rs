@@ -9,7 +9,7 @@ use crate::domain::*;
 #[component]
 pub fn TargetView(value: Target) -> Element {
     rsx! {
-        document::Link { rel: "stylesheet", href: asset!("/assets/css/domain/target.css") }
+        document::Stylesheet { href: asset!("/assets/css/domain/target.css") }
         Container {
             {tid!("points-view.text", n: value.to_string())}
         }
@@ -26,7 +26,7 @@ pub fn TargetEditor(value: Target, onchange: EventHandler<Target>) -> Element {
     };
 
     rsx! {
-        document::Link { rel: "stylesheet", href: asset!("/assets/css/domain/target.css") }
+        document::Stylesheet { href: asset!("/assets/css/domain/target.css") }
         Container {
             {tid!("points-editor.prefix")}
             label {

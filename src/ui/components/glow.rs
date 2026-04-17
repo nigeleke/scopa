@@ -6,7 +6,7 @@ pub fn Glow(
     #[props(extends = GlobalAttributes)] attributes: Vec<Attribute>,
 ) -> Element {
     rsx! {
-        document::Link { rel: "stylesheet", href: asset!("/assets/css/ui/glow.css") }
+        document::Stylesheet { href: asset!("/assets/css/ui/glow.css") }
         span {
             class: "glow",
             ..attributes,

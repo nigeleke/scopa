@@ -1,17 +1,11 @@
 use dioxus::prelude::*;
 use dioxus_i18n::tid;
 
-use super::{
-    button::Button, icon::UndoIcon, round::RoundEditor, round_number::RoundNumberView,
-    target::TargetView,
-};
+use super::{button::Button, icon::UndoIcon, round::RoundEditor};
 use crate::{domain::*, ui::state::State};
 
 #[component]
 pub fn PlayingGame(game: ReadSignal<Game<Playing>>, onchange: EventHandler<State>) -> Element {
-    let round_number = game.read().history().round_number();
-    let target = game.read().target();
-
     let undo = move |_| {
         let playing_state = game().undo()?;
         onchange.call(State::from(playing_state));
@@ -31,17 +25,15 @@ pub fn PlayingGame(game: ReadSignal<Game<Playing>>, onchange: EventHandler<State
     };
 
     rsx! {
-        document::Link { rel: "stylesheet", href: asset!("/assets/css/pages/playing_game.css") }
+        document::Stylesheet { href: asset!("/assets/css/pages/playing_game.css") }
         div {
             class: "playing-game",
             div {
-                class: "playing-game__header",
-                RoundNumberView { value: round_number, }
-                TargetView { value: target, }
-            }
-            RoundEditor {
-                game: game(),
-                round: round,
+                class: "playing-game__round-editor",
+                RoundEditor {
+                    game: game(),
+                    round: round,
+                }
             }
             div {
                 class: "playing-game__controls",

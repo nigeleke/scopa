@@ -3,9 +3,12 @@
     grid-template-columns: 1fr 6fr 1fr;
 }
 
+.scopa_header > nav {
+    margin-block-start: 0.5rem;
+}
+
 .scopa_header .icon {
-    justify-self: start;
-    anchor-name: --scopa-header-menu-icon;
+    anchor-name: --scopa-header__menu-icon;
 }
 
 .scopa_header .glow {
@@ -16,20 +19,20 @@
     font-size: 2rem;
 }
 
-.scopa_header_popover_menu {
+.scopa_header__popover_menu {
     justify-items: center;
     justify-content: space-between;
-    gap: 15px;
+    gap: 0.25rem;
     background-color: var(--control-colour);
     border: none;
     position: absolute;
-    position-anchor: --scopa-header-menu-icon;
+    position-anchor: --scopa-header__menu-icon;
     margin: 0;
     inset: auto;
-    top: anchor(bottom);
-    left: anchor(left);
+    inset-block-start: anchor(bottom);
+    inset-inline-start: anchor(left);
     margin-block-start: 10px;
-    padding: 10px;
+    padding: 0.5rem;
     border-radius: 5px;
     opacity: 0;
     transition:
@@ -38,10 +41,10 @@
     transition-behavior: allow-discrete;
 }
 
-.scopa_header_popover_menu:popover-open {
+.scopa_header__popover_menu:popover-open {
     position: absolute;
-    left: 5%;
-    top: 2rem;
+    inset-block-start: 0.75rem;
+    inset-inline-start: 0.75rem;
 
     display: grid;
     opacity: 1;
@@ -49,22 +52,10 @@
 
 .scopa_header * img.flag {
     border: solid ghostwhite;
-    height: 20px;
+    block-size: 1.25rem;
 }
 
 .scopa_header > nav > button {
     position: absolute;
-    left: 5%;
-}
-
-@media only screen and (min-width: 768px) and (max-width: 1024px) {
-    .scopa_header .glow * {
-        font-size: 2rem;
-    }
-}
-
-@media only screen and (max-width: 767px) {
-    .scopa_header .glow * {
-        font-size: 1.5rem;
-    }
+    inset-inline-start: 0.75rem;
 }

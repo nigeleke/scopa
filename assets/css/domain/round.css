@@ -1,35 +1,59 @@
-.round-editor-container {
+.round-editor {
     display: grid;
-    gap: 1.5svh;
-    grid-template-rows: 1fr repeat(5, 2fr);
-    grid-template-columns: repeat(auto-fill, 1fr);
+    grid-template-rows: auto repeat(5, minmax(0, 1fr));
     grid-auto-flow: column;
-    justify-content: space-evenly;
-    justify-items: center;
-    align-items: center;
+    place-content: center;
+    gap: 0.25rem;
+    overflow: clip;
+    block-size: 100%;
+    inline-size: 100%;
+    max-block-size: 640px;
+    min-block-size: 0;
+    min-inline-size: 0;
 }
 
-.radio-team-icon input[type="radio"] {
+.round-editor__cell {
+    block-size: 100%;
+    inline-size: 100%;
+    min-block-size: 0;
+    min-inline-size: 0;
+    place-content: center;
+}
+
+.round-editor__radio-icon {
+    block-size: 100%;
+    min-block-size: 0;
+}
+
+.round-editor__radio-icon input[type="radio"] {
     position: absolute;
     opacity: 0;
-    width: 0;
-    height: 0;
+    inline-size: 0;
+    block-size: 0;
 }
 
-.radio-team-icon input[type="radio"] + .points-group-image {
+/*.round-editor__radio-icon input[type="radio"] + * {
     border: 2px solid transparent;
     border-radius: 20px;
-}
+    block-size: 100%;
+    min-block-size: 0;
+}*/
 
-.radio-team-icon input[type="radio"]:focus + .points-group-image {
+/*.round-editor__radio-icon input[type="radio"]:focus + * {
     border-color: var(--control-colour-focused);
-}
+}*/
 
-.team-header {
-    font-size: 1.25rem;
+.round-editor__remainder_header {
     color: hsl(from var(--text-colour) h s 90%);
+    display: inline-block;
+    justify-self: center;
+    white-space: nowrap;
+    font-size: 1.25rem;
 }
 
-.team-leader-header {
+.round-editor__leader_header {
+    display: inline-block;
+    justify-self: center;
+    white-space: nowrap;
     font-size: 1.25rem;
 }

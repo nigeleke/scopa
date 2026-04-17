@@ -1,6 +1,7 @@
-/*.scopa_footer {}*/
-
 .scopa_footer p {
     justify-self: center;
     font-size: small;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

@@ -9,8 +9,9 @@ fn Icon(
     #[props(extends = button, extends=GlobalAttributes)] attributes: Vec<Attribute>,
 ) -> Element {
     rsx! {
-        document::Link { rel: "stylesheet", href: asset!("/assets/css/ui/icon.css") }
+        document::Stylesheet { href: asset!("/assets/css/ui/icon.css") }
         button {
+            class: "icon",
             onclick: move |_| on_click.call(()),
             ..attributes,
             img {

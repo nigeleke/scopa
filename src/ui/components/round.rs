@@ -7,6 +7,7 @@ use super::{
     points::{PointsEditor, PointsView},
     points_group::PointsGroup,
     points_group_image::PointsGroupImage,
+    round_number::RoundNumberView,
     team_name::TeamNameView,
 };
 use crate::domain::*;
@@ -27,8 +28,10 @@ pub fn RoundEditor(game: Game<Playing>, round: Signal<Round>) -> Element {
         .max()
         .unwrap_or_default();
 
+    let round_number = game.history().round_number();
+
     let none_column_components = [
-        rsx! { Empty {} },
+        rsx! { RoundNumberView { value: round_number, } },
         rsx! { ScopaIcon { hint: tid!("scopa-icon.hint") } },
         rsx! { RadioTeamIcon { hint: tid!("cards-count-icon.hint"), group: PointsGroup::CardsCount, team: None, round: round } },
         rsx! { RadioTeamIcon { hint: tid!("coins-count-icon.hint"), group: PointsGroup::CoinsCount, team: None, round: round } },
@@ -56,15 +59,15 @@ pub fn RoundEditor(game: Game<Playing>, round: Signal<Round>) -> Element {
     let columns_count = some_column_components.len() + 1;
 
     rsx! {
-        document::Link { rel: "stylesheet", href: asset!("/assets/css/domain/round.css") }
+        document::Stylesheet { href: asset!("/assets/css/domain/round.css") }
         div {
-            class: "round-editor-container",
+            class: "round-editor",
             for j in 0..columns_count {
                 for i in 0..6 {
                     if j == 0 {
-                        {none_column_components[i].clone()}
+                        Cell { {none_column_components[i].clone()} }
                     } else {
-                        {some_column_components[j-1][i].clone()}
+                        Cell { {some_column_components[j-1][i].clone()} }
                     }
                 }
             }
@@ -73,10 +76,11 @@ pub fn RoundEditor(game: Game<Playing>, round: Signal<Round>) -> Element {
 }
 
 #[component]
-fn Empty() -> Element {
+fn Cell(children: Element) -> Element {
     rsx! {
         div {
-            p { " " }
+            class: "round-editor__cell",
+            {children},
         }
     }
 }
@@ -86,7 +90,7 @@ fn TeamHeader(name: TeamName, points: Points, is_leader: bool) -> Element {
     rsx! {
         if is_leader {
             span {
-                class: "team-leader-header",
+                class: "round-editor__leader_header",
                 Glow {
                     TeamNameView { value: name }
                     ": "
@@ -96,12 +100,11 @@ fn TeamHeader(name: TeamName, points: Points, is_leader: bool) -> Element {
 
         } else {
             span {
-                class: "team-header",
+                class: "round-editor__remainder_header",
                 TeamNameView { value: name }
                 ": "
                 PointsView { value: points }
             }
-
         }
     }
 }
@@ -181,7 +184,7 @@ fn RadioTeamIcon(
 
     rsx! {
         label {
-            class: "radio-team-icon",
+            class: "round-editor__radio-icon",
             Input {
                 typ: "radio",
                 name: group.to_string(),

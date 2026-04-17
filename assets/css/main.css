@@ -3,7 +3,7 @@
     --text-colour-dark: hsl(from var(--text-colour) h s 90%);
     --text-shadow: 2px 2px 4px var(--text-colour);
     --theme-colour: darkgreen;
-    --theme-colour-light: hsl(from var(--theme-colour) h s 30%);
+    --theme-colour-light: hsl(from var(--theme-colour) h s 34%);
     --control-colour: hsl(from var(--theme-colour) h 50% 75%);
     --control-colour-hover: hsl(from var(--control-colour) h s 50%);
     --control-text-colour: var(--theme-colour);
@@ -23,25 +23,13 @@ body {
         var(--theme-colour)
     );
     background-attachment: fixed;
-    block-size: 100svh;
+    block-size: 100dvh;
     color: var(--text-colour);
+    overflow: hidden;
 }
 
 html {
-    font-size: clamp(24px, 6vw, 28px);
     line-height: 1.6;
-}
-
-@media only screen and (min-width: 768px) and (max-width: 1024px) {
-    html {
-        font-size: clamp(18px, 3vw + 0.5rem, 26px);
-    }
-}
-
-@media only screen and (min-width: 1025px) {
-    html {
-        font-size: clamp(18px, 1.5vw + 0.5rem, 28px);
-    }
 }
 
 * {
@@ -60,44 +48,31 @@ button {
 
 #main {
     display: grid;
-    grid-template-rows: auto 1fr auto;
-    overflow: hidden;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    overflow: clip;
     block-size: 100%;
-    justify-items: center;
-    gap: 2rem;
+    min-block-size: 0;
 }
 
 header,
 main,
 footer {
-    margin-left: 1svw;
-    margin-right: 1svw;
-}
-
-header {
-    margin-top: 1svh;
-}
-
-footer {
-    align-self: end;
-    margin-bottom: 1svh;
+    margin-inline: 1rem;
 }
 
 main {
-    max-height: 100%;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
+    block-size: 100%;
+    min-block-size: 0;
+    display: grid;
 }
 
 button {
     border: none;
     background: var(--control-colour);
     border-radius: 10px;
+    min-block-size: 30px;
+    min-inline-size: 30px;
     inline-size: fit-content;
-    padding: 0.5rem 0.75rem;
-    min-inline-size: 2rem;
-    min-block-size: 2rem;
 }
 
 button:hover {

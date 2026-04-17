@@ -1,9 +1,11 @@
 .playing-game {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: stretch;
-    gap: 3svh;
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    gap: 0.25rem;
+    block-size: 100%;
+    inline-size: 100%;
+    min-block-size: 0;
+    min-inline-size: 0;
     animation: playingGameFadeIn 0.25s;
 }
 
@@ -17,27 +19,22 @@
 }
 
 .playing-game__header {
-    width: 100%;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
+}
+
+.playing-game__round-editor {
+    block-size: 100%;
+    inline-size: 100%;
+    min-block-size: 0;
+    min-inline-size: 0;
 }
 
 .playing-game__controls {
-    align-self: center;
-    width: 90%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
 }
 
 .playing-game__controls button#score {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.playing-game__controls button#undo {
-    position: absolute;
-    left: 5%;
+    justify-self: center;
 }

@@ -19,7 +19,7 @@ pub fn PointsGroupImage(
     };
 
     rsx! {
-        document::Link { rel: "stylesheet", href: asset!("/assets/css/domain/points_group_image.css") }
+        document::Stylesheet { href: asset!("/assets/css/domain/points_group_image.css") }
         div {
             class: "points-group-image",
             class: if disabled { "disabled" },
@@ -30,7 +30,7 @@ pub fn PointsGroupImage(
             }
             if let Some(hint) = hint {
                 span {
-                    class: "points-group-image-hint",
+                    class: "points-group-image__hint",
                     "{hint}"
                 }
             }

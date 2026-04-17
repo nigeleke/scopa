@@ -20,7 +20,7 @@ use crate::{
 #[component]
 pub fn ScopaHeader() -> Element {
     rsx! {
-        document::Link { rel: "stylesheet", href: asset!("/assets/css/ui/scopa_header.css") }
+        document::Stylesheet { href: asset!("/assets/css/ui/scopa_header.css") }
         div {
             class: "scopa_header",
             Menu {}
@@ -35,7 +35,7 @@ fn Menu() -> Element {
         nav {
             MenuIcon { popovertarget: MAIN_MENU_ID }
             div {
-                class: "scopa_header_popover_menu",
+                class: "scopa_header__popover_menu",
                 id: MAIN_MENU_ID,
                 popover: "auto",
                 Flag { src: asset!("/assets/images/flags/gb.svg"), lang: "en-GB" }

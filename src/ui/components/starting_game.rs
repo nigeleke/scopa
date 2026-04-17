@@ -44,7 +44,7 @@ pub fn StartingGame(game: Game<Starting>, onchange: EventHandler<State>) -> Elem
     };
 
     rsx! {
-        document::Link { rel: "stylesheet", href: asset!("/assets/css/pages/starting_game.css") }
+        document::Stylesheet { href: asset!("/assets/css/pages/starting_game.css") }
         div {
             class: "starting-game",
             TargetEditor {
@@ -112,9 +112,13 @@ fn TeamRows(teams: Vec<Team>, onremove: EventHandler<TeamId>) -> Element {
     };
 
     rsx! {
-        table {
-            hidden: teams.is_empty(),
-            { teams.iter().map(team_row) }
+        div {
+            class: "starting-game__teams-outer",
+            table {
+                class: "starting-game__teams-inner",
+                hidden: teams.is_empty(),
+                { teams.iter().map(team_row) }
+            }
         }
     }
 }

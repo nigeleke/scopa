@@ -18,7 +18,7 @@ pub fn RoundNumberView(value: ReadSignal<RoundNumber>) -> Element {
     });
 
     rsx! {
-        document::Link { rel: "stylesheet", href: asset!("/assets/css/domain/round_number.css") }
+        document::Stylesheet { href: asset!("/assets/css/domain/round_number.css") }
         Container {
             pulse: pulse(),
             {tid!("round-view.text")}
@@ -31,7 +31,6 @@ pub fn RoundNumberView(value: ReadSignal<RoundNumber>) -> Element {
 #[component]
 fn Container(pulse: bool, children: Element) -> Element {
     rsx! {
-        document::Link { rel: "stylesheet", href: asset!("/assets/css/domain/round_number.css") }
         div {
             class: "round-number-outer",
             class: if pulse { "round-number-pulse" },

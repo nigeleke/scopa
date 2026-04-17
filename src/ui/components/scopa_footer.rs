@@ -6,7 +6,7 @@ pub fn ScopaFooter() -> Element {
     let version = env!("CARGO_PKG_VERSION");
 
     rsx! {
-        document::Link { rel: "stylesheet", href: asset!("/assets/css/ui/scopa_footer.css") }
+        document::Stylesheet { href: asset!("/assets/css/ui/scopa_footer.css") }
         div {
             class: "scopa_footer",
             p {

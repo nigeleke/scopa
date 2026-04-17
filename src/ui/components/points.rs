@@ -6,7 +6,7 @@ use crate::{domain::*, ui::kit::dialog::*};
 #[component]
 pub fn PointsView(value: Points) -> Element {
     rsx! {
-        document::Link { rel: "stylesheet", href: asset!("/assets/css/domain/points.css") }
+        document::Stylesheet { href: asset!("/assets/css/domain/points.css") }
         span { { value.to_string() } }
     }
 }
@@ -32,7 +32,7 @@ pub fn PointsEditor(
     };
 
     rsx! {
-        document::Link { rel: "stylesheet", href: asset!("/assets/css/domain/points.css") }
+        // document::Stylesheet { href: asset!("/assets/css/domain/points.css") }
         Container {
             button {
                 class: "points__button",
