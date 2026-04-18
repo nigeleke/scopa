@@ -47,39 +47,3 @@ jobs:
         needs: [bundle]
         uses: nigeleke/github/.github/workflows/rust-publish.yml@main
         secrets: inherit
-
-    publish-app:
-        needs: [publish-site]
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v6
-              with:
-                  fetch-depth: 0
-            - shell: bash
-              run: |
-                  echo "checkout 2"
-                  git status
-            - uses: nigeleke/github/.github/actions/dioxus-setup@main
-            - shell: bash
-              run: |
-                  sed -i 's/#base_path/base_path/g' Dioxus.toml
-                  echo "sed"
-                  git status
-                  dx bundle --release --platform=web --debug-symbols=false
-                  git checkout Dioxus.toml
-                  echo "chechout Dioxus toml"
-                  git status
-                  git checkout gh-pages
-
-                  mv target/dx/*/release/web/public docs/app
-
-                  git config --global user.email "nigeleke@users.noreply.github.com"
-                  git config --global user.name "Nigel Eke"
-
-                  VERSION=$(git describe --abbrev=0 --tags 2>/dev/null || echo "dev")
-
-                  git add docs
-                  echo "add docs"
-                  git status
-                  git commit -m "Release app $VERSION" || echo "No changes"
-                  git push origin gh-pages
