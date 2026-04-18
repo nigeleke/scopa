@@ -1,8 +1,0 @@
-services:
-    scopa:
-        build:
-            context: ..
-            dockerfile: docker/Dockerfile
-        ports:
-            - "8080:8080"
-        container_name: scopa

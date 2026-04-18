@@ -35,3 +35,29 @@ dx serve --platform=web
 
 - Original icons are no attribution `CC0` and `PD` svg files on [svgrepo.com](https://www.svgrepo.com/). Derived images can be found under `./design/images/`.
 - Flags by [flagicons](https://flagicons.lipis.dev/); Attribution: `./design/attribution/flags_license`.
+
+
+# scopa
+
+[![Package Version](https://img.shields.io/hexpm/v/scopa)](https://hex.pm/packages/scopa)
+[![Hex Docs](https://img.shields.io/badge/hex-docs-ffaff3)](https://hexdocs.pm/scopa/)
+
+```sh
+gleam add scopa@1
+```
+```gleam
+import scopa
+
+pub fn main() -> Nil {
+  // TODO: An example of the project in use
+}
+```
+
+Further documentation can be found at <https://hexdocs.pm/scopa>.
+
+## Development
+
+```sh
+gleam run   # Run the project
+gleam test  # Run the tests
+```
