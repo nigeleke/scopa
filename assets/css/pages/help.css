@@ -28,7 +28,7 @@
 }
 
 .help__rules {
-    align-content: center;
+    justify-items: center;
     inline-size: 100%;
     min-inline-size: 0;
 }
