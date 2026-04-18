@@ -4,4 +4,5 @@ cargo install cargo-binstall
 cargo binstall dioxus-cli
 dx bundle --release --platform=web --debug-symbols=false
 ls -al
+mkdir -p _site/app
 mv target/dx/*/release/web/public _site/app
