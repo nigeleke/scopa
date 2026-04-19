@@ -80,3 +80,25 @@ pub fn HomeIcon(on_click: EventHandler<()>) -> Element {
         }
     }
 }
+
+#[component]
+pub fn OpenFullscreenIcon(on_click: EventHandler<()>) -> Element {
+    rsx! {
+        Icon {
+            on_click,
+            src: asset!("/assets/images/icon-fullscreen-open.png"),
+            alt: tid!("fullscreen-open-icon.alt-text"),
+        }
+    }
+}
+
+#[component]
+pub fn CloseFullscreenIcon(on_click: EventHandler<()>) -> Element {
+    rsx! {
+        Icon {
+            on_click,
+            src: asset!("/assets/images/icon-fullscreen-close.png"),
+            alt: tid!("fullscreen-close-icon.alt-text"),
+        }
+    }
+}

@@ -1,6 +1,6 @@
 .help {
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: auto;
     grid-template-rows: 1fr;
     animation: helpFadeIn 0.25s;
     block-size: 100%;
@@ -39,14 +39,15 @@
 
 .help__content p {
     max-width: 65ch;
-    padding-inline-start: 2em;
+    padding-inline: 2em;
 }
 
 .help__content img.screenshot {
+    display: block;
     align-self: center;
     border: none;
     border-radius: 8px;
-    margin-inline-start: 2em;
+    margin-inline: 2em;
     max-inline-size: 90%;
     min-inline-size: 0;
     box-shadow: 0 0 12px rgba(248, 248, 255, 0.6);

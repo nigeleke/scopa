@@ -1,12 +1,12 @@
 .round-editor {
     display: grid;
-    grid-template-rows: auto repeat(5, minmax(0, 1fr));
+    grid-template-rows: auto repeat(5, minmax(0, auto));
+    grid-auto-columns: 1fr;
     grid-auto-flow: column;
-    place-content: center;
+    place-items: center;
     gap: 0.25rem;
     overflow: clip;
     block-size: 100%;
-    inline-size: 100%;
     max-block-size: 640px;
     min-block-size: 0;
     min-inline-size: 0;
@@ -14,15 +14,14 @@
 
 .round-editor__cell {
     block-size: 100%;
-    inline-size: 100%;
     min-block-size: 0;
     min-inline-size: 0;
-    place-content: center;
 }
 
 .round-editor__radio-icon {
+    cursor: pointer;
     block-size: 100%;
-    min-block-size: 0;
+    inline-size: 100%;
 }
 
 .round-editor__radio-icon input[type="radio"] {
@@ -31,17 +30,6 @@
     inline-size: 0;
     block-size: 0;
 }
-
-/*.round-editor__radio-icon input[type="radio"] + * {
-    border: 2px solid transparent;
-    border-radius: 20px;
-    block-size: 100%;
-    min-block-size: 0;
-}*/
-
-/*.round-editor__radio-icon input[type="radio"]:focus + * {
-    border-color: var(--control-colour-focused);
-}*/
 
 .round-editor__remainder_header {
     color: hsl(from var(--text-colour) h s 90%);

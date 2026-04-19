@@ -10,9 +10,7 @@ pub fn Help() -> Element {
         div {
             class: "help",
             document::Stylesheet { href: asset!("/assets/css/pages/help.css") },
-            div {}
             HelpContent {}
-            div {}
         }
     }
 }

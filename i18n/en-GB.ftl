@@ -96,6 +96,10 @@ home-icon =
     .alt-text = Home
 undo-icon =
     .alt-text = Undo
+fullscreen-open-icon =
+    .alt-text = Fullscreen
+fullscreen-close-icon =
+    .alt-text = Exit fullscreen
 
 # Supported langauges
 lang =

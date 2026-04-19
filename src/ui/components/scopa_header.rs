@@ -6,7 +6,7 @@ use dioxus_sdk::storage::{LocalStorage, use_storage};
 
 use super::{
     glow::Glow,
-    icon::{MenuIcon, RestartIcon},
+    icon::{MenuIcon, OpenFullscreenIcon, RestartIcon},
 };
 use crate::{
     domain::{Game, Target},
@@ -40,6 +40,7 @@ fn Menu() -> Element {
                 popover: "auto",
                 Flag { src: asset!("/assets/images/flags/gb.svg"), lang: "en-GB" }
                 Flag { src: asset!("/assets/images/flags/it.svg"), lang: "it-IT" }
+                FullscreenMenuItem {}
                 RestartMenuItem {}
             },
         }
@@ -67,6 +68,15 @@ fn Flag(src: String, lang: String) -> Element {
             }
         }
     }
+}
+
+#[component]
+fn FullscreenMenuItem() -> Element {
+    let fullscreen = move || {
+        let _ = document::eval("document.documentElement.requestFullscreen()");
+    };
+
+    rsx! { OpenFullscreenIcon { on_click: fullscreen } }
 }
 
 #[component]

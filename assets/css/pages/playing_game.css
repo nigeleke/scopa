@@ -24,8 +24,6 @@
 }
 
 .playing-game__round-editor {
-    block-size: 100%;
-    inline-size: 100%;
     min-block-size: 0;
     min-inline-size: 0;
 }
