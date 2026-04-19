@@ -70,10 +70,8 @@ home-icon =
     .alt-text = Home
 undo-icon =
     .alt-text = Annulla
-fullscreen-open-icon =
+fullscreen-icon =
     .alt-text = Schermo intero
-fullscreen-close-icon =
-    .alt-text = Esci schermo intero
 
 lang =
     .en-GB = Inglese

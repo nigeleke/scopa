@@ -6,7 +6,7 @@ use dioxus_sdk::storage::{LocalStorage, use_storage};
 
 use super::{
     glow::Glow,
-    icon::{MenuIcon, OpenFullscreenIcon, RestartIcon},
+    icon::{FullscreenIcon, MenuIcon, RestartIcon},
 };
 use crate::{
     domain::{Game, Target},
@@ -76,7 +76,7 @@ fn FullscreenMenuItem() -> Element {
         let _ = document::eval("document.documentElement.requestFullscreen()");
     };
 
-    rsx! { OpenFullscreenIcon { on_click: fullscreen } }
+    rsx! { FullscreenIcon { on_click: fullscreen } }
 }
 
 #[component]
