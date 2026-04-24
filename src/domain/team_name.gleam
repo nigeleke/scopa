@@ -1,5 +1,3 @@
-import gleam/string
-
 pub opaque type TeamName {
   TeamName(String)
 }

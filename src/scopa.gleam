@@ -5,14 +5,15 @@ import lustre/element.{type Element}
 import lustre/element/html.{button, div, text}
 import lustre/event.{on_click}
 
-import component/footer
-import component/header
-import component/setup
 import domain/round.{type Round}
 import domain/target.{type Target}
 import domain/team.{type Team}
 import domain/team_name.{type TeamName}
 import domain/team_status
+import ui/footer
+import ui/header
+import ui/in_progress
+import ui/setup
 
 pub type Model {
   Setup(candidate_name: TeamName, team_names: List(TeamName), target: Target)
@@ -110,7 +111,11 @@ fn main_content(model: Model) -> Element(Message) {
         ),
       )
 
-    InProgress(_, _, _) -> div([], [text("Game is in progress...")])
+    InProgress(teams, rounds, target) ->
+      in_progress.view(
+        in_progress.Model(teams, rounds, target),
+        in_progress.Props(RoundScored),
+      )
 
     Completed(_, _, _) ->
       div([], [

@@ -20,6 +20,7 @@ lustre_dev_tools = ">= 2.3.6 and < 3.0.0"
 stylesheets = [
   { href = "/css/style.css" },
   { href = "/css/setup.css" },
+  { href = "/css/glow.css" },
   { href = "/css/team_names_editor.css"}
 ]
 

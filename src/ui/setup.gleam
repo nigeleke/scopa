@@ -1,4 +1,3 @@
-import component/team_names_editor
 import gleam/list
 import lustre/attribute.{class, disabled}
 import lustre/element.{type Element}
@@ -7,6 +6,7 @@ import lustre/event.{on_click}
 
 import domain/target.{type Target}
 import domain/team_name.{type TeamName}
+import ui/team_names_editor
 
 pub type Model {
   Model(candidate_name: TeamName, team_names: List(TeamName), target: Target)
