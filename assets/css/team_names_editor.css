@@ -1,0 +1,24 @@
+.team-names-editor {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    block-size: 100%;
+    min-block-size: 0;
+    gap: 1rem;
+}
+
+.team-names-editor__name-input {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+}
+
+.team-names-editor__teams-table-wrapper {
+    overflow-y: auto;
+    min-block-size: 0;
+}
+
+.team-names-editor__teams-table {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.5rem;
+}

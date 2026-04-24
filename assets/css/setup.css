@@ -1,0 +1,8 @@
+.setup {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    block-size: 100%;
+    min-block-size: 0;
+    gap: 2rem;
+    justify-items: center;
+}

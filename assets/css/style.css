@@ -1,0 +1,104 @@
+:root {
+    --color-background: #006400;
+    --color-surface: hsl(from var(--color-background) h 50% 70%);
+    --color-surface-2: hsl(from var(--color-background) h 50% 80%);
+
+    --color-text: #f8f8ff;
+    --color-text-secondary: #4f4f4f;
+    --color-text-muted: #9ca9a3;
+
+    --color-border: #2a3b34;
+
+    --color-primary: #4adeb3;
+    --color-primary-light: #6ee6c3;
+    --color-primary-dark: #2ab89a;
+
+    --color-success: #4ade80;
+    --color-warning: #fbbf24;
+    --color-error: #f87171;
+    --color-info: #67e8f9;
+
+    --color-accent: #d4a373;
+}
+
+html {
+    line-height: 1.6;
+}
+
+* {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+}
+
+body {
+    block-size: 100dvh;
+    background: radial-gradient(
+        circle at left top,
+        hsl(from var(--color-background) h s l),
+        hsl(from var(--color-background) h s 10%)
+    );
+    color: var(--color-text);
+}
+
+#app {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    block-size: 100%;
+    min-block-size: 0;
+    gap: 0.5rem;
+    justify-items: center;
+}
+
+header {
+    font-size: 1.5rem;
+}
+
+main {
+    display: grid;
+    block-size: 100%;
+    min-block-size: 0;
+}
+
+footer {
+    font-size: 0.8rem;
+}
+
+button {
+    border: transparent;
+    min-block-size: 30px;
+    min-inline-size: 30px;
+    inline-size: fit-content;
+    background-color: var(--color-surface);
+}
+
+button,
+input {
+    color: var(--color-text-secondary);
+    font-size: 1.25rem;
+    border-radius: 10px;
+}
+
+button:hover {
+    background-color: var(--color-surface-2);
+}
+
+button:disabled {
+    background-color: var(--color-text-muted);
+}
+
+a {
+    color: inherit;
+}
+
+a:hover {
+    color: var(--color-text-secondary);
+}
+
+p {
+    color: var(--color-text-secondary);
+}
