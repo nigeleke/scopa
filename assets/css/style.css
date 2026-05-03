@@ -39,10 +39,11 @@ body {
     block-size: 100dvh;
     background: radial-gradient(
         circle at left top,
-        hsl(from var(--color-background) h s l),
-        hsl(from var(--color-background) h s 10%)
+        hsl(from var(--color-background) h s 34%),
+        hsl(from var(--color-background) h s l)
     );
     color: var(--color-text);
+    font-size: 1.25rem;
 }
 
 #app {
@@ -61,11 +62,14 @@ header {
 main {
     display: grid;
     block-size: 100%;
+    inline-size: 100%;
     min-block-size: 0;
+    min-inline-size: 0;
 }
 
 footer {
     font-size: 0.8rem;
+    padding-block-end: 0.25rem;
 }
 
 button {
@@ -79,8 +83,8 @@ button {
 button,
 input {
     color: var(--color-text-secondary);
-    font-size: 1.25rem;
     border-radius: 10px;
+    font-size: 1.25rem;
 }
 
 button:hover {

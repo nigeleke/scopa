@@ -1,9 +1,9 @@
 .team-names-editor {
-    display: grid;
-    grid-template-rows: auto minmax(0, 1fr);
-    block-size: 100%;
+    display: flex;
+    flex-direction: column;
     min-block-size: 0;
     gap: 1rem;
+    position: relative;
 }
 
 .team-names-editor__name-input {
@@ -12,13 +12,24 @@
     gap: 2rem;
 }
 
-.team-names-editor__teams-table-wrapper {
+.team-names-editor__teams-list-wrapper {
     overflow-y: auto;
     min-block-size: 0;
 }
 
-.team-names-editor__teams-table {
+.team-names-editor__teams-list {
     display: grid;
     grid-template-columns: auto 1fr;
     gap: 0.5rem;
+}
+
+.team-names-editor__error {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 100%;
+    margin-top: 0.25rem;
+
+    color: var(--color-warning);
+    white-space: nowrap;
 }

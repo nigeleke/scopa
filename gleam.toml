@@ -19,9 +19,13 @@ lustre_dev_tools = ">= 2.3.6 and < 3.0.0"
 [tools.lustre.html]
 stylesheets = [
   { href = "/css/style.css" },
-  { href = "/css/setup.css" },
   { href = "/css/glow.css" },
-  { href = "/css/team_names_editor.css"}
+  { href = "/css/tally_editor.css"},
+  { href = "/css/target.css"},
+  { href = "/css/team_name.css"},
+  { href = "/css/team_names_editor.css"},
+  { href = "/css/setup.css" },
+  { href = "/css/in_progress.css" },
 ]
 
 [tools.lustre.build]

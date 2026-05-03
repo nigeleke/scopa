@@ -1,92 +1,159 @@
-import domain/score
 import gleam/list
+import gleam/option
 import lustre
 import lustre/element.{type Element}
-import lustre/element/html.{button, div, text}
-import lustre/event.{on_click}
+import lustre/element/html
+import lustre/event
 
-import domain/round.{type Round}
-import domain/target.{type Target}
-import domain/team.{type Team}
-import domain/team_name.{type TeamName}
-import domain/team_status
+import derived/team_score
+import domain/rounds
+import domain/tally.{type Tally}
+import domain/target
+import domain/team
+import domain/team/id
+import domain/team/name.{type TeamName}
+import domain/teams
+import phase/completed.{type Model as CompletedModel}
+import phase/in_progress.{type Model as InProgressModel}
+import phase/setup.{type Model as SetupModel}
 import ui/footer
 import ui/header
-import ui/in_progress
-import ui/setup
 
 pub type Model {
-  Setup(candidate_name: TeamName, team_names: List(TeamName), target: Target)
-  InProgress(teams: List(Team), rounds: List(Round), target: Target)
-  Completed(teams: List(Team), target: Target, winner: Team)
+  Setup(SetupModel)
+  InProgress(InProgressModel)
+  Completed(CompletedModel)
 }
 
 pub type Message {
-  CandidateNameChanged(TeamName)
-  TeamAdded(TeamName)
-  TeamsRemoved(index: Int)
-  TargetChanged(Target)
-  GameStarted
-  RoundScored(Round)
-  WinnerAnnounced(Team)
-  RestartWithSameSetup
-  ReturnToSetup
+  // Setup messages
+  ChangeRawTeamName(String)
+  AddTeam(TeamName)
+  RemoveTeam(index: Int)
+  ChangeRawTarget(String)
+  StartGame
+
+  // InProgress messages
+  ChangeDraftTally(tally: Tally)
+  ScoreRound
+
+  // Completed messages
+  RestartGameWithSameSetup
+  ResetGame
 }
 
 fn init(_flags: Nil) -> Model {
-  Setup(team_name.new(""), list.new(), target.from_int(11))
+  Setup(setup.init())
 }
 
 fn update(model: Model, message: Message) -> Model {
   case message {
-    CandidateNameChanged(candidate_name) ->
-      model |> update_candidate_name(candidate_name)
-    TeamAdded(team) -> model |> add_team(team)
-    TeamsRemoved(index) -> model |> remove_team(index)
-    TargetChanged(value) -> model |> change_target(value)
-    GameStarted -> model |> start_game()
-    RoundScored(_) -> todo
-    WinnerAnnounced(_) -> todo
-    RestartWithSameSetup -> todo
-    ReturnToSetup -> todo
+    // Setup messages
+    ChangeRawTeamName(name) -> model |> change_raw_team_name(name)
+    AddTeam(name) -> model |> add_team(name)
+    RemoveTeam(index) -> model |> remove_team(index)
+    ChangeRawTarget(target) -> model |> change_raw_target(target)
+    StartGame -> model |> start_game()
+
+    // InProgress messages
+    ChangeDraftTally(tally) -> model |> change_draft_tally(tally)
+    ScoreRound -> model |> score_round()
+
+    // Completed messages
+    RestartGameWithSameSetup -> model |> restart_game()
+    ResetGame -> model |> reset_game()
   }
 }
 
-fn update_candidate_name(model: Model, candidate_name) -> Model {
-  let assert Setup(_, _, _) = model
-  Setup(..model, candidate_name:)
+fn change_raw_team_name(model: Model, raw_team_name: String) -> Model {
+  let assert Setup(model) = model
+  Setup(setup.Model(..model, raw_team_name:))
 }
 
 fn add_team(model: Model, team: TeamName) -> Model {
-  let assert Setup(_, team_names, _) = model
-  let candidate_name = team_name.new("")
-  let team_names = team_names |> list.append([team])
-  Setup(..model, candidate_name:, team_names:)
+  let assert Setup(model) = model
+
+  let raw_team_name = ""
+  let team_names = model.team_names |> list.append([team])
+
+  Setup(setup.Model(..model, raw_team_name:, team_names:))
 }
 
 fn remove_team(model: Model, index: Int) -> Model {
-  let assert Setup(_, team_names, _) = model
+  let assert Setup(model) = model
+
   let team_names =
-    team_names
+    model.team_names
     |> list.index_fold(list.new(), fn(acc, item, i) {
       case i == index {
         True -> acc
         False -> acc |> list.append([item])
       }
     })
-  Setup(..model, team_names:)
+
+  Setup(setup.Model(..model, team_names:))
 }
 
-fn change_target(model: Model, target: Target) -> Model {
-  let assert Setup(_, _, _) = model
-  Setup(..model, target:)
+fn change_raw_target(model: Model, raw_target: String) -> Model {
+  let assert Setup(model) = model
+  Setup(setup.Model(..model, raw_target:))
 }
 
 fn start_game(model: Model) -> Model {
-  let assert Setup(_, team_names, target) = model
+  let assert Setup(model) = model
+
   let teams =
-    team_names |> list.map(team.Team(_, score.from_int(0), team_status.Active))
-  InProgress(list.new(), teams:, target:)
+    model.team_names
+    |> list.index_fold(teams.new(), fn(acc, team_name, index) {
+      let team = team.new(id.new(index), team_name)
+      acc |> teams.append(team)
+    })
+
+  let assert Ok(target) = target.from_string(model.raw_target)
+
+  InProgress(in_progress.init(teams, target))
+}
+
+fn change_draft_tally(model: Model, draft_tally: Tally) -> Model {
+  let assert InProgress(model) = model
+  InProgress(in_progress.Model(..model, draft_tally:))
+}
+
+fn score_round(model: Model) -> Model {
+  let assert InProgress(model) = model
+
+  let rounds = model.rounds |> rounds.append(model.draft_tally)
+  let team_scores = team_score.team_scores(model.teams, rounds)
+
+  case team_scores |> team_score.winner(model.target) {
+    option.Some(winner) -> {
+      let completed = completed.init(team_scores, winner, model.target)
+      Completed(completed)
+    }
+    option.None -> {
+      let draft_tally = tally.new()
+      InProgress(in_progress.Model(..model, draft_tally:, rounds:))
+    }
+  }
+}
+
+fn restart_game(model: Model) -> Model {
+  let assert Completed(model) = model
+
+  let teams =
+    model.team_scores
+    |> list.fold(teams.new(), fn(acc, team_score) {
+      let team = team_score.team(team_score)
+      let team = team.new(team.id, team.name)
+      acc |> teams.append(team)
+    })
+
+  InProgress(in_progress.init(teams, model.target))
+}
+
+fn reset_game(model: Model) -> Model {
+  let assert Completed(_) = model
+  Setup(setup.init())
 }
 
 pub fn view(model: Model) -> Element(Message) {
@@ -99,29 +166,23 @@ pub fn view(model: Model) -> Element(Message) {
 
 fn main_content(model: Model) -> Element(Message) {
   let view = case model {
-    Setup(candidate_name, team_names, target) ->
+    Setup(model) ->
       setup.view(
-        setup.Model(candidate_name, team_names, target),
-        setup.Props(
-          CandidateNameChanged,
-          TeamAdded,
-          TeamsRemoved,
-          TargetChanged,
-          GameStarted,
-        ),
+        model,
+        ChangeRawTeamName,
+        AddTeam,
+        RemoveTeam,
+        ChangeRawTarget,
+        StartGame,
       )
 
-    InProgress(teams, rounds, target) ->
-      in_progress.view(
-        in_progress.Model(teams, rounds, target),
-        in_progress.Props(RoundScored),
-      )
+    InProgress(model) -> in_progress.view(model, ChangeDraftTally, ScoreRound)
 
-    Completed(_, _, _) ->
-      div([], [
-        text("Game Over! Winner: "),
-        button([on_click(ReturnToSetup)], [
-          text("Play Again"),
+    Completed(_) ->
+      html.div([], [
+        html.text("Game Over! Winner: "),
+        html.button([event.on_click(ResetGame)], [
+          html.text("Play Again"),
         ]),
       ])
   }
