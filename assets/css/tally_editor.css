@@ -26,7 +26,7 @@
     padding-inline: 15px;
 }
 
-[data-round] {
+.tally-editor__round {
     animation: tally-editor__round-pulse 0.3s ease-in-out;
 }
 
@@ -53,22 +53,27 @@
 .tally-editor__icon {
     opacity: 50%;
     block-size: 100%;
+}
+
+.tally-editor__icon input {
+    display: none;
+}
+
+.tally-editor__icon img {
     max-block-size: 64px;
     max-inline-size: 64px;
-    min-block-size: 0;
-    min-inline-size: 0;
 }
 
 .tally-editor__icon:hover {
     opacity: 70%;
 }
 
-.tally-editor__icon.disabled {
-    opacity: 20%;
-}
-
 .tally-editor__icon.checked {
     opacity: 100%;
+}
+
+.tally-editor__icon.disabled {
+    opacity: 20%;
 }
 
 .tally-editor__hint {

@@ -6,32 +6,37 @@ import lustre/element.{type Element}
 import lustre/element/html as h
 import lustre/event
 
-import derived/team_score.{type TeamScore}
 import domain/score.{type Score}
 import domain/tally.{type Tally}
+import domain/team.{type Team}
 import domain/team/id.{type TeamId}
 import domain/team/name
 import domain/team/status
+import domain/teams.{type Teams}
+import ui/action/edit_scopa_score
 import ui/glow
 
 pub fn view(
+  teams: Teams,
   round: Int,
-  team_scores: List(TeamScore),
   draft_tally: Tally,
   on_draft_tally_changed: fn(Tally) -> msg,
+  on_edit_scopa_score: fn(TeamId) -> msg,
 ) -> Element(msg) {
   let category_column =
     category_column(round, draft_tally, on_draft_tally_changed)
 
-  let leading_score = team_score.leading_score(team_scores)
+  let leading_score = teams.leading_score(teams)
 
   let team_columns =
-    team_scores
+    teams
+    |> teams.value
     |> list.flat_map(team_column(
       _,
       leading_score,
       draft_tally,
       on_draft_tally_changed,
+      on_edit_scopa_score,
     ))
 
   let cells =
@@ -112,32 +117,28 @@ fn round_cell(value: Int) -> Element(msg) {
   let children = [h.text("Round: " <> value_string)]
 
   case int.is_even(value) {
+    // Force the pulse animation...
     True -> h.div(attributes, children)
     False -> h.span(attributes, children)
   }
 }
 
 fn team_column(
-  team_score: TeamScore,
+  team: Team,
   leading_score: Score,
   draft_tally: Tally,
   on_draft_tally_changed: fn(Tally) -> msg,
+  on_edit_scopa_score: fn(TeamId) -> msg,
 ) -> List(Element(msg)) {
-  let team_id = team_score.team_id(team_score)
-  let some_team_id = option.Some(team_id)
+  let some_team_id = option.Some(team.id)
 
-  let scopa_points = tally.scopa_points(draft_tally, team_id)
+  let scopa_score = tally.scopa_score(draft_tally, team.id)
   let has_cards = tally.awarded_cards(draft_tally, some_team_id)
   let has_coins = tally.awarded_coins(draft_tally, some_team_id)
   let has_settebello = tally.awarded_settebello(draft_tally, some_team_id)
   let has_premiera = tally.awarded_premiera(draft_tally, some_team_id)
 
-  let disabled = team_score.team_status(team_score) == status.Eliminated
-
-  let on_scopa = fn(value: Int) {
-    let tally = draft_tally |> tally.set_scopas(team_id, value)
-    on_draft_tally_changed(tally)
-  }
+  let disabled = team.status == status.Eliminated
 
   let on_icon = fn(set: fn(Tally, Option(TeamId)) -> Tally) {
     let tally = draft_tally |> set(some_team_id)
@@ -145,8 +146,8 @@ fn team_column(
   }
 
   [
-    team_header_cell(team_score, leading_score),
-    scopa(scopa_points, disabled:, on_click: on_scopa),
+    team_header_cell(team, leading_score),
+    scopa(scopa_score, disabled:, on_edit: on_edit_scopa_score(team.id)),
     icon(
       "carte",
       option.None,
@@ -178,39 +179,20 @@ fn team_column(
   ]
 }
 
-fn team_header_cell(
-  team_score: TeamScore,
-  leading_score: Score,
-) -> Element(msg) {
-  let name = team_score.team_name(team_score)
-  let score = team_score.score(team_score)
-
-  let heading = name.to_string(name) <> ": " <> score.to_string(score)
-  case score == leading_score && score != score.zero {
+fn team_header_cell(team: Team, leading_score: Score) -> Element(msg) {
+  let heading = name.to_string(team.name) <> ": " <> score.to_string(team.score)
+  case team.score == leading_score && team.score != score.zero {
     True -> glow.view([h.text(heading)])
     False -> h.text(heading)
   }
 }
 
 fn scopa(
-  scopas: Int,
+  score: Score,
   disabled disabled: Bool,
-  on_click on_click: fn(Int) -> msg,
+  on_edit on_edit: msg,
 ) -> Element(msg) {
-  h.span(
-    [
-      a.class("tally-editor__scopa"),
-      case disabled {
-        True -> a.class("disabled")
-        False -> a.none()
-      },
-      // TODO:
-      event.on_click(on_click(0)),
-    ],
-    [
-      h.text(int.to_string(scopas)),
-    ],
-  )
+  edit_scopa_score.action(score, disabled, on_edit)
 }
 
 fn icon(
@@ -222,20 +204,39 @@ fn icon(
 ) -> Element(msg) {
   let asset = "/image/punteggio_" <> name <> ".png"
 
+  let checked_class = case checked {
+    True -> a.class("checked")
+    False -> a.none()
+  }
+
+  let disabled_class = case disabled {
+    True -> a.class("disabled")
+    False -> a.none()
+  }
+
+  let tabindex = case name {
+    "scopa" -> a.none()
+    _ -> a.tabindex(0)
+  }
+
   let base = [
-    h.img([
-      a.class("tally-editor__icon"),
-      case checked {
-        True -> a.class("checked")
-        False -> a.none()
-      },
-      case disabled {
-        True -> a.class("disabled")
-        False -> a.none()
-      },
-      a.src(asset),
-      event.on_click(on_click),
-    ]),
+    h.label(
+      [
+        a.class("tally-editor__icon"),
+        tabindex,
+        checked_class,
+        disabled_class,
+        event.on_click(on_click),
+        event.on_keypress(fn(_) { on_click }),
+      ],
+      [
+        h.input([
+          a.type_("radio"),
+          a.disabled(disabled),
+        ]),
+        h.img([a.src(asset)]),
+      ],
+    ),
   ]
 
   let hint = case hint {

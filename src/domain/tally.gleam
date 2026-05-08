@@ -6,7 +6,7 @@ import domain/team/id.{type TeamId}
 
 pub type Tally {
   Tally(
-    scopas: Dict(TeamId, Int),
+    scopas: Dict(TeamId, Score),
     cards: Option(TeamId),
     coins: Option(TeamId),
     settebello: Option(TeamId),
@@ -35,11 +35,11 @@ pub fn score(tally: Tally, team_id: TeamId) -> Score {
   score.from_int(total)
 }
 
-pub fn scopa_points(tally: Tally, team_id: TeamId) -> Int {
+pub fn scopa_score(tally: Tally, team_id: TeamId) -> Score {
   let result = tally.scopas |> dict.get(team_id)
   case result {
-    Ok(x) -> x
-    Error(_) -> 0
+    Ok(score) -> score
+    Error(_) -> score.zero
   }
 }
 
@@ -66,7 +66,15 @@ fn awarded_points(opt: Option(TeamId), team_id: TeamId) -> Int {
   }
 }
 
-pub fn set_scopas(tally: Tally, team_id: TeamId, points: Int) -> Tally {
+fn scopa_points(tally: Tally, team_id: TeamId) -> Int {
+  score.value(scopa_score(tally, team_id))
+}
+
+pub fn set_scopas(
+  tally: Tally,
+  for team_id: TeamId,
+  value points: Score,
+) -> Tally {
   let scopas = tally.scopas |> dict.insert(team_id, points)
   Tally(..tally, scopas:)
 }

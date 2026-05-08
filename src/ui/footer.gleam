@@ -1,8 +1,8 @@
 import lustre/element.{type Element}
-import lustre/element/html.{footer, text}
+import lustre/element/html as h
 
 pub fn view() -> Element(msg) {
   element.fragment([
-    footer([], [text("Copyright (c) 2026; Nigel Eke. All rights reserved.")]),
+    h.footer([], [h.text("Copyright (c) 2026; Nigel Eke. All rights reserved.")]),
   ])
 }

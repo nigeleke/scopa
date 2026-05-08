@@ -1,5 +1,4 @@
 import domain/score.{type Score}
-
 import domain/team/id.{type TeamId}
 import domain/team/name.{type TeamName}
 import domain/team/status.{type TeamStatus}
@@ -15,4 +14,9 @@ pub fn new(id: TeamId, name: TeamName) -> Team {
 pub fn name(team: Team) -> TeamName {
   let Team(_, name, _, _) = team
   name
+}
+
+pub fn score(team: Team) -> Score {
+  let Team(_, _, score, _) = team
+  score
 }

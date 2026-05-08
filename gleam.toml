@@ -24,6 +24,7 @@ stylesheets = [
   { href = "/css/target.css"},
   { href = "/css/team_name.css"},
   { href = "/css/team_names_editor.css"},
+  { href = "/css/scopa_editor.css"},
   { href = "/css/setup.css" },
   { href = "/css/in_progress.css" },
 ]

@@ -5,6 +5,6 @@ import lustre/event
 
 pub fn action(on_click: msg) -> Element(msg) {
   h.button([a.tabindex(0), event.on_click(on_click)], [
-    h.text("-"),
+    h.text("More..."),
   ])
 }

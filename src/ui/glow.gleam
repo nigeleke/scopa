@@ -1,7 +1,7 @@
-import lustre/attribute.{class}
+import lustre/attribute as a
 import lustre/element.{type Element}
-import lustre/element/html.{div}
+import lustre/element/html as h
 
 pub fn view(children: List(Element(msg))) -> Element(msg) {
-  div([class("glow")], children)
+  h.div([a.class("glow")], children)
 }
