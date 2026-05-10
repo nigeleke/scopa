@@ -3,22 +3,21 @@ import gleam/option
 import lustre
 import lustre/element.{type Element}
 import lustre/element/html as h
-import lustre/event
-import ui/scopa_editor
 
 import domain/rounds
 import domain/score.{type Score}
 import domain/tally.{type Tally}
-import domain/target
+import domain/target.{type Target}
 import domain/team
 import domain/team/id.{type TeamId}
 import domain/team/name.{type TeamName}
-import domain/teams
+import domain/teams.{type Teams}
 import phase/completed.{type Model as CompletedModel}
 import phase/in_progress.{type Model as InProgressModel}
 import phase/setup.{type Model as SetupModel}
 import ui/footer
 import ui/header
+import ui/scopa_editor
 
 pub type Model {
   Setup(SetupModel)
@@ -43,8 +42,8 @@ pub type Message {
   ScoreRound
 
   // Completed messages
-  RestartGameWithSameSetup
-  ResetGame
+  UpdateKeepTeams(Bool)
+  Restart
 }
 
 fn init(_flags: Nil) -> Model {
@@ -52,7 +51,7 @@ fn init(_flags: Nil) -> Model {
 }
 
 fn update(model: Model, message: Message) -> Model {
-  case message {
+  case echo message {
     // Setup messages
     UpdateTeamNameInput(name) -> model |> update_team_name_input(name)
     AddTeam(name) -> model |> add_team(name)
@@ -70,21 +69,21 @@ fn update(model: Model, message: Message) -> Model {
     ScoreRound -> model |> score_round()
 
     // Completed messages
-    RestartGameWithSameSetup -> model |> restart_game()
-    ResetGame -> model |> reset_game()
+    UpdateKeepTeams(keep) -> model |> update_keep_teams(keep)
+    Restart -> model |> restart
   }
 }
 
 fn update_team_name_input(model: Model, raw_team_name: String) -> Model {
   let assert Setup(model) = model
-  Setup(setup.Model(..model, raw_team_name:))
+  echo Setup(setup.Model(..model, raw_team_name:))
 }
 
-fn add_team(model: Model, team: TeamName) -> Model {
+fn add_team(model: Model, team_name: TeamName) -> Model {
   let assert Setup(model) = model
 
   let raw_team_name = ""
-  let team_names = model.team_names |> list.append([team])
+  let team_names = model.team_names |> list.append([team_name])
 
   Setup(setup.Model(..model, raw_team_name:, team_names:))
 }
@@ -130,8 +129,8 @@ fn set_draft_tally(model: Model, draft_tally: Tally) -> Model {
 }
 
 fn edit_scopa_score(model: Model, team_id: TeamId, full_reveal: Bool) -> Model {
-  let assert InProgress(model) = echo model
-  echo full_reveal
+  let assert InProgress(model) = model
+
   let scopa_editor = case full_reveal {
     False -> scopa_editor.OpenPartial(team_id)
     True -> scopa_editor.OpenExpanded(team_id)
@@ -174,26 +173,38 @@ fn score_round(model: Model) -> Model {
   }
 }
 
-fn restart_game(model: Model) -> Model {
+fn update_keep_teams(model: Model, keep_teams: Bool) -> Model {
   let assert Completed(model) = model
+  Completed(completed.Model(..model, keep_teams:))
+}
 
+fn restart(model: Model) -> Model {
+  let assert Completed(model) = model
+  case model.keep_teams {
+    True -> restart_with_teams(model.teams, model.target)
+    False -> restart_new()
+  }
+}
+
+fn restart_with_teams(teams: Teams, target: Target) -> Model {
   let teams =
-    model.teams
+    teams
     |> teams.value
     |> list.fold(teams.new(), fn(acc, team) {
       let team = team.new(team.id, team.name)
       acc |> teams.append(team)
     })
 
-  InProgress(in_progress.init(teams, model.target))
+  InProgress(in_progress.init(teams, target))
 }
 
-fn reset_game(model: Model) -> Model {
-  let assert Completed(_) = model
+fn restart_new() -> Model {
   Setup(setup.init())
 }
 
 pub fn view(model: Model) -> Element(Message) {
+  echo "scopa::view"
+  echo model
   element.fragment([
     header.view(),
     main_content(model),
@@ -202,6 +213,9 @@ pub fn view(model: Model) -> Element(Message) {
 }
 
 fn main_content(model: Model) -> Element(Message) {
+  echo "main_content"
+  echo model
+
   let view = case model {
     Setup(model) ->
       setup.view(
@@ -226,13 +240,7 @@ fn main_content(model: Model) -> Element(Message) {
         ScoreRound,
       )
 
-    Completed(_) ->
-      h.div([], [
-        h.text("Game Over! Winner: "),
-        h.button([event.on_click(ResetGame)], [
-          h.text("Play Again"),
-        ]),
-      ])
+    Completed(model) -> completed.view(model, UpdateKeepTeams, Restart)
   }
 
   h.main([], [view])

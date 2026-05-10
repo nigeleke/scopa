@@ -16,7 +16,7 @@
     translate: -50% -80%;
 
     display: grid;
-    grid-template-rows: 1fr auto;
+    grid-template-rows: minmax(0, 1fr) auto;
     gap: 0.5rem;
     justify-items: center;
 

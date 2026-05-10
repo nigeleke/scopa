@@ -1,11 +1,11 @@
-import domain/target
 import gleam/list
 import lustre/attribute as a
 import lustre/element.{type Element}
 import lustre/element/html as h
-import lustre/event
 
+import domain/target
 import domain/team/name.{type TeamName}
+import ui/action/start
 import ui/target as target_ui
 import ui/team_names_editor
 
@@ -29,6 +29,9 @@ pub fn view(
     name.has_valid_team_count(model.team_names)
     && target.is_valid_target(model.raw_target)
 
+  echo "setup::view"
+  echo model
+
   h.div([a.class("setup")], [
     target_ui.editor(model.raw_target, on_raw_target_change),
     team_names_editor.view(
@@ -38,8 +41,6 @@ pub fn view(
       on_team_added,
       on_team_removed,
     ),
-    h.button([a.disabled(!can_start), event.on_click(on_start)], [
-      h.text("Start"),
-    ]),
+    start.action(!can_start, on_start),
   ])
 }

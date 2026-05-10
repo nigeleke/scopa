@@ -14,6 +14,6 @@ pub fn action(tally: Tally, on_click: msg) -> Element(msg) {
       a.disabled(!can_score),
       event.on_click(on_click),
     ],
-    [h.text("Score")],
+    [h.text("Score points")],
   )
 }

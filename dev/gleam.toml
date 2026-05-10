@@ -1,0 +1,14 @@
+name = "scopa_dev"
+version = "0.0.0"
+description = "Development scripts for scopa_core"
+licences = ["BSD-3-Clause"]
+repository = { type = "github", user = "nigeleke", repo = "scopa" }
+links = [{ title = "Website", href = "https://nigeleke.github.io/scopa/" }]
+
+[dependencies]
+gleam_stdlib = ">= 0.71.0 and < 1.0.0"
+simplifile = ">= 2.4.0 and < 3.0.0"
+tom = ">= 2.1.0 and < 3.0.0"
+
+[dev_dependencies]
+gleeunit = ">= 1.0.0 and < 2.0.0"

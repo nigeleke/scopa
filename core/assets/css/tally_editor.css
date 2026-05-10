@@ -1,8 +1,7 @@
 .tally-editor {
     flex-grow: 1;
     display: grid;
-    grid-template-rows: auto repeat(5, minmax(0, auto));
-    grid-auto-columns: 1fr;
+    grid-template-rows: auto repeat(5, auto);
     grid-auto-flow: column;
     place-items: center;
     gap: 0.25rem;
@@ -13,6 +12,21 @@
     max-inline-size: 820px;
     min-block-size: 0;
     min-inline-size: 0;
+
+    justify-items: stretch;
+    align-items: stretch;
+    justify-content: start;
+}
+
+.tally-editor__cell {
+    position: relative;
+    block-size: 100%;
+    inline-size: 100%;
+    min-block-size: 0;
+    min-inline-size: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .tally-editor__scopa,
@@ -45,14 +59,15 @@
     }
 }
 
-.tally-editor__cell {
-    display: block;
-    position: relative;
-}
-
 .tally-editor__icon {
     opacity: 50%;
-    block-size: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    block-size: auto;
+    inline-size: auto;
+    min-block-size: 0;
+    min-inline-size: 0;
 }
 
 .tally-editor__icon input {
@@ -60,8 +75,12 @@
 }
 
 .tally-editor__icon img {
+    block-size: auto;
+    inline-size: auto;
     max-block-size: 64px;
-    max-inline-size: 64px;
+    max-inline-size: 100%;
+    object-fit: contain;
+    display: block;
 }
 
 .tally-editor__icon:hover {

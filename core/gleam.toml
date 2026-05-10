@@ -1,12 +1,9 @@
 name = "scopa"
 version = "3.0.0"
-# description = ""
-# licences = ["Apache-2.0"]
-# repository = { type = "github", user = "", repo = "" }
-# links = [{ title = "Website", href = "" }]
-#
-# For a full reference of all the available options, you can have a look at
-# https://gleam.run/writing-gleam/gleam-toml/.
+description = "A scoring app for the Italian card game Scopa"
+licences = ["BSD-3-Clause"]
+repository = { type = "github", user = "nigeleke", repo = "scopa" }
+links = [{ title = "Website", href = "https://nigeleke.github.io/scopa/" }]
 
 [dependencies]
 lustre = ">= 5.6.0 and < 6.0.0"
@@ -27,6 +24,7 @@ stylesheets = [
   { href = "/css/scopa_editor.css"},
   { href = "/css/setup.css" },
   { href = "/css/in_progress.css" },
+  { href = "/css/completed.css" },
 ]
 
 [tools.lustre.build]

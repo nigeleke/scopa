@@ -1,8 +1,11 @@
 .setup {
+    place-content: center;
     display: flex;
     flex-direction: column;
     block-size: 100%;
+    inline-size: 100%;
     min-block-size: 0;
-    gap: 2rem;
+    min-inline-size: 0;
+    gap: 4rem;
     align-items: center;
 }

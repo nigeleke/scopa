@@ -1,0 +1,48 @@
+.completed {
+    display: grid;
+    grid-template-rows: repeat(auto-fill, max-content);
+    block-size: 100%;
+    inline-size: 100%;
+    min-block-size: 0;
+    min-inline-size: 0;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.completed__winner {
+    font-size: 2rem;
+    text-align: center;
+    animation: completed__winner-spin linear 0.25s 0.25s 8;
+}
+
+@keyframes completed__winner-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.completed__team-results {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.completed__team-results__name {
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.completed__team-results__score {
+    text-align: right;
+}
+
+.completed__start-again {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+}

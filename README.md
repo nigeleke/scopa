@@ -1,7 +1,7 @@
 # scopa
 
 [![BSD 3 Clause License](https://img.shields.io/github/license/nigeleke/scopa?style=plastic)](https://github.com/nigeleke/scopa/blob/master/LICENSE)
-[![Language](https://img.shields.io/badge/language-Rust-blue.svg?style=plastic)](https://www.rust-lang.org/)
+[![Language](https://img.shields.io/badge/language-Gleam-blue.svg?style=plastic)](https://gleam.run/)
 [![Build](https://img.shields.io/github/actions/workflow/status/nigeleke/scopa/ci.yml?style=plastic)](https://github.com/nigeleke/scopa/actions/workflows/ci.yml)
 [![Coverage](https://img.shields.io/codecov/c/github/nigeleke/scopa?style=plastic)](https://codecov.io/gh/nigeleke/scopa)
 ![Version](https://img.shields.io/github/v/tag/nigeleke/scopa?style=plastic)
@@ -17,19 +17,26 @@ I initially discovered Scopa during a holiday in Puglia in August 2024. For a be
 I decided to write this program:
 
   - to have a simpler way to score the game and
-  - to complete a development using the [Dioxus](https://dioxuslabs.com/) framework (by way of a comparison against earlier work developed using [Leptos](https://www.leptos.dev/)).
+  - to complete a development using the [Dioxus](https://dioxuslabs.com/) framework (by way of a comparison against earlier work developed using [Leptos](https://www.leptos.dev/)),
+  - then later migrated to a development using [Gleam](https://gleam.run) and [Lustre](https://hexdocs.pm/lustre/lustre.html).
 
 Comments for improvements and any other issues, can be raised on [scopa/issues](https://github.com/nigeleke/scopa/issues).
 
 ## Development
 
 ```bash
-dx build --platform=web
-cargo test
-dx serve --platform=web
+cd dev
+gleam run --module scripts/generate_version
 ```
 
-- Open the browser to http://localhost:8080/
+```bash
+cd core
+gleam build
+gleam test
+gleam run -m lustre/dev start
+```
+
+- Open the browser to http://127.0.0.1:1234/
 
 ## Acknowledgements
 
@@ -42,22 +49,4 @@ dx serve --platform=web
 [![Package Version](https://img.shields.io/hexpm/v/scopa)](https://hex.pm/packages/scopa)
 [![Hex Docs](https://img.shields.io/badge/hex-docs-ffaff3)](https://hexdocs.pm/scopa/)
 
-```sh
-gleam add scopa@1
-```
-```gleam
-import scopa
-
-pub fn main() -> Nil {
-  // TODO: An example of the project in use
-}
-```
-
 Further documentation can be found at <https://hexdocs.pm/scopa>.
-
-## Development
-
-```sh
-gleam run   # Run the project
-gleam test  # Run the tests
-```
