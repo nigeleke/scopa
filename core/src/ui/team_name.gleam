@@ -16,6 +16,8 @@ pub fn editor(name: String, on_change: fn(String) -> msg) -> Element(msg) {
     a.class("team-name"),
     a.placeholder("Enter team name"),
     a.tabindex(0),
+    a.autocomplete("off"),
+    a.spellcheck(False),
     event.on_input(on_change),
     a.value(name),
   ])
