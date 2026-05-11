@@ -1,3 +1,5 @@
+import gleam/dynamic/decode.{type Decoder}
+import gleam/json.{type Json}
 import gleam/list
 
 import domain/score.{type Score}
@@ -10,6 +12,16 @@ pub opaque type Rounds {
 
 pub fn new() -> Rounds {
   Rounds(list.new())
+}
+
+pub fn encode(rounds: Rounds) -> Json {
+  let Rounds(tallies) = rounds
+  json.array(tallies, tally.encode)
+}
+
+pub fn decode() -> Decoder(Rounds) {
+  decode.list(tally.decode())
+  |> decode.map(Rounds)
 }
 
 pub fn round_number(rounds: Rounds) -> Int {

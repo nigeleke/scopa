@@ -1,4 +1,6 @@
+import gleam/dynamic/decode.{type Decoder}
 import gleam/int
+import gleam/json.{type Json}
 import gleam/list
 
 pub opaque type Score {
@@ -17,6 +19,16 @@ pub fn from_int(value: Int) -> Score {
     True -> Score(value)
     False -> panic as { "score must be >= zero, was " <> int.to_string(value) }
   }
+}
+
+pub fn encode(score: Score) -> Json {
+  let Score(value) = score
+  json.int(value)
+}
+
+pub fn decode() -> Decoder(Score) {
+  use value <- decode.then(decode.int)
+  decode.success(Score(value))
 }
 
 fn add(a: Score, b: Score) -> Score {

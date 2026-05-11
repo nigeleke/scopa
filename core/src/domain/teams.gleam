@@ -1,4 +1,5 @@
-import domain/team/status
+import gleam/dynamic/decode.{type Decoder}
+import gleam/json.{type Json}
 import gleam/list
 import gleam/option.{type Option}
 
@@ -6,6 +7,7 @@ import domain/rounds.{type Rounds}
 import domain/score.{type Score}
 import domain/target.{type Target}
 import domain/team.{type Team}
+import domain/team/status
 
 pub opaque type Teams {
   Teams(List(Team))
@@ -18,6 +20,16 @@ pub fn new() -> Teams {
 pub fn value(teams: Teams) -> List(Team) {
   let Teams(teams) = teams
   teams
+}
+
+pub fn encode(teams: Teams) -> Json {
+  let Teams(teams) = teams
+  json.array(teams, team.encode)
+}
+
+pub fn decode() -> Decoder(Teams) {
+  decode.list(team.decode())
+  |> decode.map(Teams)
 }
 
 pub fn append(teams: Teams, team: Team) -> Teams {

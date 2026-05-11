@@ -1,3 +1,5 @@
+import gleam/dynamic/decode.{type Decoder}
+import gleam/json.{type Json}
 import gleam/list
 import lustre/attribute as a
 import lustre/element.{type Element}
@@ -15,6 +17,21 @@ pub type Model {
 
 pub fn init() -> Model {
   Model(raw_team_name: "", team_names: list.new(), raw_target: "11")
+}
+
+pub fn encode(model: Model) -> Json {
+  json.object([
+    #("raw_team_name", json.string(model.raw_team_name)),
+    #("team_names", json.array(model.team_names, name.encode)),
+    #("raw_target", json.string(model.raw_target)),
+  ])
+}
+
+pub fn decode() -> Decoder(Model) {
+  use raw_team_name <- decode.field("raw_team_name", decode.string)
+  use team_names <- decode.field("team_names", decode.list(name.decode()))
+  use raw_target <- decode.field("raw_target", decode.string)
+  decode.success(Model(raw_team_name:, team_names:, raw_target:))
 }
 
 pub fn view(

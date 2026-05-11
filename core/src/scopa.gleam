@@ -1,3 +1,5 @@
+import gleam/dynamic/decode.{type Decoder}
+import gleam/json.{type Json}
 import gleam/list
 import gleam/option
 import lustre
@@ -23,6 +25,64 @@ pub type Model {
   Setup(SetupModel)
   InProgress(InProgressModel)
   Completed(CompletedModel)
+}
+
+pub fn encode(model: Model) -> Json {
+  case model {
+    Setup(setup) ->
+      json.object([
+        #("type", json.string("setup")),
+        #("data", setup.encode(setup)),
+      ])
+
+    InProgress(in_progress) ->
+      json.object([
+        #("type", json.string("in_progress")),
+        #("data", in_progress.encode(in_progress)),
+      ])
+
+    Completed(completed) ->
+      json.object([
+        #("type", json.string("completed")),
+        #("data", completed.encode(completed)),
+      ])
+  }
+}
+
+pub fn decode() -> Decoder(Model) {
+  decode.one_of(decode_setup_variant(), or: [
+    decode_in_progress_variant(),
+    decode_completed_variant(),
+  ])
+}
+
+fn expect(expected: String) -> Decoder(Nil) {
+  decode.string
+  |> decode.then(fn(typ) {
+    case typ == expected {
+      True -> decode.success(Nil)
+      False ->
+        decode.failure(Nil, "Expected '" <> expected <> "', got: " <> typ)
+    }
+  })
+}
+
+fn decode_setup_variant() -> Decoder(Model) {
+  use _ <- decode.field("type", expect("setup"))
+  use setup <- decode.field("data", setup.decode())
+  decode.success(Setup(setup))
+}
+
+fn decode_in_progress_variant() -> Decoder(Model) {
+  use _ <- decode.field("type", expect("in_progress"))
+  use in_progress <- decode.field("data", in_progress.decode())
+  decode.success(InProgress(in_progress))
+}
+
+fn decode_completed_variant() -> Decoder(Model) {
+  use _ <- decode.field("type", expect("completed"))
+  use completed <- decode.field("data", completed.decode())
+  decode.success(Completed(completed))
 }
 
 pub type Message {

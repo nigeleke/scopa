@@ -1,4 +1,6 @@
 import gleam/dict.{type Dict}
+import gleam/dynamic/decode.{type Decoder}
+import gleam/json.{type Json}
 import gleam/option.{type Option}
 
 import domain/score.{type Score}
@@ -22,6 +24,62 @@ pub fn new() -> Tally {
     settebello: option.None,
     premiera: option.None,
   )
+}
+
+pub fn encode(tally: Tally) -> Json {
+  json.object([
+    #("scopas", encode_scopas(tally.scopas)),
+    #("cards", option.map(tally.cards, id.encode) |> option_to_json),
+    #("coins", option.map(tally.coins, id.encode) |> option_to_json),
+    #("settebello", option.map(tally.settebello, id.encode) |> option_to_json),
+    #("premiera", option.map(tally.premiera, id.encode) |> option_to_json),
+  ])
+}
+
+fn encode_scopas(scopas: Dict(TeamId, Score)) -> Json {
+  scopas
+  |> dict.to_list
+  |> json.array(fn(pair) {
+    let #(team_id, score) = pair
+    json.object([
+      #("team_id", id.encode(team_id)),
+      #("score", score.encode(score)),
+    ])
+  })
+}
+
+fn option_to_json(opt: Option(Json)) -> Json {
+  case opt {
+    option.Some(value) -> value
+    option.None -> json.null()
+  }
+}
+
+pub fn decode() -> Decoder(Tally) {
+  use scopas <- decode.field("scopas", decode_scopas())
+  use cards <- decode.field("cards", decode.optional(id.decode()))
+  use coins <- decode.field("coins", decode.optional(id.decode()))
+  use settebello <- decode.field("settebello", decode.optional(id.decode()))
+  use premiera <- decode.field("premiera", decode.optional(id.decode()))
+
+  decode.success(Tally(
+    scopas: scopas,
+    cards: cards,
+    coins: coins,
+    settebello: settebello,
+    premiera: premiera,
+  ))
+}
+
+fn decode_scopas() -> Decoder(Dict(TeamId, Score)) {
+  decode.list(decode_scopa_pair())
+  |> decode.map(dict.from_list)
+}
+
+fn decode_scopa_pair() -> Decoder(#(TeamId, Score)) {
+  use team_id <- decode.field("team_id", id.decode())
+  use score <- decode.field("score", score.decode())
+  decode.success(#(team_id, score))
 }
 
 pub fn score(tally: Tally, team_id: TeamId) -> Score {

@@ -1,3 +1,5 @@
+import gleam/dynamic/decode.{type Decoder}
+import gleam/json.{type Json}
 import lustre/attribute as a
 import lustre/element.{type Element}
 import lustre/element/html as h
@@ -30,6 +32,32 @@ pub fn init(teams: Teams, target: Target) -> Model {
     rounds: rounds.new(),
     target:,
   )
+}
+
+pub fn encode(model: Model) -> Json {
+  json.object([
+    #("teams", teams.encode(model.teams)),
+    #("draft_tally", tally.encode(model.draft_tally)),
+    #("scopa_editor", scopa_editor.encode(model.scopa_editor)),
+    #("rounds", rounds.encode(model.rounds)),
+    #("target", target.encode(model.target)),
+  ])
+}
+
+pub fn decode() -> Decoder(Model) {
+  use teams <- decode.field("teams", teams.decode())
+  use draft_tally <- decode.field("draft_tally", tally.decode())
+  use scopa_editor <- decode.field("scopa_editor", scopa_editor.decode())
+  use rounds <- decode.field("rounds", rounds.decode())
+  use target <- decode.field("target", target.decode())
+
+  decode.success(Model(
+    teams: teams,
+    draft_tally: draft_tally,
+    scopa_editor: scopa_editor,
+    rounds: rounds,
+    target: target,
+  ))
 }
 
 pub fn view(

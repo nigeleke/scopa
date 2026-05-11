@@ -12,17 +12,29 @@
 
 ## Background
 
-I initially discovered Scopa during a holiday in Puglia in August 2024. For a beginner especially, the scoring seemed somewhat complicated. At the time I setup a quick spreadsheet to track each round of scores for each player. It worked but was not easy to navigate or reset or add additional players.
+I first discovered Scopa while on holiday in Puglia in August 2024. As a beginner, I found the scoring surprisingly tricky to keep track of, especially across multiple rounds. To make things easier, I quickly put together a spreadsheet to record each player’s score. It worked well enough, but it was awkward to reset, cumbersome to navigate, and not particularly flexible when adding extra players.
 
-I decided to write this program:
+This app grew out of that experience. Its goal is simple: make scoring a game of Scopa easier, quicker, and less error-prone, so you can focus on playing rather than doing scorekeeping.
 
-  - to have a simpler way to score the game and
-  - to complete a development using the [Dioxus](https://dioxuslabs.com/) framework (by way of a comparison against earlier work developed using [Leptos](https://www.leptos.dev/)),
-  - then later migrated to a development using [Gleam](https://gleam.run) and [Lustre](https://hexdocs.pm/lustre/lustre.html).
+## Tech
 
-Comments for improvements and any other issues, can be raised on [scopa/issues](https://github.com/nigeleke/scopa/issues).
+The original version was written in [Rust](https://rust-lang.org/) using [Dioxus](https://dioxuslabs.com/), partly as a comparison with earlier work using [Leptos](https://www.leptos.dev/).
+
+I have since rewritten in [Gleam](https://gleam.run) using [Lustre](https://hexdocs.pm/lustre/lustre.html), which has been a great fit for the project.
+
+Suggestions, improvements, and bug reports are always welcome via the project's issue tracker: [scopa/issues](https://github.com/nigeleke/scopa/issues).
 
 ## Development
+
+### Mise
+
+```bash
+mise build
+mise test
+mise run
+```
+
+### Non-mise
 
 ```bash
 cd dev

@@ -1,10 +1,12 @@
+import gleam/dynamic/decode.{type Decoder}
 import gleam/int
+import gleam/json.{type Json}
 import lustre/attribute as a
 import lustre/element.{type Element}
 import lustre/element/html as h
 
 import domain/score.{type Score}
-import domain/team/id.{type TeamId}
+import domain/team/id.{type TeamId} as team_id
 import ui/action/cancel_scopa_score_edit
 import ui/action/edit_scopa_score_more
 import ui/action/submit_scopa_score
@@ -13,6 +15,44 @@ pub type Model {
   Closed
   OpenPartial(TeamId)
   OpenExpanded(TeamId)
+}
+
+pub fn encode(model: Model) -> Json {
+  case model {
+    Closed ->
+      json.object([
+        #("type", json.string("closed")),
+      ])
+
+    OpenPartial(team_id) ->
+      json.object([
+        #("type", json.string("open_partial")),
+        #("team_id", team_id.encode(team_id)),
+      ])
+
+    OpenExpanded(team_id) ->
+      json.object([
+        #("type", json.string("open_expanded")),
+        #("team_id", team_id.encode(team_id)),
+      ])
+  }
+}
+
+pub fn decode() -> Decoder(Model) {
+  use kind <- decode.field("type", decode.string)
+
+  case kind {
+    "closed" -> decode.success(Closed)
+    "open_partial" ->
+      decode.field("team_id", team_id.decode(), fn(id) {
+        decode.success(OpenPartial(id))
+      })
+    "open_expanded" ->
+      decode.field("team_id", team_id.decode(), fn(id) {
+        decode.success(OpenExpanded(id))
+      })
+    _ -> decode.failure(Closed, "Model")
+  }
 }
 
 pub fn view(

@@ -1,4 +1,6 @@
+import gleam/dynamic/decode.{type Decoder}
 import gleam/int
+import gleam/json.{type Json}
 import gleam/result
 
 pub opaque type Target {
@@ -19,6 +21,15 @@ pub fn from_string(value: String) -> Result(Target, Nil) {
     Ok(value) if value > 0 -> Ok(Target(value))
     _ -> Error(Nil)
   }
+}
+
+pub fn encode(target: Target) -> Json {
+  let Target(target) = target
+  json.int(target)
+}
+
+pub fn decode() -> Decoder(Target) {
+  decode.int |> decode.map(from_int)
 }
 
 pub fn to_string(target: Target) -> String {
