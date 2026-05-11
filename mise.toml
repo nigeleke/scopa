@@ -1,6 +1,7 @@
 [tools]
 gleam = "1.16"
 erlang = "28"
+rebar = "3.27"
 
 [tasks.dev-build]
 description = "Build dev project"
