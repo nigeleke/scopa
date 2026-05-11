@@ -12,10 +12,6 @@
     max-inline-size: 820px;
     min-block-size: 0;
     min-inline-size: 0;
-
-    justify-items: stretch;
-    align-items: stretch;
-    justify-content: start;
 }
 
 .tally-editor__cell {

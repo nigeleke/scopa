@@ -5,6 +5,7 @@ import gleam/option
 import lustre
 import lustre/element.{type Element}
 import lustre/element/html as h
+import storage/storage
 
 import domain/rounds
 import domain/score.{type Score}
@@ -107,11 +108,14 @@ pub type Message {
 }
 
 fn init(_flags: Nil) -> Model {
-  Setup(setup.init())
+  case storage.load("scopa", decode(), encode) {
+    Ok(model) -> model
+    Error(_) -> Setup(setup.init())
+  }
 }
 
 fn update(model: Model, message: Message) -> Model {
-  case echo message {
+  let model = case message {
     // Setup messages
     UpdateTeamNameInput(name) -> model |> update_team_name_input(name)
     AddTeam(name) -> model |> add_team(name)
@@ -132,11 +136,15 @@ fn update(model: Model, message: Message) -> Model {
     UpdateKeepTeams(keep) -> model |> update_keep_teams(keep)
     Restart -> model |> restart
   }
+
+  let _ = storage.save("scopa", model, decode(), encode)
+
+  model
 }
 
 fn update_team_name_input(model: Model, raw_team_name: String) -> Model {
   let assert Setup(model) = model
-  echo Setup(setup.Model(..model, raw_team_name:))
+  Setup(setup.Model(..model, raw_team_name:))
 }
 
 fn add_team(model: Model, team_name: TeamName) -> Model {
@@ -263,8 +271,6 @@ fn restart_new() -> Model {
 }
 
 pub fn view(model: Model) -> Element(Message) {
-  echo "scopa::view"
-  echo model
   element.fragment([
     header.view(),
     main_content(model),
@@ -273,9 +279,6 @@ pub fn view(model: Model) -> Element(Message) {
 }
 
 fn main_content(model: Model) -> Element(Message) {
-  echo "main_content"
-  echo model
-
   let view = case model {
     Setup(model) ->
       setup.view(

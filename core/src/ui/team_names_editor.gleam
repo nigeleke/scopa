@@ -15,7 +15,6 @@ pub fn view(
   on_team_added: fn(TeamName) -> msg,
   on_team_removed: fn(Int) -> msg,
 ) -> Element(msg) {
-  echo "team_names_editor::view: raw_team_name: " <> raw_team_name
   h.div([a.class("team-names-editor")], [
     name_input(raw_team_name, on_raw_team_name_changed, on_team_added),
     teams_list(team_names, on_team_removed),
@@ -28,8 +27,6 @@ fn name_input(
   on_raw_team_name_changed: fn(String) -> msg,
   on_team_added: fn(TeamName) -> msg,
 ) -> Element(msg) {
-  echo "team_names_editor::name_input: raw_team_name: " <> raw_team_name
-  echo name.new(raw_team_name)
   h.div([a.class("team-names-editor__name-input")], [
     team_name_ui.editor(raw_team_name, on_raw_team_name_changed),
     add_team.action(on_team_added(name.new(raw_team_name))),

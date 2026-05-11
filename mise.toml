@@ -47,3 +47,16 @@ run = "gleam run --module lustre/dev start"
 [tasks.default]
 description = "Run core project"
 depends = ["core-run"]
+
+[tasks.dev-clean]
+description = "Clean dev project"
+dir = "./dev"
+run = "gleam clean"
+
+[tasks.core-clean]
+description = "Clean core project"
+dir = "./core"
+run = "gleam clean"
+
+[tasks.clean]
+depends = ["dev-clean", "core-clean"]

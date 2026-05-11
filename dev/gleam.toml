@@ -1,6 +1,6 @@
-name = "scopa_dev"
+name = "dev"
 version = "0.0.0"
-description = "Development scripts for scopa_core"
+description = "Development scripts for scopa core"
 licences = ["BSD-3-Clause"]
 repository = { type = "github", user = "nigeleke", repo = "scopa" }
 links = [{ title = "Website", href = "https://nigeleke.github.io/scopa/" }]

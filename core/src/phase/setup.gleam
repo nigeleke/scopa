@@ -46,9 +46,6 @@ pub fn view(
     name.has_valid_team_count(model.team_names)
     && target.is_valid_target(model.raw_target)
 
-  echo "setup::view"
-  echo model
-
   h.div([a.class("setup")], [
     target_ui.editor(model.raw_target, on_raw_target_change),
     team_names_editor.view(

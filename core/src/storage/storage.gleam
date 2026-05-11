@@ -1,23 +1,37 @@
+import gleam/dynamic/decode.{type Decoder}
+import gleam/json.{type Json}
 import gleam/result
 import varasto.{type TypedStorage}
 
-import scopa.{type Model}
-
 @external(erlang, "storage", "noop")
-@external(javascript, "storage", "storage")
-fn storage() -> TypedStorage(Model) {
+fn storage(decoder: Decoder(a), encoder: fn(a) -> Json) -> TypedStorage(a) {
   let assert Ok(local) = varasto.local()
-  varasto.new(local, scopa.decode(), scopa.encode)
+  varasto.new(local, decoder, encoder)
 }
 
 @external(erlang, "storage", "noop")
-@external(javascript, "storage", "load")
-pub fn load() -> Result(Model, Nil) {
-  storage() |> varasto.get("scopa") |> result.map_error(fn(_) { Nil })
+pub fn load(
+  key: String,
+  decoder: Decoder(a),
+  encoder: fn(a) -> Json,
+) -> Result(a, Nil) {
+  let storage = storage(decoder, encoder)
+
+  storage
+  |> varasto.get(key)
+  |> result.replace_error(Nil)
 }
 
 @external(erlang, "storage", "noop")
-@external(javascript, "storage", "save")
-pub fn save(model: Model) -> Result(Nil, Nil) {
-  storage() |> varasto.set("scopa", model)
+pub fn save(
+  key: String,
+  value: a,
+  decoder: Decoder(a),
+  encoder: fn(a) -> Json,
+) -> Result(Nil, Nil) {
+  let storage = storage(decoder, encoder)
+
+  storage
+  |> varasto.set(key, value)
+  |> result.replace_error(Nil)
 }
