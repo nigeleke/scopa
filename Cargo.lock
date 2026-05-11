@@ -952,7 +952,7 @@ dependencies = [
 [[package]]
 name = "dioxus-attributes"
 version = "0.1.0"
-source = "git+https://github.com/DioxusLabs/components#d6d784c82eb8705e1122730560a442630453aa49"
+source = "git+https://github.com/DioxusLabs/components#d054f51f9d2a545410a2d75ec85051b218880021"
 dependencies = [
  "dioxus-rsx",
  "proc-macro2",
@@ -1343,7 +1343,7 @@ dependencies = [
 [[package]]
 name = "dioxus-primitives"
 version = "0.0.1"
-source = "git+https://github.com/DioxusLabs/components#d6d784c82eb8705e1122730560a442630453aa49"
+source = "git+https://github.com/DioxusLabs/components#d054f51f9d2a545410a2d75ec85051b218880021"
 dependencies = [
  "dioxus",
  "dioxus-attributes",
