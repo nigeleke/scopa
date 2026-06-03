@@ -1,0 +1,56 @@
+.main-menu {
+    position: fixed;
+    inset-block-start: 0.5rem;
+    inset-inline-start: 0.5rem;
+    anchor-name: "main-menu";
+}
+
+.main-menu__root {
+}
+
+.main-menu__items {
+    justify-items: center;
+    justify-content: space-between;
+    gap: 0.25rem;
+    background-color: var(--color-surface);
+    border: none;
+    position: absolute;
+    position-anchor: "main-menu";
+    margin: 0;
+    inset: auto;
+    inset-block-start: anchor(bottom);
+    inset-inline-start: anchor(left);
+    margin-block-start: 10px;
+    padding: 0.5rem;
+    border-radius: 5px;
+    opacity: 0;
+    transition:
+        display 250ms,
+        opacity 250ms;
+    transition-behavior: allow-discrete;
+}
+
+.main-menu__items:popover-open {
+    position: absolute;
+    inset-block-start: 0.75rem;
+    inset-inline-start: 1rem;
+
+    display: grid;
+    opacity: 1;
+}
+
+.main-menu__items__spacer {
+    border-block-start: 1px solid var(--color-border);
+    block-size: auto;
+    justify-self: stretch;
+}
+
+.main-menu__button {
+    background-color: var(--color-surface);
+    min-block-size: 40px;
+    min-inline-size: 40px;
+}
+
+.main-menu__button.emphasis {
+    font-size: 28pt;
+}

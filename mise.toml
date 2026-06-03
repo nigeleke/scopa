@@ -1,63 +1,77 @@
 [tools]
 gleam = "1.16"
-erlang = "28"
+erlang = "29"
+elixir = "1.19"
 rebar = "3.27"
 
-[tasks.dev-build]
-description = "Build dev project"
-dir = "./dev"
-run = "gleam build"
-
-[tasks.core-build]
-description = "Build core project"
-depends = ["dev-run"]
-dir = "./core"
-run = "gleam build"
-
 [tasks.build]
-description = "Build all projects in dependency order"
-depends = ["core-build"]
-
-[tasks.dev-test]
-description = "Test dev project"
-dir = "./dev"
-run = "gleam test"
-
-[tasks.core-test]
-description = "Test core project"
-depends = ["dev-run"]
-dir = "./core"
-run = "gleam test"
-
-[tasks.test]
-depends = ["dev-test", "core-test"]
-
-[tasks.dev-run]
-description = "Run dev project"
-dir = "./dev"
+description = "Build all workspace projects in dependency order"
 run = """
-gleam run --module scripts/generate_version
+echo "[build] Build all projects in dependency order"
+cd build_pipeline
+gleam build
+gleam run
+cd ../scopa
+gleam build
+cd ..
 """
 
-[tasks.core-run]
-description = "Run core project"
-depends = ["dev-build"]
-dir = "./core"
-run = "gleam run --module lustre/dev start"
+[tasks.test]
+description = "Run tests (and dev entrypoints) across all workspace projects"
+run = """
+echo "[test] Run tests across all projects"
+cd build_pipeline
+gleam test
+gleam run
+cd ../scopa
+gleam test
+cd ..
+"""
+
+[tasks.run]
+description = "Execute the build_pipeline entrypoint and rebuild dependent projects"
+run = """
+echo "[run] Execute build_pipeline and rebuild dependent projects"
+cd build_pipeline
+gleam run
+cd ../scopa
+gleam run -m lustre/dev start
+cd ..
+"""
 
 [tasks.default]
-description = "Run core project"
-depends = ["core-run"]
-
-[tasks.dev-clean]
-description = "Clean dev project"
-dir = "./dev"
-run = "gleam clean"
-
-[tasks.core-clean]
-description = "Clean core project"
-dir = "./core"
-run = "gleam clean"
+description = "Default task: runs the main pipeline execution"
+depends = ["run"]
 
 [tasks.clean]
-depends = ["dev-clean", "core-clean"]
+description = "Clean build artifacts across all workspace projects"
+run = """
+echo "[clean] Clean all workspace projects"
+cd build_pipeline
+gleam clean
+cd ../scopa
+gleam clean
+cd ..
+"""
+
+[tasks.update]
+description = "Update Gleam dependencies across all workspace projects"
+run = """
+echo "[update] Update dependencies across all workspace projects"
+cd build_pipeline
+gleam update
+cd ../scopa
+gleam update
+cd ..
+"""
+
+[tasks.format]
+description = "Format Gleam source across all workspace projects"
+run = """
+echo "[update] Format Gleam source across all workspace projects"
+cd build_pipeline
+gleam format
+cd ../scopa
+gleam format
+cd ..
+"""

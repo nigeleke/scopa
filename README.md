@@ -3,10 +3,9 @@
 [![BSD 3 Clause License](https://img.shields.io/github/license/nigeleke/scopa?style=plastic)](https://github.com/nigeleke/scopa/blob/master/LICENSE)
 [![Language](https://img.shields.io/badge/language-Gleam-blue.svg?style=plastic)](https://gleam.run/)
 [![Build](https://img.shields.io/github/actions/workflow/status/nigeleke/scopa/ci.yml?style=plastic)](https://github.com/nigeleke/scopa/actions/workflows/ci.yml)
-[![Coverage](https://img.shields.io/codecov/c/github/nigeleke/scopa?style=plastic)](https://codecov.io/gh/nigeleke/scopa)
 ![Version](https://img.shields.io/github/v/tag/nigeleke/scopa?style=plastic)
 
-  [Site](https://nigeleke.github.io/scopa) \| [GitHub](https://github.com/nigeleke/scopa) \| [API](https://nigeleke.github.io/scopa/doc/scopa/index.html) \| [Coverage Report](https://nigeleke.github.io/scopa/llvm-cov/html/index.html) \| [App](https://nigeleke.github.io/scopa/app/)
+  [Site](https://nigeleke.github.io/scopa) \| [GitHub](https://github.com/nigeleke/scopa) \| [App](https://nigeleke.github.io/scopa/app/)
 
 [Scopa](https://en.wikipedia.org/wiki/Scopa) is a popular Italian card game played by two to four players.
 
@@ -20,7 +19,7 @@ This app grew out of that experience. Its goal is simple: make scoring a game of
 
 The original version was written in [Rust](https://rust-lang.org/) using [Dioxus](https://dioxuslabs.com/), partly as a comparison with earlier work using [Leptos](https://www.leptos.dev/).
 
-I have since rewritten in [Gleam](https://gleam.run) using [Lustre](https://hexdocs.pm/lustre/lustre.html), which has been a great fit for the project.
+I have since rewritten Scopa in [Gleam](https://gleam.run) using [Lustre](https://hexdocs.pm/lustre/lustre.html), which has been a great fit for the project.
 
 Suggestions, improvements, and bug reports are always welcome via the project's issue tracker: [scopa/issues](https://github.com/nigeleke/scopa/issues).
 
@@ -37,8 +36,8 @@ mise run
 ### Non-mise
 
 ```bash
-cd dev
-gleam run --module scripts/generate_version
+cd build_pipeline
+gleam run
 ```
 
 ```bash

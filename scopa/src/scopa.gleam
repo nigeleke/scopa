@@ -3,6 +3,8 @@ import gleam/json.{type Json}
 import gleam/list
 import gleam/option
 import lustre
+import lustre/effect
+
 import lustre/element.{type Element}
 import lustre/element/html as h
 import storage/storage
@@ -20,6 +22,7 @@ import phase/in_progress.{type Model as InProgressModel}
 import phase/setup.{type Model as SetupModel}
 import ui/footer
 import ui/header
+import ui/main_menu
 import ui/scopa_editor
 
 pub type Model {
@@ -87,6 +90,11 @@ fn decode_completed_variant() -> Decoder(Model) {
 }
 
 pub type Message {
+  // Main menu messages
+  SetLanguage(String)
+  EnterFullScreen
+  Reset
+
   // Setup messages
   UpdateTeamNameInput(String)
   AddTeam(TeamName)
@@ -116,6 +124,11 @@ fn init(_flags: Nil) -> Model {
 
 fn update(model: Model, message: Message) -> Model {
   let model = case message {
+    // Main menu messages
+    SetLanguage(language) -> todo
+    EnterFullScreen -> model |> enter_fullscreen()
+    Reset -> model |> reset()
+
     // Setup messages
     UpdateTeamNameInput(name) -> model |> update_team_name_input(name)
     AddTeam(name) -> model |> add_team(name)
@@ -140,6 +153,19 @@ fn update(model: Model, message: Message) -> Model {
   let _ = storage.save("scopa", model, decode(), encode)
 
   model
+}
+
+@external(erlang, "fullscreen", "noop")
+@external(javascript, "/js/fullscreen.mjs", "enterFullscreen")
+pub fn fullscreen() -> Nil
+
+fn enter_fullscreen(model: Model) -> Model {
+  fullscreen()
+  model
+}
+
+fn reset(_model: Model) -> Model {
+  Setup(setup.init())
 }
 
 fn update_team_name_input(model: Model, raw_team_name: String) -> Model {
@@ -272,9 +298,21 @@ fn restart_new() -> Model {
 
 pub fn view(model: Model) -> Element(Message) {
   element.fragment([
+    main_menu(model),
     header.view(),
     main_content(model),
     footer.view(),
+  ])
+}
+
+fn main_menu(model: Model) -> Element(Message) {
+  let home_page = case model {
+    Setup(_) -> True
+    _ -> False
+  }
+
+  element.fragment([
+    main_menu.view(home_page, SetLanguage, EnterFullScreen, Reset),
   ])
 }
 
