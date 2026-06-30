@@ -2452,7 +2452,7 @@ dependencies = [
 
 [[package]]
 name = "scopa"
-version = "3.0.1-rc1"
+version = "3.0.1-rc2"
 dependencies = [
  "dioxus",
  "dioxus-i18n",
