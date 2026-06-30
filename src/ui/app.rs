@@ -46,21 +46,21 @@ fn Layout(children: Element) -> Element {
     let version = env!("CARGO_PKG_VERSION");
     rsx! {
         header {  Glow { {tid!("scopa-app.title-text")} } }
-        main {
-            MainMenu {}
-            { children }
-        }
-        footer {
-            { tid!("scopa-app.version-text", version: version) }
-            " "
-            { tid!("scopa-app.author-text") }
-            " "
-            a {
-                href: "https://opensource.org/license/bsd-3-clause",
-                target: "_blank",
-                rel: "noopener noreferrer",
-                { tid!("scopa-app.license-text") }
-            }
-        }
+        // main {
+        //     MainMenu {}
+        //     { children }
+        // }
+        // footer {
+        //     { tid!("scopa-app.version-text", version: version) }
+        //     " "
+        //     { tid!("scopa-app.author-text") }
+        //     " "
+        //     a {
+        //         href: "https://opensource.org/license/bsd-3-clause",
+        //         target: "_blank",
+        //         rel: "noopener noreferrer",
+        //         { tid!("scopa-app.license-text") }
+        //     }
+        // }
     }
 }
