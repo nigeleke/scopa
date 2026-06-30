@@ -24,7 +24,7 @@ pub fn GroupImage(hint: Option<String>, group: Group, disabled: bool, checked: b
                 alt: tid!(&format!("{group}-icon.alt-text")),
             }
             if let Some(hint) = hint {
-                div { "{hint}" }
+                div { "{hint.to_string()}" }
             }
         }
     }

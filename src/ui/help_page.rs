@@ -1,7 +1,7 @@
 use dioxus::prelude::*;
 use dioxus_i18n::tid;
 
-use crate::{application::Model, i18n::Language};
+use crate::application::Model;
 
 #[component]
 pub fn HelpPage() -> Element {
@@ -57,15 +57,10 @@ fn HelpContent() -> Element {
 #[component]
 fn Screenshot(name: String) -> Element {
     let model = use_context::<Signal<Model>>();
-    let root = model()
-        .language()
-        .unwrap_or(Language::default())
-        .root_string();
-
-    let src = format!("assets/images/{name}-{root}.png");
+    let root = model().language().unwrap_or_default().root_string();
 
     rsx! {
-        img { class: "help-page__screenshot", src: "{src}" }
+        img { class: "help-page__screenshot", src: "assets/images/{name}-{root}.png" }
     }
 }
 

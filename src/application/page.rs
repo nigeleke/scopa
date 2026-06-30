@@ -1,13 +1,8 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Serialize, Deserialize)]
 pub enum Page {
     Help,
+    #[default]
     Game,
-}
-
-impl Default for Page {
-    fn default() -> Self {
-        Self::Game
-    }
 }

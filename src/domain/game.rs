@@ -91,8 +91,10 @@ impl Game {
         match &self.state {
             GameState::Setup => self.state = GameState::Playing,
             GameState::Finished => {
-                let mut game = Game::default();
-                game.teams = Vec::from_iter(self.teams().cloned());
+                let mut game = Game {
+                    teams: Vec::from_iter(self.teams().cloned()),
+                    ..Default::default()
+                };
                 game.start();
                 *self = game;
             }

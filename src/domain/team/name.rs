@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
 pub struct TeamName(String);
 
 impl TeamName {
@@ -10,12 +10,6 @@ impl TeamName {
 
     pub fn is_empty(&self) -> bool {
         self.0.is_empty()
-    }
-}
-
-impl Default for TeamName {
-    fn default() -> Self {
-        Self(Default::default())
     }
 }
 

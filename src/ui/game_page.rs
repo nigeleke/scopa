@@ -13,20 +13,17 @@ pub fn GamePage() -> Element {
 
     use_effect(move || {
         let state = model.read().state();
-        match state {
-            GameState::Playing => {
-                let leading_teams = model.read().leading_teams().cloned().collect::<Vec<_>>();
+        if state == GameState::Playing {
+            let leading_teams = model.read().leading_teams().cloned().collect::<Vec<_>>();
 
-                if leading_teams.len() == 1 {
-                    let target = model.read().target();
-                    let id = *leading_teams[0].id();
+            if leading_teams.len() == 1 {
+                let target = model.read().target();
+                let id = *leading_teams[0].id();
 
-                    if model.read().score(id).value() >= target.value() {
-                        model.write().finish();
-                    }
+                if model.read().score(id).value() >= target.value() {
+                    model.write().finish();
                 }
             }
-            _ => {}
         }
     });
 
