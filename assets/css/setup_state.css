@@ -1,0 +1,80 @@
+.setup-state {
+    display: flex;
+    flex-direction: column;
+    block-size: 100%;
+    min-block-size: 0;
+    inline-size: 100%;
+    min-inline-size: 0;
+    padding-block: 2rem;
+    gap: 1.5rem;
+    align-items: center;
+    animation: setupGameFadeIn 0.25s;
+
+    button:last-child {
+        margin-block-start: auto;
+        justify-self: flex-end;
+    }
+}
+
+@keyframes setupGameFadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.setup-state__target-input {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+
+    input {
+        text-align: center;
+        inline-size: 15ch;
+    }
+}
+
+.setup-state__team-name-input {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+
+    & > input {
+        padding-block: 0.25rem;
+        padding-inline: 1rem;
+    }
+}
+
+.setup-state__teams-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-block-size: calc(6 * (30px + 0.5rem));
+    overflow-y: auto;
+    list-style-type: none;
+    padding-inline-start: 0;
+    max-inline-size: 30ch;
+}
+
+.setup-state__team-row {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    inline-size: 100%;
+    align-items: center;
+
+    button {
+        flex-shrink: 0;
+    }
+
+    span {
+        min-width: 0;
+        flex-grow: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}

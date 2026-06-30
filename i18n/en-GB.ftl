@@ -11,28 +11,82 @@
 # Version number, e.g. v 1.42.0
 scopa-app =
     .title-text = Scopa Scorer
-    .copyright-text = Copyright 2025-2026 © Nigel Eke; All rights reserved.
-    .version-text = v {$version}
+    .author-text = Written by Nigel Eke; 2025-2026.
+    .license-text = BSD-3-Clause License.
+    .version-text = v{$version}.
 
-# Points editor; determine number of points to play to.
-# Displayed as "<points_editor_prefix> <points edit control> <points_editor_prefix>"
-points-editor =
-    .prefix = Play to
-    .suffix = points
-    .aria-label = Enter game target
+# =============================================================================
+# Game Page
+# =============================================================================
 
-# Points; status showing points being played to in current game.
-points-view =
-    .text = Playing to {$n} points
+# -----------------------------------------------------------------------------
+# Setup State
+# -----------------------------------------------------------------------------
 
-# Team name editor; allow teams to be created during initialisation of game.
-team-name-editor =
-    .placeholder = Add 2, 3, 4 or 6 teams
+# TargetInput is used to enter the target points during game setup.
+target-input =
+    .label = Target
+    .placeholder = Enter target
+    .aria-label = Enter target
+
+# Icon button to add a team
+add-team-button =
+    .hint = Add team
+    .aria-label = Add team
+
+# Icon button to add a team
+remove-team-button =
+    .hint = Remove team
+    .aria-label = Remove team { $team }
+
+# TeamNameInput is used to enter team names during game setup.
+team-name-input =
+    .placeholder = Enter team name
     .aria-label = Enter team name
 
 # Start button
 start-button =
     .text = Start
+    .aria-label = Start scoring
+
+# Help button
+help-button =
+    .text = Help
+    .aria-label = Get game rules and instructions
+
+# Game button
+game-button =
+    .text = Back
+    .aria-label = Return to main page
+
+# -----------------------------------------------------------------------------
+# Playing State
+# -----------------------------------------------------------------------------
+
+# Scopas editor; select number of scopas scored.
+scopa-button =
+    .aria-label =
+        { $n ->
+            [0] No scopas
+            [1] One scopa
+           *[other] { $n } scopas
+        }
+
+more-button =
+    .text = More...
+    .aria-label = Show more choices
+
+cancel-button =
+    .text = Cancel
+    .aria-label = Return to points editor
+
+undo-button =
+    .hint = Undo
+    .aria-label = Undo score
+
+score-button =
+    .text = Score
+    .aria-label = Record the current score
 
 # Hints on the icons displayed during scoring.
 scopa-icon =
@@ -64,26 +118,30 @@ score-group-icon =
     .aria-label = {$group} for {$teamname}
 
 # Round number; status showing current round number.
-# Displayed as "<round_text> <round number>"
 round-view =
-    .text = Round
+    .text = Round {$n}
 
-# Score button.
-score-button =
-    .text = Score points
+# -----------------------------------------------------------------------------
+# Finished State
+# -----------------------------------------------------------------------------
+
+# Restart button
+restart-button =
+    .text = Start again
+    .aria-label = Start again
 
 # Winner; display the winning team name.
 winner-view =
-    .text = Winner - {$teamname}
-
-# Start new game button
-start-new-game-button =
-    .text = Start again
+    .text = Winner - {$teamname} !!!
 
 # Start new game settings checkbox
-start-new-game-settings =
+restart-settings =
     .text = Same teams
     .aria-label = Select to use same teams
+
+# -----------------------------------------------------------------------------
+# App
+# -----------------------------------------------------------------------------
 
 # Icons
 menu-icon =
@@ -108,25 +166,9 @@ lang =
 reset-button =
     .text = Reset
 
-# Cancel button.
-cancel-button =
-    .text = Cancel
-
-# More button.
-more-button =
-    .text = More...
-
-# Error instructions.
-error =
-    .apology = An unexpected error occurred
-    .report0 = Please raise an issue on the
-    .report1 = issues page
-    .report2 = to let us know what happened.
-
-# Not found page
-not-found =
-    .heading = 404 - Not Found
-    .home = Home
+# =============================================================================
+# Help Page
+# =============================================================================
 
 # Help page
 help =

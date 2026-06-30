@@ -1,0 +1,57 @@
+.help-page {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 1fr auto;
+    gap: 2rem;
+    place-items: center;
+    animation: helpFadeIn 0.25s;
+    block-size: 100%;
+    min-block-size: 0;
+}
+
+@keyframes helpFadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.help-page__content {
+    display: grid;
+    grid-template-rows: 1fr;
+    gap: 2rem;
+    block-size: 100%;
+    inline-size: 100%;
+    min-block-size: 0;
+    min-inline-size: 0;
+    overflow: auto;
+}
+
+.help-page__rules {
+    justify-items: center;
+    inline-size: 100%;
+    min-inline-size: 0;
+}
+
+.help-page__content button {
+    justify-self: center;
+}
+
+.help-page__content p {
+    max-width: 65ch;
+    padding-inline: 2em;
+}
+
+.help-page__screenshot {
+    display: block;
+    align-self: center;
+    border: none;
+    border-radius: 8px;
+    margin-block: 1rem;
+    margin-inline: 2rem;
+    max-inline-size: 90%;
+    min-inline-size: 0;
+    box-shadow: 0 0 12px rgba(248, 248, 255, 0.6);
+}

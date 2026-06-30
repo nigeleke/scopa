@@ -1,0 +1,22 @@
+.round-number {
+    background-color: var(--color-surface);
+    color: var(--color-text-secondary);
+    border-radius: 10px;
+    padding-inline: 1rem;
+    animation: round-number__pulse 0.9s ease-in-out;
+}
+
+@keyframes round-number__pulse {
+    0% {
+        transform: scale(1);
+        background-color: var(--control-colour);
+    }
+    50% {
+        transform: scale(1.2);
+        background-color: var(--control-colour-highlight, #eee);
+    }
+    100% {
+        transform: scale(1);
+        background-color: var(--control-colour);
+    }
+}

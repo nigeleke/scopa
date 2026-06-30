@@ -1,0 +1,46 @@
+.points-dialog {
+    background-color: ghostwhite;
+    border: solid 4px var(--color-accent);
+    border-radius: 12px;
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.points-dialog__points {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: auto;
+    gap: 0.5rem;
+    justify-items: center;
+
+    & button {
+        inline-size: 100%;
+    }
+}
+
+.points-dialog__controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    min-inline-size: 180px;
+
+    & > .points-dialog__cancel-button {
+        margin-left: auto;
+    }
+}
+
+.points-dialog__overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.25);
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-block-start: 10vh;
+
+    z-index: 1000;
+}

@@ -5,15 +5,6 @@ asset_dir = "assets"
 
 [web.app]
 title = "Scopa Scorer"
-#uncomment for gh-pages deploy.
-#base_path = "scopa/app"
-
-[web.resource]
-style = []
-script = []
-
-[web.resource.dev]
-script = []
 
 [bundle]
 identifier = "io.github.nigeleke"

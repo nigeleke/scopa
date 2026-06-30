@@ -1,0 +1,32 @@
+.playing-state {
+    display: grid;
+    grid-template-rows: minmax(0, min-content) min-content;
+    align-items: center;
+    justify-items: center;
+    gap: 2rem;
+    block-size: 100%;
+    min-block-size: 0;
+    inline-size: 100%;
+    min-inline-size: 0;
+    animation: playingGameFadeIn 0.25s;
+}
+
+@keyframes playingGameFadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.playing_state__actions {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+}
+
+.playing-state__undo-button {
+    position: absolute;
+    inset-inline-start: 0.5rem;
+}

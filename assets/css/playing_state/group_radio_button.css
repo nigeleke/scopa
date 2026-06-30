@@ -1,0 +1,17 @@
+.group-radio-button {
+    block-size: 100%;
+    min-block-size: 0;
+    inline-size: 100%;
+    min-inline-size: 0;
+
+    input {
+        position: absolute;
+        opacity: 0;
+        block-size: 10;
+        inline-size: 10;
+    }
+}
+
+.group-radio-button:focus-within {
+    outline: 1px dashed var(--color-accent);
+}

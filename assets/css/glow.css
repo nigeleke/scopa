@@ -1,0 +1,7 @@
+.glow {
+    text-shadow: 0 0 5px var(--color-accent);
+    text-decoration: var(--color-text-secondary);
+
+    filter: drop-shadow(0 0 5px var(--color-text))
+        drop-shadow(0 0 7px var(--color-accent));
+}

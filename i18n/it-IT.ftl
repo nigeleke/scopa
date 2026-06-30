@@ -1,22 +1,62 @@
 scopa-app =
-    .title-text = Marcatore Scopa
-    .copyright-text = Copyright 2025-2026 © Nigel Eke; Tutti i diritti riservati.
-    .version-text = v {$version}
+    .title-text = Segnapunti Scopa
+    .author-text = Scritto da Nigel Eke; 2025-2026.
+    .license-text = Licenza BSD-3-Clause.
+    .version-text = v{$version}.
 
-points-editor =
-    .prefix = Gioca fino a
-    .suffix = punti
-    .aria-label = Inserisci l'obiettivo del gioco
+target-input =
+    .label = Obiettivo
+    .placeholder = Inserisci obiettivo
+    .aria-label = Inserisci obiettivo
 
-points-view =
-    .text = Giocare a {$n} punti
+add-team-button =
+    .hint = Aggiungi squadra
+    .aria-label = Aggiungi squadra
 
-team-name-editor =
-    .placeholder = Aggiungi 2, 3, 4 o 6 squadre
-    .aria-label = Inserisci il nome della squadra
+remove-team-button =
+    .hint = Rimuovi squadra
+    .aria-label = Rimuovi squadra { $team }
+
+team-name-input =
+    .placeholder = Inserisci nome squadra
+    .aria-label = Inserisci nome squadra
 
 start-button =
-    .text = Inizio
+    .text = Inizia
+    .aria-label = Inizia punteggio
+
+help-button =
+    .text = Aiuto
+    .aria-label = Regole del gioco e istruzioni
+
+game-button =
+    .text = Indietro
+    .aria-label = Torna alla pagina principale
+
+
+scopa-button =
+    .aria-label =
+        { $n ->
+            [0] Nessuna scopa
+            [1] Una scopa
+           *[other] { $n } scope
+        }
+
+more-button =
+    .text = Altro…
+    .aria-label = Mostra altre opzioni
+
+cancel-button =
+    .text = Annulla
+    .aria-label = Torna all’editor dei punti
+
+undo-button =
+    .hint = Annulla
+    .aria-label = Annulla punteggio
+
+score-button =
+    .text = Segna
+    .aria-label = Registra il punteggio corrente
 
 scopa-icon =
     .hint = Scopa
@@ -45,20 +85,18 @@ score-group-icon =
     .aria-label = {$group} per {$teamname}
 
 round-view =
-    .text = Giri
+    .text = Giri {$n}
 
-score-button =
-    .text = Segna punti
+restart-button =
+    .text = Ricomincia
+    .aria-label = Ricomincia da capo
 
 winner-view =
-    .text = Vincitore - {$teamname}
+    .text = Vincitore - {$teamname} !!!
 
-start-new-game-button =
-    .text = Ricominciare
-
-start-new-game-settings =
+restart-settings =
     .text = Stesse squadre
-    .aria-label = Seleziona per utilizzare le stesse squadre
+    .aria-label = Seleziona per usare le stesse squadre
 
 menu-icon =
     .alt-text = Tendina
@@ -80,27 +118,11 @@ lang =
 reset-button =
     .text = Reset
 
-cancel-button =
-    .text = Annulla
-
-more-button =
-    .text = Altro...
-
-error =
-    .apology = Si è verificato un errore imprevisto
-    .report0 = Segnala un problema nella
-    .report1 = pagina dei problemi
-    .report2 = per farci sapere cosa è successo.
-
-not-found =
-    .heading = 404 - Pagina non trovata
-    .home = Home
-
 # Help page
 help =
     .heading = Benvenuto
     .intro =
-        Benvenuti a Scopa Scorer, il compagno perfetto per le vostre
+        Benvenuti a Segnapunti Scopa, il compagno perfetto per le vostre
         serate di gioco a Scopa! Con questa utile utility potete tenere
         traccia dei punteggi, gestire i round e mantenere il divertimento
         a ritmo serrato.

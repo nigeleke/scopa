@@ -1,0 +1,56 @@
+.group-image {
+    block-size: 100%;
+    min-block-size: 0;
+    inline-size: 100%;
+    min-inline-size: 0;
+    display: grid;
+    place-items: center;
+    position: relative;
+    cursor: pointer;
+    filter: brightness(70%);
+
+    img {
+        block-size: min(100%, 64px);
+        min-block-size: 0;
+
+        inline-size: min(100%, 64px);
+        min-inline-size: 0;
+
+        object-fit: scale-down;
+        object-position: center;
+    }
+
+    & > div {
+        position: absolute;
+        inset-block-start: 80%;
+        inset-inline-start: 0%;
+        background-color: var(--color-surface);
+        padding-inline: 1rem;
+        border-radius: 5px;
+
+        opacity: 0;
+        visibility: hidden;
+        white-space: nowrap;
+        transition:
+            opacity 0.3s ease,
+            visibility 0.3s ease;
+    }
+
+    &:hover {
+        filter: brightness(90%);
+        transform: scale(1.1);
+        & > div {
+            opacity: 1;
+            filter: brightness(100%);
+            visibility: visible;
+        }
+    }
+
+    &.disabled {
+        filter: brightness(50%);
+    }
+
+    &.checked {
+        filter: brightness(100%);
+    }
+}

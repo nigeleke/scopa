@@ -3,13 +3,16 @@ use std::num::ParseIntError;
 use serde::{Deserialize, Serialize};
 use thiserror::*;
 
-#[derive(Debug, Error)]
+#[derive(Clone, Debug, Error)]
 pub enum TargetError {
     #[error("no value")]
     NoValueProvided,
 
     #[error("invalid value")]
     InvalidValue(#[from] ParseIntError),
+
+    #[error("invalid value")]
+    BadValue(String),
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
@@ -35,7 +38,9 @@ impl std::str::FromStr for Target {
             Err(TargetError::NoValueProvided)
         } else {
             let value = s.parse::<usize>()?;
-            Ok(Self(value))
+            (value != 0)
+                .then_some(Self(value))
+                .ok_or(TargetError::BadValue(s.into()))
         }
     }
 }
@@ -56,8 +61,6 @@ impl std::fmt::Display for Target {
 #[cfg(test)]
 mod test {
     use std::str::FromStr;
-
-    use pretty_assertions::assert_eq;
 
     use super::*;
 

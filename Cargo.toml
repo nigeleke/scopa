@@ -1,40 +1,17 @@
 [package]
 name = "scopa"
-version = "2.2.0"
+version = "3.0.0"
 authors = ["Nigel Eke <nigeleke@gmail.com>"]
 edition = "2024"
 
 [dependencies]
-dioxus = "0.7"
-dioxus-i18n = "0.5"
-dioxus-sdk = { version = "0.7", features = ["storage"] }
-thiserror = "2.0"
-serde = { version = "1.0", features = ["derive"] }
-gloo-timers = { version = "0.4.0", features = ["futures"] }
-dioxus-primitives = { git = "https://github.com/DioxusLabs/components", version = "0.0.1", default-features = false }
-
-[dev-dependencies]
-pretty_assertions = "1.4"
+dioxus = { version = "0.7.9", features = [] }
+dioxus-i18n = "0.5.1"
+dioxus-sdk = { version = "0.7.0", features = ["storage"] }
+serde = { version = "1.0.228", features = ["derive"] }
+thiserror = "2.0.18"
+uuid = { version = "1.23.3", features = ["v4", "js", "serde"] }
 
 [features]
-default = []
+default = ["web"]
 web = ["dioxus/web"]
-desktop = ["dioxus/desktop"]
-mobile = ["dioxus/mobile"]
-
-[profile]
-
-[profile.wasm-dev]
-inherits = "dev"
-opt-level = 1
-
-[profile.server-dev]
-inherits = "dev"
-
-[profile.android-dev]
-inherits = "dev"
-
-[lints]
-clippy.all = { level = "warn", priority = -1 }
-clippy.unwrap_used = "forbid"
-clippy.expect_used = "allow"

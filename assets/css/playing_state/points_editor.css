@@ -1,0 +1,7 @@
+.points-editor:focus-within {
+    outline: 1px dashed var(--color-accent);
+}
+
+.points-editor__points-button {
+    background-color: var(--color-surface);
+}

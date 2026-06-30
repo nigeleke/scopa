@@ -1,0 +1,66 @@
+.finished-state {
+    display: grid;
+    grid-template-rows: 1fr min_content auto;
+    align-items: center;
+    justify-items: center;
+    gap: 2rem;
+    block-size: 100%;
+    min-block-size: 0;
+    inline-size: 100%;
+    min-inline-size: 0;
+    animation: finishedGameFadeIn 0.25s;
+}
+
+@keyframes finishedGameFadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.finished-state__winner {
+    font-size: 32px;
+    text-align: center;
+    animation: finishedGameWinnerSpin linear 0.4s 0.4s 8;
+}
+
+@keyframes finishedGameWinnerSpin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.finished-state__placings {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-auto-flow: auto;
+    gap: 0.25rem;
+    column-gap: 2rem;
+}
+
+.finished-state__actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 2rem;
+
+    & > label {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+}
+
+.finished-state__undo-button {
+    position: absolute;
+    inset-inline-start: 0.5rem;
+}
+
+.finished-state__restart-button {
+    padding-inline: 1rem;
+}
