@@ -27,22 +27,22 @@ pub fn MainMenu() -> Element {
                 popover: "auto",
                 id: MAIN_MENU_ID,
                 IconButton {
-                    icon: "\u{1F1EC}\u{1F1E7}",
+                    icon: "\u{1f1ec}\u{1f1e7}",
                     on_click: move |_| model.write().set_language(Language::english()),
                 }
                 IconButton {
-                    icon: "\u{1F1EE}\u{1F1F9}",
+                    icon: "\u{1f1ee}\u{1f1f9}",
                     on_click: move |_| model.write().set_language(Language::italian()),
                 }
                 IconButton {
-                    icon: "\u{26F6}",
+                    icon: "\u{26f6}",
                     on_click: move |_| {
                         let _ =  document::eval("document.documentElement.requestFullscreen()");
                     },
                 }
                 if model.read().can_reset() {
                     IconButton {
-                        icon: "\u{23FC}",
+                        icon: "\u{23fb}",
                         on_click: move |_| model.write().reset(),
                     }
                 }
