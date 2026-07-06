@@ -30,9 +30,19 @@
 }
 
 .help-page__rules {
-    justify-items: center;
+    justify-items: flex-start;
     inline-size: 100%;
     min-inline-size: 0;
+
+    p {
+        padding-block-end: 1rem;
+    }
+
+    h1,
+    h2,
+    img {
+        justify-self: center;
+    }
 }
 
 .help-page__content button {
@@ -42,6 +52,7 @@
 .help-page__content p {
     max-width: 65ch;
     padding-inline: 2em;
+    text-align: justify;
 }
 
 .help-page__screenshot {
