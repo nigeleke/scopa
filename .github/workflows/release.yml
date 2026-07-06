@@ -4,16 +4,16 @@ on:
     push:
         tags:
             - "v*.*.*"
+            - "v*.*.*-rc*"
 
 jobs:
     tags:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v6
+            - uses: actions/checkout@v7
             - uses: nigeleke/github/.github/actions/cargo-verify-version-vs-tag@main
             - shell: bash
               run: |
-                  echo "checkout"
                   git status
 
     bundle:
@@ -32,7 +32,6 @@ jobs:
             - uses: nigeleke/github/.github/actions/rust-setup@main
             - shell: bash
               run: |
-                  echo "rust setup"
                   git status
             - uses: nigeleke/github/.github/actions/dockerhub-publish@main
               with:
@@ -40,7 +39,6 @@ jobs:
                   tags: nigeleke/scopa:latest,nigeleke/scopa:${{ github.sha }}
             - shell: bash
               run: |
-                  echo "dockerhub publish"
                   git status
 
     publish-site:
