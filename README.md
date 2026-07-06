@@ -6,7 +6,7 @@
 [![Coverage](https://img.shields.io/codecov/c/github/nigeleke/scopa?style=plastic)](https://codecov.io/gh/nigeleke/scopa)
 ![Version](https://img.shields.io/github/v/tag/nigeleke/scopa?style=plastic)
 
-  [Site](https://nigeleke.github.io/scopa) \| [GitHub](https://github.com/nigeleke/scopa) \| [API](https://nigeleke.github.io/scopa/doc/scopa/index.html) \| [Coverage Report](https://nigeleke.github.io/scopa/llvm-cov/html/index.html) \| [App](https://nigeleke.github.io/scopa/app/)
+  [Site](https://nigeleke.github.io/scopa) \| [GitHub](https://github.com/nigeleke/scopa) \| [App](https://nigeleke.github.io/scopa/app/)
 
 [Scopa](https://en.wikipedia.org/wiki/Scopa) is a popular Italian card game played by two to four players.
 
@@ -24,14 +24,17 @@ Comments for improvements and any other issues, can be raised on [scopa/issues](
 ## Development
 
 ```bash
-dx build --platform=web
+dx build
 cargo test
-dx serve --platform=web
+dx serve
 ```
 
 - Open the browser to http://localhost:8080/
 
 ## Acknowledgements
 
-- Original icons are no attribution `CC0` and `PD` svg files on [svgrepo.com](https://www.svgrepo.com/). Derived images can be found under `./design/images/`.
-- Flags by [flagicons](https://flagicons.lipis.dev/); Attribution: `./design/attribution/flags_license`.
+- base_broom.svg Attribution CC BY - [openmoji.org](https://www.svgrepo.com/svg/311835/broom)
+- base_bastoni.svg PD
+- base_coppe.svg PD
+- base_corona.svg PD
+- base_spade.svg PD
