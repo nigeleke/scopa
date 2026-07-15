@@ -44,7 +44,7 @@ pub fn IconButton(
     rsx! {
         document::Stylesheet { href: asset!("/assets/css/icon_button.css") }
         button {
-            class: "{class}",
+            class: "{class.to_string()}",
             onclick: move |_| on_click.call(()),
             ..attributes,
             img { src: asset }
