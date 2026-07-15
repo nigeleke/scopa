@@ -15,7 +15,8 @@ pub enum TargetError {
     BadValue(String),
 }
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[cfg_attr(test, derive(Debug))]
 pub struct Target(usize);
 
 impl Target {

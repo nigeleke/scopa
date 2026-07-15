@@ -7,3 +7,6 @@ mod storage;
 mod ui;
 
 pub use ui::App;
+
+#[cfg(test)]
+mod test_support;

@@ -1,11 +1,12 @@
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[cfg_attr(test, derive(Debug))]
 pub struct TeamName(String);
 
 impl TeamName {
-    pub fn new(value: String) -> Self {
-        Self(value)
+    pub fn new(value: &str) -> Self {
+        Self(value.into())
     }
 
     pub fn is_empty(&self) -> bool {

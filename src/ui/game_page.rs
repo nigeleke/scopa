@@ -9,23 +9,7 @@ use crate::ui::setup_state::SetupState;
 
 #[component]
 pub fn GamePage() -> Element {
-    let mut model = use_context::<Signal<Model>>();
-
-    use_effect(move || {
-        let state = model.read().state();
-        if state == GameState::Playing {
-            let leading_teams = model.read().leading_teams().cloned().collect::<Vec<_>>();
-
-            if leading_teams.len() == 1 {
-                let target = model.read().target();
-                let id = *leading_teams[0].id();
-
-                if model.read().score(id).value() >= target.value() {
-                    model.write().finish();
-                }
-            }
-        }
-    });
+    let model = use_context::<Signal<Model>>();
 
     rsx! {
         document::Stylesheet { href: asset!("/assets/css/game_page.css") }

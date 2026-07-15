@@ -10,6 +10,7 @@ use crate::domain::points::Points;
 use crate::domain::team::TeamId;
 
 #[derive(Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[cfg_attr(test, derive(Debug))]
 pub struct Round {
     scopas: HashMap<TeamId, Points>,
     card_count: Option<TeamId>,

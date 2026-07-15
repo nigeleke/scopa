@@ -19,7 +19,6 @@ pub struct Game {
     rounds: Vec<Round>,
 }
 
-const MIN_TEAMS: usize = 2;
 const MAX_TEAMS: usize = 6;
 
 impl Game {
@@ -39,12 +38,11 @@ impl Game {
     }
 
     pub fn active_teams(&self) -> impl Iterator<Item = &Team> {
-        self.teams.iter().filter(|t| t.is_playing())
+        self.teams.iter().filter(|t| !t.is_eliminated())
     }
 
     pub fn leading_teams(&self) -> impl Iterator<Item = &Team> {
-        self.teams
-            .iter()
+        self.active_teams()
             .fold(BTreeMap::<Points, Vec<&Team>>::new(), |mut acc, team| {
                 let score = self.points(*team.id());
                 acc.entry(score).or_default().push(team);
@@ -54,6 +52,17 @@ impl Game {
             .next_back()
             .into_iter()
             .flat_map(|(_, teams)| teams)
+    }
+
+    pub fn winner(&self) -> Option<&Team> {
+        let reached_target = |team: &Team| self.points(*team.id()).value() >= self.target().value();
+
+        let mut leaders = self.leading_teams();
+
+        match (leaders.next(), leaders.next()) {
+            (Some(team), None) if reached_target(team) => Some(team),
+            _ => None,
+        }
     }
 
     pub fn can_add_team(&self, name: &TeamName) -> bool {
@@ -82,14 +91,26 @@ impl Game {
 
     pub fn can_start(&self) -> bool {
         match &self.state {
-            GameState::Setup => self.teams.len() >= MIN_TEAMS,
+            GameState::Setup => self.is_valid_team_count() && self.is_valid_target(),
             _ => panic!("invalid can_start in state {:?}", self.state),
         }
     }
 
+    fn is_valid_team_count(&self) -> bool {
+        matches!(self.teams.len(), 2 | 3 | 4 | 6)
+    }
+
+    fn is_valid_target(&self) -> bool {
+        self.target != Target::from(0)
+    }
+
     pub fn start(&mut self) {
         match &self.state {
-            GameState::Setup => self.state = GameState::Playing,
+            GameState::Setup if self.can_start() => {
+                self.rounds = Vec::new();
+                self.reinstate_teams();
+                self.state = GameState::Playing
+            }
             GameState::Finished => {
                 let mut game = Game {
                     teams: Vec::from_iter(self.teams().cloned()),
@@ -99,13 +120,6 @@ impl Game {
                 *self = game;
             }
             _ => panic!("invalid start in state {:?}", self.state),
-        }
-    }
-
-    pub fn finish(&mut self) {
-        match &self.state {
-            GameState::Playing => self.state = GameState::Finished,
-            _ => panic!("invalid finish in state {:?}", self.state),
         }
     }
 
@@ -121,11 +135,43 @@ impl Game {
     }
 
     pub fn add_round(&mut self, round: Round) {
-        self.rounds.push(round);
+        match &self.state {
+            GameState::Playing => {
+                self.rounds.push(round);
+                self.eliminate_trailing_teams();
+                if self.winner().is_some() {
+                    self.state = GameState::Finished;
+                }
+            }
+            _ => panic!("cannot add round unless playing"),
+        }
+    }
+
+    fn eliminate_trailing_teams(&mut self) {
+        let leaders = self
+            .leading_teams()
+            .map(|team| *team.id())
+            .collect::<std::collections::HashSet<_>>();
+
+        if let Some(id) = leaders.iter().next()
+            && self.points(*id).value() >= self.target.value()
+        {
+            self.teams.iter_mut().for_each(|team| {
+                if !leaders.contains(team.id()) {
+                    team.eliminate();
+                }
+            });
+        }
+    }
+
+    fn reinstate_teams(&mut self) {
+        self.teams.iter_mut().for_each(|t| t.reinstate());
+        self.eliminate_trailing_teams();
     }
 
     pub fn remove_round(&mut self) {
-        let _ = self.rounds.pop();
+        self.rounds.pop().expect("cannot remove round");
+        self.reinstate_teams();
     }
 
     pub fn last_round(&self) -> Option<&Round> {

@@ -1,4 +1,5 @@
 #[derive(PartialEq, Eq)]
+#[cfg_attr(test, derive(Debug))]
 pub struct RoundNumber(usize);
 
 impl RoundNumber {

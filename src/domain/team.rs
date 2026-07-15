@@ -7,21 +7,22 @@ pub use name::TeamName;
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[cfg_attr(test, derive(Debug))]
 pub struct Team {
     id: TeamId,
     name: TeamName,
-    is_playing: bool,
+    is_eliminated: bool,
 }
 
 impl Team {
     pub fn new(name: TeamName) -> Self {
         let id = TeamId::new();
-        let is_playing = true;
+        let is_eliminated = false;
 
         Team {
             id,
             name,
-            is_playing,
+            is_eliminated,
         }
     }
 
@@ -33,7 +34,15 @@ impl Team {
         &self.name
     }
 
-    pub fn is_playing(&self) -> bool {
-        self.is_playing
+    pub fn is_eliminated(&self) -> bool {
+        self.is_eliminated
+    }
+
+    pub fn eliminate(&mut self) {
+        self.is_eliminated = true;
+    }
+
+    pub fn reinstate(&mut self) {
+        self.is_eliminated = false;
     }
 }

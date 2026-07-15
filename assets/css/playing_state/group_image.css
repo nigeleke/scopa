@@ -48,6 +48,7 @@
 
     &.disabled {
         filter: brightness(50%);
+        transform: scale(1);
     }
 
     &.checked {

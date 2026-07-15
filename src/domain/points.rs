@@ -3,6 +3,7 @@ use std::ops::AddAssign;
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
+#[cfg_attr(test, derive(Debug))]
 pub struct Points(usize);
 
 impl Points {

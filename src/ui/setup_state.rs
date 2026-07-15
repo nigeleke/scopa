@@ -106,7 +106,7 @@ fn TeamNameInput(
                 name: "team-name",
                 placeholder: tid!("team-name-input.placeholder"),
                 value: value.to_string(),
-                oninput: move |e| on_value_changed.call(TeamName::new(e.value())),
+                oninput: move |e| on_value_changed.call(TeamName::new(&e.value())),
             }
 
             IconButton {

@@ -40,14 +40,14 @@ pub fn RoundEditor() -> Element {
         let name = team.name();
         let points = model.read().score(id);
         let is_leader = points == leading_teams_score;
-        let is_not_playing = !team.is_playing();
+        let is_eliminated = team.is_eliminated();
         [
             rsx! { TeamHeader { name: name.clone(), points: points, is_leader: is_leader } },
-            rsx! { ScopaScore { team: team.clone(), autofocus: id == first_active_team_id, disabled: is_not_playing } },
-            rsx! { GroupRadioButton { group: Group::CardsCount, team: Some(team.clone()), disabled: is_not_playing } },
-            rsx! { GroupRadioButton { group: Group::CoinsCount, team: Some(team.clone()), disabled: is_not_playing } },
-            rsx! { GroupRadioButton { group: Group::Settebello, team: Some(team.clone()), disabled: is_not_playing } },
-            rsx! { GroupRadioButton { group: Group::Premiera, team: Some(team.clone()), disabled: is_not_playing } },
+            rsx! { ScopaScore { team: team.clone(), autofocus: id == first_active_team_id, disabled: is_eliminated } },
+            rsx! { GroupRadioButton { group: Group::CardsCount, team: Some(team.clone()), disabled: is_eliminated } },
+            rsx! { GroupRadioButton { group: Group::CoinsCount, team: Some(team.clone()), disabled: is_eliminated } },
+            rsx! { GroupRadioButton { group: Group::Settebello, team: Some(team.clone()), disabled: is_eliminated } },
+            rsx! { GroupRadioButton { group: Group::Premiera, team: Some(team.clone()), disabled: is_eliminated } },
         ]
     };
 

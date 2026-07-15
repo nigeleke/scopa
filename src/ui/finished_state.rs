@@ -2,7 +2,6 @@ use dioxus::prelude::*;
 use dioxus_i18n::tid;
 
 use crate::application::Model;
-use crate::domain::{Team, TeamName};
 use crate::ui::glow::Glow;
 use crate::ui::icon_button::IconButton;
 
@@ -11,10 +10,9 @@ pub fn FinishedState() -> Element {
     let mut model = use_context::<Signal<Model>>();
     let winner = model
         .read()
-        .leading_teams()
-        .next()
+        .winner()
         .cloned()
-        .unwrap_or(Team::new(TeamName::default()));
+        .expect("must have winner to be finished");
 
     let mut teams = Vec::from_iter(model.read().teams().cloned());
     teams.sort_by_key(|t| model.read().score(*t.id()));
