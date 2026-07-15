@@ -46,17 +46,17 @@ team-name-input =
 
 # Start button
 start-button =
-    .text = Start
+    .title = Start
     .aria-label = Start scoring
 
 # Help button
 help-button =
-    .text = Help
+    .title = Help
     .aria-label = Get game rules and instructions
 
-# Game button
-game-button =
-    .text = Back
+# Home button
+home-button =
+    .title = Back
     .aria-label = Return to main page
 
 # -----------------------------------------------------------------------------

@@ -2,6 +2,7 @@ use dioxus::prelude::*;
 use dioxus_i18n::tid;
 
 use crate::application::Model;
+use crate::ui::icon_button::{Icon, IconButton};
 
 #[component]
 pub fn HelpPage() -> Element {
@@ -12,7 +13,7 @@ pub fn HelpPage() -> Element {
             class: "help-page",
             document::Stylesheet { href: asset!("/assets/css/help_page.css") },
             HelpContent {}
-            GameButton { on_game: move |_| model.write().show_game() }
+            HomeButton { on_game: move |_| model.write().show_game() }
         }
     }
 }
@@ -65,12 +66,13 @@ fn Screenshot(name: String) -> Element {
 }
 
 #[component]
-fn GameButton(on_game: EventHandler<()>) -> Element {
+fn HomeButton(on_game: EventHandler<()>) -> Element {
     rsx! {
-        button {
-            aria_label: tid!("game-button.aria-label"),
-            onclick: move |_| on_game(()),
-            {tid!("game-button.text")}
+        IconButton {
+            icon: Icon::Home,
+            title: tid!("home-button.title"),
+            aria_label: tid!("home-button.aria-label"),
+            on_click: move |_| on_game(()),
         }
     }
 }

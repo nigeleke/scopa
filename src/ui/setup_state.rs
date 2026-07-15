@@ -3,7 +3,7 @@ use dioxus_i18n::tid;
 
 use crate::application::Model;
 use crate::domain::{Target, TargetError, Team, TeamId, TeamName};
-use crate::ui::icon_button::IconButton;
+use crate::ui::icon_button::{Icon, IconButton};
 
 #[component]
 pub fn SetupState() -> Element {
@@ -110,10 +110,10 @@ fn TeamNameInput(
             }
 
             IconButton {
-                icon: "+",
-                on_click: move |_| on_submit.call(()),
+                icon: Icon::AddTeam,
                 title: tid!("add-team-button.hint"),
                 aria_label: tid!("add-team-button.aria-label"),
+                on_click: move |_| on_submit.call(()),
                 disabled: !can_submit,
             }
         }
@@ -144,10 +144,10 @@ fn TeamRow(team: Team, on_remove: EventHandler<TeamId>) -> Element {
         li {
             class: "setup-state__team-row",
             IconButton {
-                icon: "-",
-                on_click: move |_| on_remove.call(team_id),
+                icon: Icon::RemoveTeam,
                 title: tid!("remove-team-button.hint"),
                 aria_label: tid!("remove-team-button.aria-label", team: team_name.to_string()),
+                on_click: move |_| on_remove.call(team_id),
             }
             span { "{team_name}" }
         }
@@ -157,21 +157,24 @@ fn TeamRow(team: Team, on_remove: EventHandler<TeamId>) -> Element {
 #[component]
 fn StartButton(on_start: EventHandler<()>, can_start: bool) -> Element {
     rsx! {
-        button {
+        IconButton {
+            icon: Icon::Start,
+            title: tid!("start-button.title"),
             aria_label: tid!("start-button.aria-label"),
             disabled: !can_start,
-            onclick: move |_| on_start(()),
-            {tid!("start-button.text")} }
+            on_click: move || on_start(())
+        }
     }
 }
 
 #[component]
 fn HelpButton(on_help: EventHandler<()>) -> Element {
     rsx! {
-        button {
+        IconButton {
+            icon: Icon::Help,
+            title: tid!("help-button.title"),
             aria_label: tid!("help-button.aria-label"),
-            onclick: move |_| on_help(()),
-            {tid!("help-button.text")}
+            on_click: move || on_help(()),
         }
     }
 }

@@ -24,7 +24,7 @@ use dioxus_i18n::tid;
 
 use crate::application::Model;
 use crate::domain::{Round, RoundNumber as DomainRoundNumber};
-use crate::ui::icon_button::IconButton;
+use crate::ui::icon_button::{Icon, IconButton};
 
 #[component]
 pub fn PlayingState() -> Element {
@@ -41,7 +41,7 @@ pub fn PlayingState() -> Element {
             div {
                 class: "playing-state__actions",
                 IconButton {
-                    icon: "\u{21a9}",
+                    icon: Icon::Undo,
                     class: "playing-state__undo-button",
                     title: tid!("undo-button.hint"),
                     aria_label: tid!("undo-button.aria-label"),

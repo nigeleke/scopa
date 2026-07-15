@@ -2,7 +2,7 @@ use dioxus::prelude::*;
 
 use crate::application::Model;
 use crate::i18n::Language;
-use crate::ui::icon_button::IconButton;
+use crate::ui::icon_button::{Icon, IconButton};
 
 const MAIN_MENU_ID: &str = "main-menu";
 
@@ -18,7 +18,7 @@ pub fn MainMenu() -> Element {
                 class: "main-menu__root",
                 IconButton {
                     popovertarget: MAIN_MENU_ID,
-                    icon: "\u{2630}",
+                    icon: Icon::Menu,
                     on_click: move |_| {}
                 }
             }
@@ -27,22 +27,22 @@ pub fn MainMenu() -> Element {
                 popover: "auto",
                 id: MAIN_MENU_ID,
                 IconButton {
-                    icon: "\u{1f1ec}\u{1f1e7}",
+                    icon: Icon::English,
                     on_click: move |_| model.write().set_language(Language::english()),
                 }
                 IconButton {
-                    icon: "\u{1f1ee}\u{1f1f9}",
+                    icon: Icon::Italian,
                     on_click: move |_| model.write().set_language(Language::italian()),
                 }
                 IconButton {
-                    icon: "\u{26f6}",
+                    icon: Icon::Fullscreen,
                     on_click: move |_| {
                         let _ =  document::eval("document.documentElement.requestFullscreen()");
                     },
                 }
                 if model.read().can_reset() {
                     IconButton {
-                        icon: "\u{23fb}",
+                        icon: Icon::Reset,
                         on_click: move |_| model.write().reset(),
                     }
                 }

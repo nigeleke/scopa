@@ -3,7 +3,7 @@ use dioxus_i18n::tid;
 
 use crate::application::Model;
 use crate::ui::glow::Glow;
-use crate::ui::icon_button::IconButton;
+use crate::ui::icon_button::{Icon, IconButton};
 
 #[component]
 pub fn FinishedState() -> Element {
@@ -38,26 +38,27 @@ pub fn FinishedState() -> Element {
             div {
                 class: "finished-state__actions",
                 IconButton {
-                    icon: "\u{21a9}",
-                    on_click: move |_| {
+                    icon: Icon::Undo,
+                    class: "finished-state__undo-button",
+                    title: tid!("undo-button.hint"),
+                    aria_label: tid!("undo-button.aria-label"),
+                    on_click: move || {
                         model.write().remove_round();
                         model.write().play();
                     },
-                    class: "finished-state__undo-button",
-                    aria_label: tid!("undo-button.aria-label"),
-                    title: tid!("undo-button.hint")
                 }
-                button {
+                IconButton {
+                    icon: Icon::Reset,
                     class: "finished-state__restart-button",
+                    title: tid!("restart-button.text"),
                     aria_label: tid!("restart-button.aria-label"),
-                    onclick: move |_| {
+                    on_click: move || {
                         if *retain_settings.read() {
                             model.write().start();
                         } else {
                             model.set(Model::default());
                         }
                     },
-                    {tid!("restart-button.text")}
                 }
                 label {
                     input {

@@ -1,4 +1,11 @@
 .icon-button {
     font-size: 24px;
     font-weight: bold;
+
+    img {
+        inline-size: 1.25rem;
+        block-size: 1.25rem;
+        display: block;
+        object-fit: contain;
+    }
 }

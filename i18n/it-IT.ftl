@@ -22,15 +22,15 @@ team-name-input =
     .aria-label = Inserisci nome squadra
 
 start-button =
-    .text = Inizia
+    .title = Inizia
     .aria-label = Inizia punteggio
 
 help-button =
-    .text = Aiuto
+    .title = Aiuto
     .aria-label = Regole del gioco e istruzioni
 
-game-button =
-    .text = Indietro
+home-button =
+    .title = Indietro
     .aria-label = Torna alla pagina principale
 
 
