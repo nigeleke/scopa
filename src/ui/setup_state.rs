@@ -157,12 +157,11 @@ fn TeamRow(team: Team, on_remove: EventHandler<TeamId>) -> Element {
 #[component]
 fn StartButton(on_start: EventHandler<()>, can_start: bool) -> Element {
     rsx! {
-        IconButton {
-            icon: Icon::Start,
-            title: tid!("start-button.title"),
+        button {
             aria_label: tid!("start-button.aria-label"),
             disabled: !can_start,
-            on_click: move || on_start(())
+            onclick: move |_| on_start(()),
+            {tid!("start-button.text")}
         }
     }
 }

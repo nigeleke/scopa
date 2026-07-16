@@ -15,6 +15,5 @@
 - [Reset](https://icons8.com/icon/fFl7SUNX1Tte/restart) icon by [Icons8](https://icons8.com)
 - [Add](https://icons8.com/icon/SuPFstyooiwU/add) icon by [Icons8](https://icons8.com)
 - [Cancel](https://icons8.com/icon/XMIQOqKWWnuu/cancel) icon by [Icons8](https://icons8.com)
-- [Play](https://icons8.com/icon/2JASvA9QIi4d/circled-play-button) icon by [Icons8](https://icons8.com)
 - [Return](https://icons8.com/icon/pkJ2YVRU0aQW/return) icon by [Icons8](https://icons8.com)
 - [Fit to Width](https://icons8.com/icon/GfJ1xrr3KE8W/fit-to-width) icon by [Icons8](https://icons8.com)

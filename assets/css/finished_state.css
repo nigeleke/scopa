@@ -63,4 +63,5 @@
 
 .finished-state__restart-button {
     justify-self: end;
+    padding-inline: 0.5rem;
 }

@@ -3,7 +3,7 @@ use dioxus_i18n::prelude::*;
 use dioxus_i18n::tid;
 
 use crate::application::Page;
-use crate::i18n::{self, Language};
+use crate::i18n;
 use crate::storage;
 use crate::ui::game_page::GamePage;
 use crate::ui::glow::Glow;
@@ -12,11 +12,17 @@ use crate::ui::main_menu::MainMenu;
 
 #[component]
 pub fn App() -> Element {
-    let mut i18n = use_init_i18n(|| i18n::config(Language::english().identifier()));
-
-    let model = storage::use_application_model();
+    let mut model = storage::use_application_model();
     provide_context(model);
 
+    let language = i18n::use_preferred_language();
+    use_effect(move || {
+        if model().language().is_none() {
+            model.write().set_language(language());
+        }
+    });
+
+    let mut i18n = use_init_i18n(|| i18n::config(language.read().identifier()));
     use_effect(move || {
         if let Some(language) = model().language() {
             i18n.set_language(language.identifier());

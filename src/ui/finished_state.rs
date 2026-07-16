@@ -47,18 +47,17 @@ pub fn FinishedState() -> Element {
                         model.write().play();
                     },
                 }
-                IconButton {
-                    icon: Icon::Reset,
+                button {
                     class: "finished-state__restart-button",
-                    title: tid!("restart-button.text"),
                     aria_label: tid!("restart-button.aria-label"),
-                    on_click: move || {
+                    onclick: move |_| {
                         if *retain_settings.read() {
                             model.write().start();
                         } else {
                             model.set(Model::default());
                         }
                     },
+                    {tid!("restart-button.text")}
                 }
                 label {
                     input {

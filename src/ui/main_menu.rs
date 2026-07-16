@@ -10,6 +10,11 @@ const MAIN_MENU_ID: &str = "main-menu";
 pub fn MainMenu() -> Element {
     let mut model = use_context::<Signal<Model>>();
 
+    let fullscreen_allowed = web_sys::window()
+        .and_then(|w| w.document())
+        .map(|d| d.fullscreen_enabled())
+        .unwrap_or_default();
+
     rsx! {
         document::Stylesheet { href: asset!("/assets/css/main_menu.css") },
         div {
@@ -34,11 +39,18 @@ pub fn MainMenu() -> Element {
                     icon: Icon::Italian,
                     on_click: move |_| model.write().set_language(Language::italian()),
                 }
-                IconButton {
-                    icon: Icon::Fullscreen,
-                    on_click: move |_| {
-                        let _ =  document::eval("document.documentElement.requestFullscreen()");
-                    },
+                if fullscreen_allowed {
+                    IconButton {
+                        icon: Icon::Fullscreen,
+                        on_click: move |_| {
+                            if let Some(el) = web_sys::window()
+                                .and_then(|w| w.document())
+                                .and_then(|d| d.document_element())
+                            {
+                                spawn(async move { let _ = el.request_fullscreen(); });
+                            }
+                        },
+                    }
                 }
                 if model.read().can_reset() {
                     IconButton {

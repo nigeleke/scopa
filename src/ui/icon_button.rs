@@ -10,7 +10,6 @@ pub enum Icon {
     Reset,
     AddTeam,
     RemoveTeam,
-    Start,
     Undo,
     Fullscreen,
 }
@@ -31,7 +30,6 @@ pub fn IconButton(
         Icon::Reset => asset!("/assets/images/icon-reset.png"),
         Icon::AddTeam => asset!("/assets/images/icon-add.png"),
         Icon::RemoveTeam => asset!("/assets/images/icon-cancel.png"),
-        Icon::Start => asset!("/assets/images/icon-play.png"),
         Icon::Undo => asset!("/assets/images/icon-return.png"),
         Icon::Fullscreen => asset!("/assets/images/icon-fit-to-width.png"),
     };

@@ -22,7 +22,7 @@ team-name-input =
     .aria-label = Inserisci nome squadra
 
 start-button =
-    .title = Inizia
+    .text = Inizia
     .aria-label = Inizia punteggio
 
 help-button =

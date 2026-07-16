@@ -46,7 +46,7 @@ team-name-input =
 
 # Start button
 start-button =
-    .title = Start
+    .text = Start
     .aria-label = Start scoring
 
 # Help button
