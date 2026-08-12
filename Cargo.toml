@@ -5,14 +5,18 @@ authors = ["Nigel Eke <nigeleke@gmail.com>"]
 edition = "2024"
 
 [dependencies]
-dioxus = { version = "0.7.9", features = [] }
-dioxus-i18n = "0.5.1"
-dioxus-sdk = { version = "0.7.0", features = ["storage"] }
-serde = { version = "1.0.228", features = ["derive"] }
-thiserror = "2.0.18"
-uuid = { version = "1.23.3", features = ["v4", "js", "serde"] }
-web-sys = { version = "0.3.103", features = ["Document", "Navigator"] }
+dioxus = { version = "0.7", features = [] }
+dioxus-i18n = "0.5"
+dioxus-sdk = { version = "0.7", features = ["storage"] }
+serde = { version = "1.0", features = ["derive"] }
+thiserror = "2.0"
+uuid = { version = "1.23", features = ["v4", "js", "serde"] }
+web-sys = { version = "0.3", features = ["Document", "Navigator"] }
 
 [features]
 default = ["web"]
 web = ["dioxus/web"]
+
+[profile.release]
+debug = false
+strip = "debuginfo"
