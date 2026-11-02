@@ -1,4 +1,4 @@
-#![feature(coverage_attribute)]
+#![cfg_attr(test, feature(coverage_attribute))]
 
 mod application;
 mod domain;

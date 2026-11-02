@@ -58,8 +58,8 @@ impl std::fmt::Display for Target {
     }
 }
 
-#[coverage(off)]
 #[cfg(test)]
+#[coverage(off)]
 mod test {
     use std::str::FromStr;
 
